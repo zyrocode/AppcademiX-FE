@@ -1,31 +1,31 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { setUser } from '../Actions/setUser'
+import { connect } from "react-redux"
+import { getUsersWithThunk } from '../Actions/setUser'
 
 const mapStateToProps = state => state
 
 const mapDispatchToProps = dispatch => ({
-    setUser: (userInfos) => dispatch(setUser(userInfos))
+    loadUsers: (userInfos) => dispatch(getUsersWithThunk(userInfos))
 })
 
 class ProfilePage extends Component {
-    state = {
-
+    state = {   
     }
     render() {
         return (
             <div>
-                {this.props.user[0] && this.props.user[0].username}
+                {this.props.userInfo.user && this.props.userInfo.user.username}
 
             </div>
         );
     }
     componentDidMount = async() => {
-        let request = await fetch("http://localhost:9000/");
+        let request = await fetch("http://localhost:9000/api/posts");
         let userInfos = await request.json();
-        this.props.setUser(userInfos)
-        console.log(this.props.user)
+        this.props.loadUsers(userInfos.postsList[0])
+        console.log(userInfos.postsList[0])
     }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
+

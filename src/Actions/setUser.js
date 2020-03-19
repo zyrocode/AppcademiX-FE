@@ -1,8 +1,8 @@
-export const setUser = (userInfo) => {
+export const getUsersWithThunk = (userInfos) => {
     return async (dispatch, getState) => {
         dispatch({
             type: "SET_USER",
-            payload: userInfo
+            payload: userInfos
         })
     };
 }
