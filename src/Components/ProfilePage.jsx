@@ -14,7 +14,11 @@ class ProfilePage extends Component {
     render() {
         return (
             <div>
-                {this.props.userInfo.user && this.props.userInfo.user.username}
+                {this.props.userInfo && this.props.userInfo.map((user,index)=>
+                    <div key={index}>
+                        {user.username}
+                    </div>
+                )}
 
             </div>
         );
@@ -22,8 +26,8 @@ class ProfilePage extends Component {
     componentDidMount = async() => {
         let request = await fetch("http://localhost:9000/api/posts");
         let userInfos = await request.json();
-        this.props.loadUsers(userInfos.postsList[0])
-        console.log(userInfos.postsList[0])
+        this.props.loadUsers(userInfos.postsList)
+        console.log(this.props.userInfo)
     }
 }
 

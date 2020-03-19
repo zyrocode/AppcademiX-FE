@@ -6,9 +6,7 @@ import errorReducer from '../Reducers/errorReducer'
 import loginReducer from '../Reducers/loginReducer'
 
 const initialState = { 
-    userInfo:{
-        user: []
-    },
+    userInfo:[],
     loading: false,
     errorMessage: '',
     accessToken: ''
