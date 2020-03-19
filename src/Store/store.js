@@ -5,15 +5,17 @@ import loaderReducer from '../Reducers/loaderReducer'
 import errorReducer from '../Reducers/errorReducer'
 import loginReducer from '../Reducers/loginReducer'
 
-const initialState = {
-    user: [],
-    loading: {load: false},
+const initialState = { 
+    userInfo:{
+        user: []
+    },
+    loading: false,
     errorMessage: '',
     accessToken: ''
 }
 
 const combinedReducers = combineReducers({
-    user: userReducer,
+    userInfo: userReducer,
     loading: loaderReducer,
     errorMessage: errorReducer,
     accessToken: loginReducer

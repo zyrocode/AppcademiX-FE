@@ -5,7 +5,7 @@ import ProfilePage from './ProfilePage'
 import NotFound from './NotFound'
 
 class Register extends Component {
-    render() {
+    render() { 
         return (
             <Router>
                 <Switch>

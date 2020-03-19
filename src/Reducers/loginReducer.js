@@ -2,7 +2,7 @@ export default function (state = {}, action) {
     switch (action.type) {
         case "SET_TOKEN":
             return {
-                ...state,
+                ...state, 
                 accessToken: action.payload
             }
 

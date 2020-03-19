@@ -4,7 +4,7 @@ export default function (state = {}, action) {
             return {
                 ...state,
                 loading: true
-            }
+            } 
 
             case "UNSET_LOADING":
                 return {

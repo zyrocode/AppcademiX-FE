@@ -1,15 +1,15 @@
 export default function (state = {}, action) {
     switch (action.type) {
-        case "SET_USER":
+        case "SET_USER": 
             return {
                 ...state,
-                ...action.payload
+                user: action.payload
             }
 
             case "UNSET_USER":
                 return {
                     ...state,
-                    ...undefined
+                   user: undefined
                 }
 
                 default:

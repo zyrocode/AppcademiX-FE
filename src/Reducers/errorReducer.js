@@ -7,7 +7,7 @@ export default function (state = {}, action) {
             }
 
             case "HIDE_ERROR":
-                return {
+                return { 
                     ...state,
                     errorMessage: ''
                 }
