@@ -5,16 +5,20 @@ import ProfilePage from './ProfilePage'
 import NotFound from './NotFound'
 
 class Register extends Component {
-    render() { 
+    render() {
         return (
             <Router>
                 <Switch>
-                    <Route path="/" exact component={ PostPage }/>
-                    <Route path="/profile" exact component={ ProfilePage }/>
-                    <Route component={ NotFound }/>
+                    <Route path="/" exact component={PostPage} />
+                    <Route path="/profile/:username" exact component={ProfilePage} />
+                    <Route component={NotFound} />
                 </Switch>
             </Router>
         );
+    }
+
+    componentDidMount = () => {
+        
     }
 }
 
