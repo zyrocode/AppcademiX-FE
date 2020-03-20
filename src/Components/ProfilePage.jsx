@@ -4,8 +4,8 @@ import { Container, Col, Row, Fade } from 'reactstrap'
 import PostsList from './PostsList';
 import FontAwesome from 'react-fontawesome';
 import { withRouter } from 'react-router-dom'
-import NavBar from './NavBar';
 import EditInfoModal from './EditInfoModal';
+import NavBar from './NavBar';
 
 /* import { getUsersWithThunk } from '../Actions/setUser' */
 
@@ -26,7 +26,7 @@ class ProfilePage extends Component {
             <div>
                 {this.state.profile &&
                     <Fade>
-                        <NavBar />
+                        <NavBar/>
                         <Container className="profile">
                             <Row>
                                 <Col className="col-sm-4 col-md-3 col-l-2">
@@ -64,7 +64,7 @@ class ProfilePage extends Component {
     }
 
     componentDidMount = async () => {
-     await this.initialFetcher()
+        await this.initialFetcher()
     }
 
     capFirst = string => {
@@ -79,11 +79,13 @@ class ProfilePage extends Component {
             profile: {
                 ...this.state.profile,
                 firstname: update.firstname,
-                lastname: update.lastname
+                lastname: update.lastname,
+                image: update.image
             }
         })
+        console.log(this.state.image)
     }
 }
 
-export default withRouter /* connect(mapStateToProps, mapDispatchToProps) */(ProfilePage);
+export default /* connect(mapStateToProps, mapDispatchToProps) */ProfilePage;
 

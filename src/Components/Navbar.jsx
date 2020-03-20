@@ -27,6 +27,8 @@ class NavBar extends Component {
                         <NavItem>
                             <NavLink href="http://localhost:3000/">Home</NavLink>
                         </NavItem>
+                        <NavItem>
+                                </NavItem>
                         {localStorage.getItem("access_token") !== "" && localStorage.getItem("access_token") !== null &&
                             <>
                                 <NavItem>
@@ -39,7 +41,7 @@ class NavBar extends Component {
                         }
                     </Nav>
                     {localStorage.getItem("access_token") === "" || localStorage.getItem("access_token") === null
-                        ? <Button onClick={this.toggleLoginModal}>Log in</Button>
+                        ? <Button onClick={this.toggleLoginModal}>Log in / Register</Button>
                         : <Button onClick={this.toggleLogout}>Log out</Button>}
                 </Navbar>
                 {this.state.loginModal && <Login toggle={this.toggleLoginModal} open={this.state.loginModal} />}

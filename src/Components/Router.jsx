@@ -4,8 +4,12 @@ import PostPage from "./PostPage";
 import ProfilePage from "./ProfilePage";
 import NotFound from "./NotFound";
 import CreatePost from "./CreatePost";
+import Register from "./Register";
 
-class Register extends Component {
+class RouterBrowse extends Component {
+    state = {
+        lightTheme: true
+    }
     render() {
         return (
             <Router>
@@ -13,9 +17,10 @@ class Register extends Component {
                     <Route path="/" exact component={PostPage} />
                     <Route path="/profile/:username" exact component={ProfilePage} />
                     <Route path="/createpost" exact component={CreatePost} />
+                    <Route path="/register" exact component={Register} />
                     <Route component={NotFound} />
                 </Switch>
-            </Router>
+            </Router >
         );
     }
 
@@ -45,7 +50,7 @@ class Register extends Component {
             if (access_token) {
                 console.log(access_token)
                 const userJson = await this.refreshTokenAPI(access_token);
-                
+
                 localStorage.setItem("access_token", userJson.access_token);
                 localStorage.setItem("username", userJson.username);
             } else {
@@ -62,4 +67,4 @@ class Register extends Component {
     };
 }
 
-export default Register;
+export default RouterBrowse;
