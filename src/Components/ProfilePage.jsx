@@ -6,6 +6,7 @@ import FontAwesome from 'react-fontawesome';
 import { withRouter } from 'react-router-dom'
 import NavBar from './NavBar';
 import EditInfoModal from './EditInfoModal';
+
 /* import { getUsersWithThunk } from '../Actions/setUser' */
 
 /* const mapStateToProps = state => state
