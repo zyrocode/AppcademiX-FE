@@ -31,8 +31,8 @@ class Login extends Component {
         );
     }
 
-    submitForm = async (loginCredentials) => {
-        loginCredentials.preventDefault()
+    submitForm = async (e) => {
+        e.preventDefault()
         let login = {
             username: this.state.username,
             password: this.state.password

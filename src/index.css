@@ -28,18 +28,19 @@ body {
 
 .profile-img {
   max-width: 100px;
-  border:2px solid #EF3C59;
+  border: 2px solid #EF3C59;
   border-radius: 100%;
-  display: inline-block
+  display: block;
+  margin-left: auto;
 }
 
 .profile-info {
-  float:left
+  float: left
 }
 
 .post {
   border-radius: 7px;
-  border: 1px solid #EF3C59;
+  border: 1px solid rgba(239, 60, 90, 0.055);
   background-color: #ffffff;
   color: black;
   padding: 20px;
@@ -78,4 +79,32 @@ body {
   font-weight: 600;
   padding: 0.5em;
   vertical-align: super;
+}
+
+.icon {
+  transition-duration: 0.1s;
+  float: right;
+  padding-right: 10px;
+}
+
+.icon:hover {
+  color: #EF3C59;
+  cursor: pointer;
+}
+
+.navbar {
+  background-color: #272727;
+}
+
+.navbar-brand {
+  color: #EF3C59 !important;
+}
+
+.nav-link {
+  color: white !important;
+  transition-duration: 0.2s;
+}
+
+.nav-link:hover {
+  color: #EF3C59 !important;
 }
