@@ -20,7 +20,7 @@ class Register extends Component {
     }
 
     componentDidMount = () => {
-        
+
     }
 }
 

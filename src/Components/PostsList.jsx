@@ -13,7 +13,7 @@ class PostsList extends Component {
                     <Container className="m-4 mx-auto post" key={index}>
                         <Row>
                             <div className="m-2">
-                                <img className="post-image" src={post.image} alt="Post Image" />
+                                <img className="post-image" src={post.image} alt="Post Default Pic" />
                             </div>
                             <Col>
                                 <Row><h4>{post.title}</h4></Row>
