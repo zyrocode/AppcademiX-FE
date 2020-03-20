@@ -4,7 +4,7 @@ import { Container, Col, Row } from 'reactstrap'
 import PostsList from './PostsList';
 import FontAwesome from 'react-fontawesome';
 import { withRouter } from 'react-router-dom'
-import NavBar from './NavBar';
+import NavBar from './Navbar';
 /* import { getUsersWithThunk } from '../Actions/setUser' */
 
 /* const mapStateToProps = state => state
@@ -27,7 +27,7 @@ class ProfilePage extends Component {
                         <Container className="profile">
                             <Row>
                                 <Col className="col-sm-4 col-md-3 col-l-2">
-                                    <img className="profile-img" src={this.state.profile.image} />
+                                    <img className="profile-img" src={this.state.profile.image} alt=""/>
                                 </Col>
                                 <Col>
                                     <div className="profile-info ml-1">
