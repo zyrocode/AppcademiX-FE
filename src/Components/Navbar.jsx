@@ -30,6 +30,7 @@ class NavBar extends Component {
 
     toggleLogout = () => {
         localStorage.setItem("access_token", "")
+        localStorage.setItem("username", "")
         this.setState({})
     }
 }

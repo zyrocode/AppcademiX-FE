@@ -37,13 +37,14 @@ class ProfilePage extends Component {
                                 </Col>
                             </Row>
                         </Container>
-                        <PostsList posts={this.state.posts} />
+                        <PostsList posts={this.state.posts} nrefresh={this.initialFetcher}/>
                     </>
                 }
             </div>
         );
     }
-    componentDidMount = async () => {
+
+    initialFetcher = async () =>{
         let response = await fetch("http://localhost:9000/api/users/" + this.props.match.params.username)
         if(response.status === 500)
             this.props.history.push("/")
@@ -55,6 +56,10 @@ class ProfilePage extends Component {
             profile: profile,
             posts: posts
         })
+    }
+
+    componentDidMount = async () => {
+     await this.initialFetcher()
     }
 
     capFirst = string => {
