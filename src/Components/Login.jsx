@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
-
+import { Link } from 'react-router-dom'
 
 class Login extends Component {
     state = {
@@ -16,14 +16,17 @@ class Login extends Component {
                         <Form onSubmit={this.submitForm}>
                             <FormGroup>
                                 <Label>Username</Label>
-                                <Input type="text" onChange={(e) => this.setState({username: e.target.value})} value={this.state.username}/>
+                                <Input type="text" onChange={(e) => this.setState({ username: e.target.value })} value={this.state.username} />
                             </FormGroup>
                             <FormGroup>
                                 <Label>Password</Label>
-                                <Input type="password" onChange={(e) => this.setState({password: e.target.value})} value={this.state.password}/>
+                                <Input type="password" onChange={(e) => this.setState({ password: e.target.value })} value={this.state.password} />
                             </FormGroup>
-                            <Button style={{ backgroundColor: "#EF3C59", border: "1px solid #EF3C59" }}>Login</Button>{' '}
-                            <Button style={{ float: "right" }} color="secondary" onClick={this.props.toggle}>Cancel</Button>
+                            <FormGroup>
+                                <Link to="/register">New user? Click here to register</Link>
+                            </FormGroup>
+                            <Button className="btn-modal-primary">Login</Button>
+                            <Button className="btn-modal-secondary" color="secondary" onClick={this.props.toggle}>Cancel</Button>
                         </Form>
                     </ModalBody>
                 </Modal>
@@ -45,12 +48,12 @@ class Login extends Component {
                 },
                 body: JSON.stringify(login)
             })
-            if (response.ok){
+            if (response.ok) {
                 let token = await response.json()
                 localStorage.setItem("access_token", token.access_token)
                 localStorage.setItem("username", token.username)
             }
-            else    
+            else
                 console.log("Incorrect login")
         } catch (e) {
             console.log(e)

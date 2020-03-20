@@ -50,7 +50,6 @@ class RatingsPage extends Component {
 
       if (allUpVotes.ok) {
         const response = await allUpVotes.json();
-
         this.setState({
           upVoteCount: response.upVotalTotal
         });

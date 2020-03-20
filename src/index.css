@@ -17,6 +17,11 @@ body {
   background-color: #f4f4f4 !important;
 }
 
+body.dark-mode {
+  background-color: #1a1919;
+  color: #999;
+}
+
 .profile {
   padding: 3em;
   background-color: #272727;
@@ -117,6 +122,37 @@ body {
   border-radius: 7px;
 }
 
-input[type="file"]{
+input[type="file"] {
   display: none;
+}
+
+.btn {
+  background-color: #181818 !important;
+  border: 1px solid rgb(239, 60, 90) !important;
+}
+
+.btn:hover {
+  background-color: #EF3C59 !important;
+}
+
+.btn-modal-primary {
+  background-color: #EF3C59 !important;
+}
+
+.btn-modal-primary:hover {
+  background-color: #181818 !important;
+}
+
+.btn-modal-secondary {
+  background-color: #181818 !important;
+  float: right;
+  border: none !important;
+}
+
+.modal-header {
+  border: none !important;
+}
+
+.modal-content {
+  background-color: #f7f7f7 !important;
 }
