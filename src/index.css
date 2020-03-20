@@ -108,3 +108,15 @@ body {
 .nav-link:hover {
   color: #EF3C59 !important;
 }
+
+.create-post {
+  background-color: white;
+  padding: 2em;
+  margin: 6em;
+  box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.52);
+  border-radius: 7px;
+}
+
+input[type="file"]{
+  display: none;
+}

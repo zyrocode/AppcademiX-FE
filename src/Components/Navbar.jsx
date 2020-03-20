@@ -7,8 +7,8 @@ import {
     Nav,
     Button,
     Fade,
-    Toast, 
-    ToastBody, 
+    Toast,
+    ToastBody,
     ToastHeader
 } from 'reactstrap';
 import Login from './Login'
@@ -27,12 +27,18 @@ class NavBar extends Component {
                         <NavItem>
                             <NavLink href="http://localhost:3000/">Home</NavLink>
                         </NavItem>
-                        {localStorage.getItem("access_token") !== "" &&
-                            <NavItem>
-                                <NavLink href={"http://localhost:3000/profile/" + localStorage.getItem("username")}>Profile</NavLink>
-                            </NavItem>}
+                        {localStorage.getItem("access_token") !== "" && localStorage.getItem("access_token") !== null &&
+                            <>
+                                <NavItem>
+                                    <NavLink href={"http://localhost:3000/profile/" + localStorage.getItem("username")}>Profile</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink href={"http://localhost:3000/createpost"}>Create Post</NavLink>
+                                </NavItem>
+                            </>
+                        }
                     </Nav>
-                    {localStorage.getItem("access_token") === ""
+                    {localStorage.getItem("access_token") === "" || localStorage.getItem("access_token") === null
                         ? <Button onClick={this.toggleLoginModal}>Log in</Button>
                         : <Button onClick={this.toggleLogout}>Log out</Button>}
                 </Navbar>

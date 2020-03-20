@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Col, Row, Fade, Container, Form, FormGroup, Label, Input } from 'reactstrap';
+import NavBar from './NavBar';
 
 class CreatePost extends Component {
     state = {
@@ -7,13 +8,15 @@ class CreatePost extends Component {
         description: "",
         link: "",
         difficulty: "",
-        category: ""
+        category: "",
+        selectedFile: null
     }
 
     render() {
         return (
             <Fade>
-                <Container className="m-5">
+                <NavBar />
+                <Container className="create-post">
                     <Row>
                         <Col>
                             <Form onSubmit={this.submitPost}>
@@ -47,8 +50,9 @@ class CreatePost extends Component {
                                     </Input>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label>Image</Label>
-                                    <Input type="file"></Input>
+                                    <Label className="btn btn-primary">Image
+                                        <Input type="file" onChange={(val) => this.setState({ selectedFile: val.target.files[0] })} ></Input>
+                                    </Label>
                                 </FormGroup>
                                 <Button>Create Post</Button>
                             </Form>
@@ -77,11 +81,24 @@ class CreatePost extends Component {
                 },
                 body: JSON.stringify(post)
             })
-            console.log(response)
-            if (response.ok){
+            if (this.state.selectedFile) {
+                let post = await response.json()
+                console.log(post)
+                let id = post.newPost._id
+                let fd = new FormData();
+                fd.append("postImage", this.state.selectedFile)
+                let fileUploaded = await fetch("http://localhost:9000/api/posts/image/" + id + "/" + localStorage.getItem("username"), {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("access_token")
+                    },
+                    body: fd
+                })
+            }
+            if (response.ok) {
                 this.props.history.push("/")
             }
-            else    
+            else
                 console.log("Error")
         } catch (e) {
             console.log(e)
