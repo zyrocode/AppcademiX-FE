@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Col, Fade, Row } from 'reactstrap'
-import FontAwesome from 'react-fontawesome'
+import RatingsPage from './RatingsPage';
+// import FontAwesome from 'react-fontawesome'
 
 class PostsList extends Component {
     state = {
@@ -19,19 +20,7 @@ class PostsList extends Component {
                                 <Row><h4>{post.title}</h4></Row>
                                 <Row>{post.description}</Row>
                             </Col>
-                            <Col>
-                                <Row>
-                                    <Col>
-                                        <span onClick={() => this.ratePost(post._id)} className="rate">
-                                            <FontAwesome
-                                                name="star"
-                                                size="2x"
-                                            />
-                                            <span className="rate-number">{post.ratings.length}</span>
-                                        </span>
-                                    </Col>
-                                </Row>
-                            </Col>
+                            <RatingsPage id={post._id} refresh={this.props.nrefresh}/>
                         </Row>
                     </Container>
                 )}
@@ -39,21 +28,7 @@ class PostsList extends Component {
         );
     }
 
-    ratePost = async (id) => {
-        console.log(id)
-        if (localStorage.getItem("access_token")) {
-            let response = await fetch("http://localhost:9000/api/ratings/" + id + "/" + localStorage.getItem("username"), {
-                method: "POST",
-                headers: {
-                    "Authorization": "Bearer " + localStorage.getItem("access_token"),
-                    "Content-Type": "application/json"
-                }
-            })
-            console.log(await response.json())
-            /* if(response.ok)
-                this */
-        }
-    }
+
 }
 
 export default PostsList;
