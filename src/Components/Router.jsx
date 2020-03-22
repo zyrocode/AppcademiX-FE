@@ -3,16 +3,26 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PostPage from "./PostPage";
 import ProfilePage from "./ProfilePage";
 import NotFound from "./NotFound";
+import Loader from "./Loader";
 
 class Register extends Component {
+    state={
+        load:true
+    }
   render() {
     return (
+       
       <Router>
+           { this.state.load ? 
+           <Loader />
+           : 
         <Switch>
+       
           <Route path="/" exact component={PostPage} />
           <Route path="/profile/:username" exact component={ProfilePage} />
           <Route component={NotFound} />
         </Switch>
+        }
       </Router>
     );
   }
@@ -36,6 +46,7 @@ class Register extends Component {
   };
 
   componentDidMount = async () => {
+  
     const access_token = localStorage.getItem("access_token");
     const sessionToken = sessionStorage.getItem("access_token");
 
@@ -48,13 +59,22 @@ class Register extends Component {
         const userJson = await this.refreshTokenAPI(sessionToken);
         sessionStorage.setItem("access_token", userJson.access_token);
         sessionStorage.setItem("username", userJson.username);
+    
       }
+     
+    
     } else {
       localStorage.clear();
       sessionStorage.clear();
       //   delete localStorage["access_token"];
       //   delete sessionStorage["access_token"];
     }
+
+    setTimeout(() => {
+        this.setState({
+            load:false
+        })
+      }, 2000);
   };
 }
 
