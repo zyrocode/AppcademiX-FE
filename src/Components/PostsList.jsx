@@ -20,7 +20,7 @@ class PostsList extends Component {
                                 <Row><h4>{post.title}</h4></Row>
                                 <Row>{post.description}</Row>
                             </Col>
-                            <RatingsPage id={post._id} refresh={this.props.nrefresh}/>
+                            <RatingsPage id={post._id} refresh={this.props.refresh} count={post.ratingsCount}/>
                         </Row>
                     </Container>
                 )}

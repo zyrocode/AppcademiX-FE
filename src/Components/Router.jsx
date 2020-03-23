@@ -7,7 +7,7 @@ import Loader from "./Loader";
 
 class Register extends Component {
     state={
-        load:true
+        // load:true
     }
   render() {
     return (
@@ -70,11 +70,11 @@ class Register extends Component {
       //   delete sessionStorage["access_token"];
     }
 
-    setTimeout(() => {
-        this.setState({
-            load:false
-        })
-      }, 2000);
+    // setTimeout(() => {
+    //     this.setState({
+    //         load:false
+    //     })
+    //   }, 2000);
   };
 }
 

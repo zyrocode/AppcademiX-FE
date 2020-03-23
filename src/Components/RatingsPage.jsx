@@ -5,7 +5,7 @@ import FontAwesome from "react-fontawesome";
 class RatingsPage extends Component {
   state = {
     upVoteCount: 0,
-    upVotedByUser: false
+     upVotedByUser: true
   };
 
   render() {
@@ -15,13 +15,13 @@ class RatingsPage extends Component {
         <Col>
           <Row>
             <Col>
-              {this.state.upVotedByUser === false ? (
+              {!this.state.upVotedByUser ? (
                 <span onClick={this.upRatePost} className="rate">
                   <FontAwesome name="star" size="2x" />
                   <span className="rate-number">{this.state.upVoteCount}</span>
                 </span>
               ) : (
-                <span onClick={this.downRatePost} className="rate">
+                <span onClick={this.downRatePost}  className="rate2">
                   <FontAwesome name="star" size="2x" />
                   <span className="rate-number"> {this.state.upVoteCount}</span>
                 </span>
@@ -37,24 +37,24 @@ class RatingsPage extends Component {
     await this.countUpvotes(this.props.id);
   };
 
-  setStateForRatings = () => {
-    this.setState(prevState => ({
-      upVotedByUser: !prevState.upVotedByUser
-    }));
-  };
+  componentDidUpdate = async (prevProps,prevState)=>{
+    if(prevProps.id !== this.props.id){
+        await this.countUpvotes(this.props.id);
+    }
+  }
+
 
   countUpvotes = async id => {
     try {
       //http://localhost:9000/api/ratings/5e72afef19ef022fd996c4ef
       const allUpVotes = await fetch(`http://localhost:9000/api/ratings/${id}`);
+      const response = await allUpVotes.json();
 
-      if (allUpVotes.ok) {
-        const response = await allUpVotes.json();
-
-        this.setState({
-          upVoteCount: response.upVotalTotal
-        });
-
+      this.setState({
+        // response.post.ratingsCount
+      upVoteCount:response.post.ratingsCount
+    });
+       
         const upVotedByUserAvailable = response.post.ratings.find(
           user => user.upvotedBy === localStorage.getItem("username")
         );
@@ -66,12 +66,8 @@ class RatingsPage extends Component {
           : this.setState({
               upVotedByUser: false
             });
-      } else {
-        this.setState({
-          upVoteCount: 0,
-          upVotedByUser: false
-        });
-      }
+    
+     
     } catch (error) {
       console.log(error);
     }
@@ -92,9 +88,14 @@ class RatingsPage extends Component {
         }
       );
       if (response.ok) {
-        this.setStateForRatings();
+       
+            this.setState({
+              upVotedByUser: true
+            })
+ 
         await this.countUpvotes(this.props.id);
         await this.props.refresh();
+        console.log("total", this.state.upVoteCount)
       }
     } catch (error) {
       console.log(error);
@@ -116,9 +117,12 @@ class RatingsPage extends Component {
         }
       );
       if (response.ok) {
-        this.setStateForRatings();
+        this.setState({
+            upVotedByUser: false
+          })
         await this.countUpvotes(this.props.id);
         await this.props.refresh();
+        console.log("total", this.state.upVoteCount)
       }
     } catch (error) {
       console.log(error);

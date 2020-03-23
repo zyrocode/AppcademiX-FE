@@ -10,20 +10,28 @@ class PostPage extends Component {
         return (
             <div>
                 <NavBar />
-                <PostsList posts={this.state.posts} />
+                <PostsList posts={this.state.posts} refresh={this.componentDidMount} />
             </div>
         );
     }
 
-    componentDidMount = async () => {
-        let response = await fetch("http://localhost:9000/api/posts")
+    componentDidMount=async ()=>{
+    await this.fetchPosts()
+    }
+
+
+    fetchPosts = async () => {
+        let response = await fetch("http://localhost:9000/api/posts?sort=ratingsCount")
         let posts = await response.json()
-        posts = posts.postsList
-        posts.sort(function (a, b) { return b.ratings.length - a.ratings.length })
-        this.setState({
-            posts: posts
-        })
-        console.log(posts)
+        const newPosts = posts.postsList
+
+        setTimeout(() => {
+            this.setState({
+                posts: newPosts.sort(function (a, b) { return b.ratingsCount - a.ratingsCount})
+               })
+        }, 200);
+       
+        
     }
 }
 
