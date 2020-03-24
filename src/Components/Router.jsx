@@ -5,21 +5,28 @@ import ProfilePage from "./ProfilePage";
 import NotFound from "./NotFound";
 import CreatePost from "./CreatePost";
 import Register from "./Register";
+import NavBar from './NavBar'
+import LoadingPage from './LoadingPage'
 
 class RouterBrowse extends Component {
     state = {
-        lightTheme: true
+        isLoading: true
     }
     render() {
         return (
             <Router>
-                <Switch>
-                    <Route path="/" exact component={PostPage} />
-                    <Route path="/profile/:username" exact component={ProfilePage} />
-                    <Route path="/createpost" exact component={CreatePost} />
-                    <Route path="/register" exact component={Register} />
-                    <Route component={NotFound} />
-                </Switch>
+                {this.state.isLoading && <LoadingPage />}
+                {!this.state.isLoading &&
+                    <>
+                        <NavBar />
+                        <Switch>
+                            <Route path="/" exact component={PostPage} />
+                            <Route path="/profile/:username" exact component={ProfilePage} />
+                            <Route path="/createpost" exact component={CreatePost} />
+                            <Route path="/register" exact component={Register} />
+                            <Route component={NotFound} />
+                        </Switch>
+                    </>}
             </Router >
         );
     }
@@ -49,14 +56,26 @@ class RouterBrowse extends Component {
         if (access_token || sessionToken) {
             if (access_token) {
                 console.log(access_token)
-                const userJson = await this.refreshTokenAPI(access_token);
-
-                localStorage.setItem("access_token", userJson.access_token);
-                localStorage.setItem("username", userJson.username);
+                try {
+                    const userJson = await this.refreshTokenAPI(access_token);
+                    if (userJson) {
+                        localStorage.setItem("access_token", userJson.access_token);
+                        localStorage.setItem("username", userJson.username);
+                    } else {
+                        delete localStorage["access_token"]
+                        delete localStorage["username"]
+                    }
+                } catch (e) {
+                    console.log(e)
+                }
             } else {
-                const userJson = await this.refreshTokenAPI(sessionToken);
-                sessionStorage.setItem("access_token", userJson.access_token);
-                sessionStorage.setItem("username", userJson.username);
+                try {
+                    const userJson = await this.refreshTokenAPI(sessionToken);
+                    sessionStorage.setItem("access_token", userJson.access_token);
+                    sessionStorage.setItem("username", userJson.username);
+                } catch (e) {
+                    console.log(e)
+                }
             }
         } else {
             localStorage.clear();
@@ -64,6 +83,11 @@ class RouterBrowse extends Component {
             //   delete localStorage["access_token"];
             //   delete sessionStorage["access_token"];
         }
+        setTimeout(() => {
+            this.setState({
+                isLoading: false
+            })
+        }, 2000);
     };
 }
 

@@ -14,7 +14,7 @@ code {
 }
 
 body {
-  background-color: #f4f4f4 !important;
+  background-color: #f4f4f4;
 }
 
 body.dark-mode {
@@ -117,7 +117,7 @@ body.dark-mode {
 .create-post {
   background-color: white;
   padding: 2em;
-  margin: 6em;
+  margin: 3em;
   box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.52);
   border-radius: 7px;
 }
@@ -153,6 +153,6 @@ input[type="file"] {
   border: none !important;
 }
 
-.modal-content {
+/* .modal-content {
   background-color: #f7f7f7 !important;
-}
+} */

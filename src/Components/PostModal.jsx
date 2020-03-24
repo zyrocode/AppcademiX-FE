@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Fade, Row, Container, Col, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 
 
 class PostModal extends Component {
     state = {
         post: undefined,
         comments: [],
+        commentLoading: true,
         comment: ""
     }
 
@@ -24,7 +25,23 @@ class PostModal extends Component {
                                 </FormGroup>
                                 <Button className="btn-modal-primary">Comment</Button>
                             </Form>}
-                        {this.state.comments && this.state.comments.map((comment, index) => <p key={index}> {comment.comment} </p>)}
+                        {this.state.comments && !this.state.commentLoading && this.state.comments.map((comment, index) =>
+                            <Container key={index}>
+                                <Fade>
+                                    <Row>
+                                        <img src={comment.user.image} />
+                                        <Col>
+                                            <Row>
+                                                <h5>{this.capFirst(comment.user.firstname) + " " + this.capFirst(comment.user.lastname)}</h5>
+                                            </Row>
+                                            <Row>
+                                                <h6>{comment.comment}</h6>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+                                </Fade>
+                            </Container>
+                        )}
                     </ModalBody>
                 </Modal>
             </div>
@@ -35,11 +52,22 @@ class PostModal extends Component {
         try {
             let response = await fetch("http://localhost:9000/api/comments/" + this.props.post._id)
             let comments = await response.json()
-            console.log(comments)
+            comments.forEach(async (comment) => {
+                let response = await fetch("http://localhost:9000/api/users/" + comment.username)
+                let user = await response.json()
+                if (response.ok)
+                    comment.user = user
+            })
             this.setState({
                 post: this.props.post,
                 comments: comments
             })
+            console.log(this.state.comments)
+            setTimeout(() => {
+                this.setState({
+                    commentLoading: false
+                })
+            }, 500);
         } catch (e) {
             console.log(e)
         }
@@ -61,18 +89,23 @@ class PostModal extends Component {
                 },
                 body: JSON.stringify(comment)
             })
-            if(response.ok) {
+            if (response.ok) {
                 this.setState({
                     comments: [
-                            ...this.state.comments,
-                            comment
-                        ],
+                        ...this.state.comments,
+                        comment
+                    ],
                     comment: ""
                 })
             }
         } catch (e) {
             console.log(e)
         }
+    }
+
+    capFirst = string => {
+        if (string)
+            return string.charAt(0).toUpperCase() + string.slice(1)
     }
 }
 

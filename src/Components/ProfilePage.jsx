@@ -5,7 +5,6 @@ import PostsList from './PostsList';
 import FontAwesome from 'react-fontawesome';
 import { withRouter } from 'react-router-dom'
 import EditInfoModal from './EditInfoModal';
-import NavBar from './NavBar';
 
 /* import { getUsersWithThunk } from '../Actions/setUser' */
 
@@ -26,7 +25,6 @@ class ProfilePage extends Component {
             <div>
                 {this.state.profile &&
                     <Fade>
-                        <NavBar/>
                         <Container className="profile">
                             <Row>
                                 <Col className="col-sm-4 col-md-3 col-l-2">
@@ -83,7 +81,6 @@ class ProfilePage extends Component {
                 image: update.image
             }
         })
-        console.log(this.state.image)
     }
 }
 
