@@ -10,6 +10,7 @@ import {
     ToastBody,
     ToastHeader
 } from 'reactstrap';
+import {toast} from 'react-toastify'
 import { NavLink } from 'react-router-dom'
 import Login from './Login'
 import RubberBand from 'react-reveal/RubberBand';
@@ -78,6 +79,8 @@ class NavBar extends Component {
         localStorage.setItem("access_token", "")
         localStorage.setItem("username", "")
         this.setState({})
+        toast.success(`Good bye`)
+
     }
 }
 

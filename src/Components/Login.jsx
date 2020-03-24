@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Link } from 'react-router-dom'
+import {toast} from 'react-toastify'
 
 class Login extends Component {
     state = {
@@ -52,10 +53,19 @@ class Login extends Component {
                 let token = await response.json()
                 localStorage.setItem("access_token", token.access_token)
                 localStorage.setItem("username", token.username)
+                toast.success(`Welcome ${token.username}`)
+                
             }
-            else
-                console.log("Incorrect login")
+            else{
+                let errorMessage = await response.json()
+                if (errorMessage && errorMessage.type ) {
+                    toast.error(`${errorMessage.message}`)
+                    return
+                }
+                    
+            }
         } catch (e) {
+            toast.error(`Username or password incorect`)
             console.log(e)
         }
 

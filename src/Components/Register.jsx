@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Col, Row, Fade, Container, Form, FormGroup, Label, Input } from 'reactstrap';
-import NavBar from './NavBar';
+import {toast} from 'react-toastify'
+import NavBar from './Navbar';
 
 class Register extends Component {
     state = {
@@ -67,12 +68,11 @@ class Register extends Component {
             })
             let credentials = await response.json()
             if (response.ok) {
-                localStorage.setItem("access_token", credentials.access_token)
-                localStorage.setItem("username", credentials.username)
+               toast.success(credentials.message)
                 this.props.history.push("/")
             }
             else
-                console.log("Error")
+            toast.error("oops somethimg go wrong")
         } catch (e) {
             console.log(e)
         }
