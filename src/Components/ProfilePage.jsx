@@ -5,7 +5,6 @@ import PostsList from './PostsList';
 import FontAwesome from 'react-fontawesome';
 import { withRouter } from 'react-router-dom'
 import EditInfoModal from './EditInfoModal';
-import NavBar from './Navbar';
 
 /* import { getUsersWithThunk } from '../Actions/setUser' */
 
@@ -26,7 +25,6 @@ class ProfilePage extends Component {
             <div>
                 {this.state.profile &&
                     <Fade>
-                        <NavBar/>
                         <Container className="profile">
                             <Row>
                                 <Col className="col-sm-4 col-md-3 col-l-2">
@@ -50,18 +48,23 @@ class ProfilePage extends Component {
     }
 
     initialFetcher = async () =>{
-        let response = await fetch("http://localhost:9000/api/users/" + this.props.match.params.username)
-        if (response.status === 500)
-            this.props.history.push("/")
-        let profile = await response.json()
-        response = await fetch("http://localhost:9000/api/posts/username/" + this.props.match.params.username)
-        let posts = await response.json()
-        posts.sort(function (a, b) { return b.ratings.length - a.ratings.length })
-        this.setState({
-            profile: profile,
-            posts: posts
-        })
+        try {
+            let response = await fetch("http://localhost:9000/api/users/" + this.props.match.params.username)
+            if (response.status === 500)
+                this.props.history.push("/")
+            let profile = await response.json()
+            response = await fetch("http://localhost:9000/api/posts/username/" + this.props.match.params.username)
+            let posts = await response.json()
+            posts.sort(function (a, b) { return b.ratings.length - a.ratings.length })
+            this.setState({
+                profile: profile,
+                posts: posts
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
+    
 
     componentDidMount = async () => {
         await this.initialFetcher()
@@ -83,7 +86,6 @@ class ProfilePage extends Component {
                 image: update.image
             }
         })
-        console.log(this.state.image)
     }
 }
 

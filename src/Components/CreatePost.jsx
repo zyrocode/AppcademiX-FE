@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Col, Row, Fade, Container, Form, FormGroup, Label, Input } from 'reactstrap';
-import NavBar from './Navbar';
 
 class CreatePost extends Component {
     state = {
@@ -15,7 +14,6 @@ class CreatePost extends Component {
     render() {
         return (
             <Fade>
-                <NavBar />
                 <Container className="create-post">
                     <Row>
                         <Col>

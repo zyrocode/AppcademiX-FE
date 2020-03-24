@@ -14,7 +14,7 @@ code {
 }
 
 body {
-  background-color: #f4f4f4 !important;
+  background-color: #f4f4f4;
 }
 
 body.dark-mode {
@@ -80,6 +80,30 @@ body.dark-mode {
   transform: scale(0.85);
 }
 
+.rate2 {
+  padding: 0.3em;
+  color: white;
+  background-color: #EF3C59;
+  border: 1px solid #EF3C59;
+  border-radius: 7px;
+  padding: 1em;
+  float: right;
+  transition-duration: 0.2s;
+}
+
+.rate2:hover {
+  color: #EF3C59;
+  background-color: white;
+  border: 1px solid #c5c5c5;
+  cursor: pointer;
+  transform: scale(0.85);
+}
+
+
+
+
+
+
 .rate-number {
   font-weight: 600;
   padding: 0.5em;
@@ -117,7 +141,7 @@ body.dark-mode {
 .create-post {
   background-color: white;
   padding: 2em;
-  margin: 6em;
+  margin: 3em;
   box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.52);
   border-radius: 7px;
 }
@@ -153,6 +177,6 @@ input[type="file"] {
   border: none !important;
 }
 
-.modal-content {
+/* .modal-content {
   background-color: #f7f7f7 !important;
-}
+} */

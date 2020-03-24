@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PostsList from './PostsList';
-import NavBar from './Navbar';
 
 class PostPage extends Component {
     state = {
@@ -9,26 +8,26 @@ class PostPage extends Component {
     render() {
         return (
             <div>
-                <NavBar/>
                 <PostsList posts={this.state.posts} />
             </div>
         );
     }
 
-    componentDidMount = async() => {
-        await this.updateList()
+    componentDidMount = async() => { 
+      await this.fetchPosts()
     }
 
-    updateList = async () => {
-        let response = await fetch("http://localhost:9000/api/posts")
+
+    fetchPosts = async () => {
+        let response = await fetch("http://localhost:9000/api/posts?sort=ratingsCount")
         let posts = await response.json()
-        posts = posts.postsList
-        let bla = posts.sort(function (a, b) { return b.ratings.length - a.ratings.length})
-        console.log("lol", bla)
-        this.setState({
-            posts: posts
-        })
-        console.log(posts)
+        const newPosts = posts.postsList
+
+        setTimeout(() => {
+            this.setState({
+                posts: newPosts.sort(function (a, b) { return b.ratingsCount - a.ratingsCount})
+               })
+        }, 200);
     }
 }
 
