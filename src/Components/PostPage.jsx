@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PostsList from './PostsList';
-import NavBar from './NavBar';
+import NavBar from './Navbar';
 
 class PostPage extends Component {
     state = {

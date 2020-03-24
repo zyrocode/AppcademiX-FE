@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css'
 import PostPage from "./PostPage";
 import ProfilePage from "./ProfilePage";
 import NotFound from "./NotFound";
@@ -12,6 +14,7 @@ class RouterBrowse extends Component {
     }
     render() {
         return (
+            <>
             <Router>
                 <Switch>
                     <Route path="/" exact component={PostPage} />
@@ -21,6 +24,8 @@ class RouterBrowse extends Component {
                     <Route component={NotFound} />
                 </Switch>
             </Router >
+            <ToastContainer autoClose={5000} position="top-center"  />
+            </>
         );
     }
 
@@ -45,7 +50,8 @@ class RouterBrowse extends Component {
     componentDidMount = async () => {
         const access_token = localStorage.getItem("access_token");
         const sessionToken = sessionStorage.getItem("access_token");
-
+        if (!access_token)
+            return
         if (access_token || sessionToken) {
             if (access_token) {
                 console.log(access_token)

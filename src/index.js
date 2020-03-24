@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Appcademix from './Components/Router';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css' 
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import { configureStore } from './Store/store'

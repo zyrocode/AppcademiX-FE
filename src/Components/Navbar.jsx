@@ -11,6 +11,7 @@ import {
     ToastBody,
     ToastHeader
 } from 'reactstrap';
+import {toast} from 'react-toastify'
 import Login from './Login'
 
 class NavBar extends Component {
@@ -65,6 +66,8 @@ class NavBar extends Component {
         localStorage.setItem("access_token", "")
         localStorage.setItem("username", "")
         this.setState({})
+        toast.success(`Good bye`)
+
     }
 }
 

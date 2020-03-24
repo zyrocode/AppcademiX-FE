@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Col, Row, Fade, Container, Form, FormGroup, Label, Input } from 'reactstrap';
-import NavBar from './NavBar';
+import NavBar from './Navbar';
 
 class CreatePost extends Component {
     state = {

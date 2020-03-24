@@ -5,7 +5,7 @@ import PostsList from './PostsList';
 import FontAwesome from 'react-fontawesome';
 import { withRouter } from 'react-router-dom'
 import EditInfoModal from './EditInfoModal';
-import NavBar from './NavBar';
+import NavBar from './Navbar';
 
 /* import { getUsersWithThunk } from '../Actions/setUser' */
 
