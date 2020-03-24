@@ -13,18 +13,21 @@ class PostPage extends Component {
         );
     }
 
-    componentDidMount = async() => {
-        await this.updateList()
+    componentDidMount = async() => { 
+      await this.fetchPosts()
     }
 
-    updateList = async () => {
-        let response = await fetch("http://localhost:9000/api/posts")
+
+    fetchPosts = async () => {
+        let response = await fetch("http://localhost:9000/api/posts?sort=ratingsCount")
         let posts = await response.json()
-        posts = posts.postsList
-        let bla = posts.sort(function (a, b) { return b.ratings.length - a.ratings.length})
-        this.setState({
-            posts: posts
-        })
+        const newPosts = posts.postsList
+
+        setTimeout(() => {
+            this.setState({
+                posts: newPosts.sort(function (a, b) { return b.ratingsCount - a.ratingsCount})
+               })
+        }, 200);
     }
 }
 

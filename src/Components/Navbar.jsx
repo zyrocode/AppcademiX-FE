@@ -12,17 +12,30 @@ import {
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom'
 import Login from './Login'
+import RubberBand from 'react-reveal/RubberBand';
+
 
 class NavBar extends Component {
     state = {
         loginModal: false
     }
 
+    
     render() {
         return (
             <Fade>
                 <Navbar>
-                    <NavbarBrand href="/">Appcademix</NavbarBrand>
+             
+
+         
+       
+  
+                <NavbarBrand href="/"> <RubberBand>
+          <h5>Appcademix</h5>
+        </RubberBand></NavbarBrand>
+    
+
+                   
                     <Nav className="mr-auto" >
                         <NavItem>
                             <NavLink className="nav-link" to="/">Home</NavLink>

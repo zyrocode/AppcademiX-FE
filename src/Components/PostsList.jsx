@@ -18,14 +18,14 @@ class PostsList extends Component {
                 {this.state.posts && this.props.posts.map((post, index) =>
                     <Container className="m-4 mx-auto post" key={index}>
                         <Row>
-                                <div className="m-2" onClick={() => { this.setState({ selectedPost: post }); this.togglePostModal() }}>
-                                    <img className="post-image" src={post.image} alt="Post Default Pic" />
-                                </div>
-                                <Col onClick={() => { this.setState({ selectedPost: post }); this.togglePostModal() }}>
-                                    <Row><h4>{post.title}</h4></Row>
-                                    <Row>{post.description}</Row>
-                                </Col>
-                            <RatingsPage id={post._id} /* refresh={this.props.nrefresher} */ />
+                            <div className="m-2">
+                                <img className="post-image" src={post.image} alt="Post Default Pic" />
+                            </div>
+                            <Col>
+                                <Row><h4>{post.title}</h4></Row>
+                                <Row>{post.description}</Row>
+                            </Col>
+                            <RatingsPage id={post._id} refresh={this.props.refresh} count={post.ratingsCount}/>
                         </Row>
                     </Container>
                 )}
