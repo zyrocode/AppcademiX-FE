@@ -88,17 +88,16 @@ class EditInfoModal extends Component {
                         },
                         body: fd
                     })
-                    await this.setState({
-                        image: fileUploaded
+                    this.setState({
+                        image: await fileUploaded.json()
                     })
-                    console.log(this.state.image)
                 } catch (e) {
                     console.log(e)
                 }
             }
             profile = {
                 ...profile,
-                image: this.state.image
+                image: this.state.image.image
             }
             if (response.ok) {
                 this.props.toggle(profile)

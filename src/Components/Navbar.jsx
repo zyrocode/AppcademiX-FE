@@ -3,7 +3,6 @@ import {
     Navbar,
     NavbarBrand,
     NavItem,
-    NavLink,
     Nav,
     Button,
     Fade,
@@ -11,6 +10,7 @@ import {
     ToastBody,
     ToastHeader
 } from 'reactstrap';
+import { NavLink } from 'react-router-dom'
 import Login from './Login'
 
 class NavBar extends Component {
@@ -25,17 +25,17 @@ class NavBar extends Component {
                     <NavbarBrand href="/">Appcademix</NavbarBrand>
                     <Nav className="mr-auto" >
                         <NavItem>
-                            <NavLink href="http://localhost:3000/">Home</NavLink>
+                            <NavLink className="nav-link" to="/">Home</NavLink>
                         </NavItem>
                         <NavItem>
                                 </NavItem>
                         {localStorage.getItem("access_token") !== "" && localStorage.getItem("access_token") !== null &&
                             <>
                                 <NavItem>
-                                    <NavLink href={"http://localhost:3000/profile/" + localStorage.getItem("username")}>Profile</NavLink>
+                                    <NavLink className="nav-link" to={"/profile/" + localStorage.getItem("username")}>Profile</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href={"http://localhost:3000/createpost"}>Create Post</NavLink>
+                                    <NavLink className="nav-link" to={"/createpost"}>Create Post</NavLink>
                                 </NavItem>
                             </>
                         }
