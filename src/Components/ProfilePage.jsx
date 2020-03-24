@@ -4,7 +4,6 @@ import { Container, Col, Row, Fade } from 'reactstrap'
 import PostsList from './PostsList';
 import FontAwesome from 'react-fontawesome';
 import { withRouter } from 'react-router-dom'
-import NavBar from './NavBar';
 import EditInfoModal from './EditInfoModal';
 
 /* import { getUsersWithThunk } from '../Actions/setUser' */
@@ -26,7 +25,6 @@ class ProfilePage extends Component {
             <div>
                 {this.state.profile &&
                     <Fade>
-                        <NavBar />
                         <Container className="profile">
                             <Row>
                                 <Col className="col-sm-4 col-md-3 col-l-2">
@@ -50,21 +48,26 @@ class ProfilePage extends Component {
     }
 
     initialFetcher = async () =>{
-        let response = await fetch("http://localhost:9000/api/users/" + this.props.match.params.username)
-        if (response.status === 500)
-            this.props.history.push("/")
-        let profile = await response.json()
-        response = await fetch("http://localhost:9000/api/posts/username/" + this.props.match.params.username)
-        let posts = await response.json()
-        posts.sort(function (a, b) { return b.ratings.length - a.ratings.length })
-        this.setState({
-            profile: profile,
-            posts: posts
-        })
+        try {
+            let response = await fetch("http://localhost:9000/api/users/" + this.props.match.params.username)
+            if (response.status === 500)
+                this.props.history.push("/")
+            let profile = await response.json()
+            response = await fetch("http://localhost:9000/api/posts/username/" + this.props.match.params.username)
+            let posts = await response.json()
+            posts.sort(function (a, b) { return b.ratings.length - a.ratings.length })
+            this.setState({
+                profile: profile,
+                posts: posts
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
+    
 
     componentDidMount = async () => {
-     await this.initialFetcher()
+        await this.initialFetcher()
     }
 
     capFirst = string => {
@@ -79,11 +82,12 @@ class ProfilePage extends Component {
             profile: {
                 ...this.state.profile,
                 firstname: update.firstname,
-                lastname: update.lastname
+                lastname: update.lastname,
+                image: update.image
             }
         })
     }
 }
 
-export default withRouter /* connect(mapStateToProps, mapDispatchToProps) */(ProfilePage);
+export default /* connect(mapStateToProps, mapDispatchToProps) */ProfilePage;
 

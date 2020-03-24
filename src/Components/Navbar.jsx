@@ -3,14 +3,14 @@ import {
     Navbar,
     NavbarBrand,
     NavItem,
-    NavLink,
     Nav,
     Button,
     Fade,
-    Toast, 
-    ToastBody, 
+    Toast,
+    ToastBody,
     ToastHeader
 } from 'reactstrap';
+import { NavLink } from 'react-router-dom'
 import Login from './Login'
 import RubberBand from 'react-reveal/RubberBand';
 
@@ -38,15 +38,23 @@ class NavBar extends Component {
                    
                     <Nav className="mr-auto" >
                         <NavItem>
-                            <NavLink href="http://localhost:3000/">Home</NavLink>
+                            <NavLink className="nav-link" to="/">Home</NavLink>
                         </NavItem>
-                        {localStorage.getItem("access_token") !== "" &&
-                            <NavItem>
-                                <NavLink href={"http://localhost:3000/profile/" + localStorage.getItem("username")}>Profile</NavLink>
-                            </NavItem>}
+                        <NavItem>
+                                </NavItem>
+                        {localStorage.getItem("access_token") !== "" && localStorage.getItem("access_token") !== null &&
+                            <>
+                                <NavItem>
+                                    <NavLink className="nav-link" to={"/profile/" + localStorage.getItem("username")}>Profile</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link" to={"/createpost"}>Create Post</NavLink>
+                                </NavItem>
+                            </>
+                        }
                     </Nav>
-                    {localStorage.getItem("access_token") === ""
-                        ? <Button onClick={this.toggleLoginModal}>Log in</Button>
+                    {localStorage.getItem("access_token") === "" || localStorage.getItem("access_token") === null
+                        ? <Button onClick={this.toggleLoginModal}>Log in / Register</Button>
                         : <Button onClick={this.toggleLogout}>Log out</Button>}
                 </Navbar>
                 {this.state.loginModal && <Login toggle={this.toggleLoginModal} open={this.state.loginModal} />}

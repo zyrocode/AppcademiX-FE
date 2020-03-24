@@ -50,11 +50,11 @@ class RatingsPage extends Component {
       const allUpVotes = await fetch(`http://localhost:9000/api/ratings/${id}`);
       const response = await allUpVotes.json();
 
+
       this.setState({
         // response.post.ratingsCount
       upVoteCount:response.post.ratingsCount
     });
-       
         const upVotedByUserAvailable = response.post.ratings.find(
           user => user.upvotedBy === localStorage.getItem("username")
         );

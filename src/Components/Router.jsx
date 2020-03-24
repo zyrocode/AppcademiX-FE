@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PostPage from "./PostPage";
+import CreatePost from "./CreatePost";
+import Register from "./Register";
 import ProfilePage from "./ProfilePage";
 import NotFound from "./NotFound";
+import NavBar from './NavBar'
 import Loader from "./Loader";
 
 class Register extends Component {
@@ -16,34 +19,40 @@ class Register extends Component {
            { this.state.load ? 
            <Loader />
            : 
+        <>
+          <NavBar />
         <Switch>
        
           <Route path="/" exact component={PostPage} />
           <Route path="/profile/:username" exact component={ProfilePage} />
+          <Route path="/createpost" exact component={CreatePost} />
+          <Route path="/register" exact component={Register} />
           <Route component={NotFound} />
         </Switch>
+          </>
         }
       </Router>
     );
   }
 
-  refreshTokenAPI = async token => {
-    try {
-      const response = await fetch(
-        "http://localhost:9000/api/auth/refreshtoken",
-        {
-          headers: {
-            Authorization: "Bearer " + token
-          },
-          method: "POST"
-        }
-      );
 
-      if (response.ok) return await response.json();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    refreshTokenAPI = async token => {
+        try {
+            const response = await fetch(
+                "http://localhost:9000/api/auth/refreshtoken",
+                {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    },
+                    method: "POST"
+                }
+            );
+
+            if (response.ok) return await response.json();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
   componentDidMount = async () => {
   
@@ -78,4 +87,4 @@ class Register extends Component {
   };
 }
 
-export default Register;
+export default RouterBrowse;

@@ -14,7 +14,12 @@ code {
 }
 
 body {
-  background-color: #f3f3f3 !important;
+  background-color: #f4f4f4;
+}
+
+body.dark-mode {
+  background-color: #1a1919;
+  color: #999;
 }
 
 .profile {
@@ -132,3 +137,46 @@ body {
 .nav-link:hover {
   color: #EF3C59 !important;
 }
+
+.create-post {
+  background-color: white;
+  padding: 2em;
+  margin: 3em;
+  box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.52);
+  border-radius: 7px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.btn {
+  background-color: #181818 !important;
+  border: 1px solid rgb(239, 60, 90) !important;
+}
+
+.btn:hover {
+  background-color: #EF3C59 !important;
+}
+
+.btn-modal-primary {
+  background-color: #EF3C59 !important;
+}
+
+.btn-modal-primary:hover {
+  background-color: #181818 !important;
+}
+
+.btn-modal-secondary {
+  background-color: #181818 !important;
+  float: right;
+  border: none !important;
+}
+
+.modal-header {
+  border: none !important;
+}
+
+/* .modal-content {
+  background-color: #f7f7f7 !important;
+} */

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PostsList from './PostsList';
-import NavBar from './NavBar'
 
 class PostPage extends Component {
     state = {
@@ -9,14 +8,13 @@ class PostPage extends Component {
     render() {
         return (
             <div>
-                <NavBar />
-                <PostsList posts={this.state.posts} refresh={this.componentDidMount} />
+                <PostsList posts={this.state.posts} />
             </div>
         );
     }
 
-    componentDidMount=async ()=>{
-    await this.fetchPosts()
+    componentDidMount = async() => { 
+      await this.fetchPosts()
     }
 
 
@@ -30,8 +28,6 @@ class PostPage extends Component {
                 posts: newPosts.sort(function (a, b) { return b.ratingsCount - a.ratingsCount})
                })
         }, 200);
-       
-        
     }
 }
 

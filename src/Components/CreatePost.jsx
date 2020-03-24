@@ -7,13 +7,14 @@ class CreatePost extends Component {
         description: "",
         link: "",
         difficulty: "",
-        category: ""
+        category: "",
+        selectedFile: null
     }
 
     render() {
         return (
             <Fade>
-                <Container className="m-5">
+                <Container className="create-post">
                     <Row>
                         <Col>
                             <Form onSubmit={this.submitPost}>
@@ -31,7 +32,8 @@ class CreatePost extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label>Difficulty</Label>
-                                    <Input type="select" onChange={(e) => this.setState({ category: e.target.value })} value={this.state.category} required>
+                                    <Input type="select" onChange={(e) => this.setState({ difficulty: e.target.value })} value={this.state.difficulty} required>
+                                        <option>-</option>
                                         <option>Easy</option>
                                         <option>Medium</option>
                                         <option>Hard</option>
@@ -40,6 +42,7 @@ class CreatePost extends Component {
                                 <FormGroup>
                                     <Label>Category</Label>
                                     <Input type="select" onChange={(e) => this.setState({ category: e.target.value })} value={this.state.category} required>
+                                        <option>-</option>
                                         <option>Tech</option>
                                         <option>Sales</option>
                                         <option>Productivity</option>
@@ -47,10 +50,12 @@ class CreatePost extends Component {
                                     </Input>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label>Image</Label>
-                                    <Input type="file"></Input>
+                                    <Label className="btn btn-primary">Upload Image
+                                        <Input type="file" onChange={(val) => this.setState({ selectedFile: val.target.files[0] })} ></Input>
+                                    </Label>
+                                    {this.state.selectedFile && this.state.selectedFile.name}
                                 </FormGroup>
-                                <Button>Create Post</Button>
+                                <Button className="btn-modal-primary">Create Post</Button>
                             </Form>
                         </Col>
                     </Row>
@@ -77,11 +82,24 @@ class CreatePost extends Component {
                 },
                 body: JSON.stringify(post)
             })
-            console.log(response)
-            if (response.ok){
+            if (this.state.selectedFile) {
+                let post = await response.json()
+                console.log(post)
+                let id = post.newPost._id
+                let fd = new FormData();
+                fd.append("postImage", this.state.selectedFile)
+                let fileUploaded = await fetch("http://localhost:9000/api/posts/image/" + id + "/" + localStorage.getItem("username"), {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("access_token")
+                    },
+                    body: fd
+                })
+            }
+            if (response.ok) {
                 this.props.history.push("/")
             }
-            else    
+            else
                 console.log("Error")
         } catch (e) {
             console.log(e)
