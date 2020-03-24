@@ -24,7 +24,7 @@ class Login extends Component {
                                 <Input type="password" onChange={(e) => this.setState({ password: e.target.value })} value={this.state.password} />
                             </FormGroup>
                             <FormGroup>
-                                <Link to="/register">New user? Click here to register</Link>
+                                <Link to="/register" onClick={() => this.props.toggle()}>New user? Click here to register</Link>
                             </FormGroup>
                             <Button className="btn-modal-primary">Login</Button>
                             <Button className="btn-modal-secondary" color="secondary" onClick={this.props.toggle}>Cancel</Button>
@@ -49,12 +49,12 @@ class Login extends Component {
                 },
                 body: JSON.stringify(login)
             })
+            console.log(response)
             if (response.ok) {
                 let token = await response.json()
                 localStorage.setItem("access_token", token.access_token)
                 localStorage.setItem("username", token.username)
                 toast.success(`Welcome ${token.username}`)
-                
             }
             else{
                 let errorMessage = await response.json()
@@ -68,7 +68,6 @@ class Login extends Component {
             toast.error(`Username or password incorect`)
             console.log(e)
         }
-
         this.props.toggle()
     }
 }

@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import { Button, Col, Row, Fade, Container, Form, FormGroup, Label, Input } from 'reactstrap';
-import {toast} from 'react-toastify'
-import NavBar from './Navbar';
+import { toast } from 'react-toastify'
 
 class Register extends Component {
     state = {
         firstname: "",
         lastname: "",
         username: "",
-        password:"",
+        password: "",
         email: ""
     }
 
     render() {
         return (
             <Fade>
-                <NavBar />
                 <Container className="create-post">
                     <Row>
                         <Col>
@@ -38,7 +36,7 @@ class Register extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label>E-Mail</Label>
-                                    <Input type="email" onChange={(e) => this.setState({ email: e.target.value })} value={this.state.email} required/>
+                                    <Input type="email" onChange={(e) => this.setState({ email: e.target.value })} value={this.state.email} required />
                                 </FormGroup>
                                 <Button className="btn-modal-primary">Register</Button>
                             </Form>
@@ -68,11 +66,11 @@ class Register extends Component {
             })
             let credentials = await response.json()
             if (response.ok) {
-               toast.success(credentials.message)
+                toast.success(credentials.message)
                 this.props.history.push("/")
             }
             else
-            toast.error("oops somethimg go wrong")
+                toast.error("oops somethimg go wrong")
         } catch (e) {
             console.log(e)
         }
