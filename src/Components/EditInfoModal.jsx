@@ -41,13 +41,20 @@ class EditInfoModal extends Component {
     }
 
     componentDidMount = async () => {
-        let response = await fetch("http://localhost:9000/api/users/" + localStorage.getItem("username"))
-        let profile = await response.json()
-        this.setState({
-            firstname: this.capFirst(profile.firstname),
-            lastname: this.capFirst(profile.lastname)
-        })
+       try { 
+            let response = await fetch("http://localhost:9000/api/users/" + localStorage.getItem("username"))
+            let profile = await response.json()
+            this.setState({
+                firstname: this.capFirst(profile.firstname),
+                lastname: this.capFirst(profile.lastname)
+            })
+            console.log(profile)
+            
+        } catch (e) {
+            console.log(e)
+        }
     }
+    
 
     capFirst = string => {
         if (string)

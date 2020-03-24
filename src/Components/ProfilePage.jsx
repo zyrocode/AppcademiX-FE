@@ -48,18 +48,23 @@ class ProfilePage extends Component {
     }
 
     initialFetcher = async () =>{
-        let response = await fetch("http://localhost:9000/api/users/" + this.props.match.params.username)
-        if (response.status === 500)
-            this.props.history.push("/")
-        let profile = await response.json()
-        response = await fetch("http://localhost:9000/api/posts/username/" + this.props.match.params.username)
-        let posts = await response.json()
-        posts.sort(function (a, b) { return b.ratings.length - a.ratings.length })
-        this.setState({
-            profile: profile,
-            posts: posts
-        })
+        try {
+            let response = await fetch("http://localhost:9000/api/users/" + this.props.match.params.username)
+            if (response.status === 500)
+                this.props.history.push("/")
+            let profile = await response.json()
+            response = await fetch("http://localhost:9000/api/posts/username/" + this.props.match.params.username)
+            let posts = await response.json()
+            posts.sort(function (a, b) { return b.ratings.length - a.ratings.length })
+            this.setState({
+                profile: profile,
+                posts: posts
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
+    
 
     componentDidMount = async () => {
         await this.initialFetcher()
