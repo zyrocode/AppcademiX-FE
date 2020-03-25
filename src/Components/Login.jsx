@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import  { connect } from "react-redux"
+
+
+ import { getUsersWithThunk } from '../Actions/setUser' 
+
+const mapStateToProps = state => state
+
+const mapDispatchToProps = dispatch => ({
+    loadUsers: (userInfos) => dispatch(getUsersWithThunk(userInfos))
+}) 
+
 
 class Login extends Component {
     state = {
@@ -49,12 +60,14 @@ class Login extends Component {
                 },
                 body: JSON.stringify(login)
             })
-            console.log(response)
+            
             if (response.ok) {
                 let token = await response.json()
+                console.log(token)
+                this.props.loadUsers(token)
                 localStorage.setItem("access_token", token.access_token)
-                localStorage.setItem("username", token.username)
-                toast.success(`Welcome ${token.username}`)
+                localStorage.setItem("username", token.userInfo.username)
+                toast.success(`Welcome ${token.userInfo.firstname}`)
             }
             else{
                 let errorMessage = await response.json()
@@ -72,4 +85,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

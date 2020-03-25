@@ -50,10 +50,10 @@ class PostModal extends Component {
                             <Container className="section-modal" key={index}>
                                 <Fade>
                                     <Row>
-                                        <img className="comment-pic" src={comment.userInfo[0].image} />
+                                        <img className="comment-pic" src={comment.userInfo.image} />
                                         <Col>
                                             <Row>
-                                                <h5>{this.capFirst(comment.userInfo[0].firstname) + " " + this.capFirst(comment.userInfo[0].lastname)}</h5>
+                                                <h5>{this.capFirst(comment.userInfo.firstname) + " " + this.capFirst(comment.userInfo.lastname)}</h5>
                                             </Row>
                                             <Row>
                                                 <h6>{comment.comment}</h6>
@@ -92,7 +92,6 @@ class PostModal extends Component {
         e.preventDefault()
         if (localStorage.getItem("username")) {
             let comment = {
-                username: localStorage.getItem("username"),
                 comment: this.state.comment,
                 postid: this.props.post._id
             }
@@ -115,6 +114,7 @@ class PostModal extends Component {
                         ],
                         comment: ""
                     })
+                    console.log(comment)
                 }
             } catch (e) {
                 console.log(e)
