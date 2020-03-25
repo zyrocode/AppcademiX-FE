@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PostsList from './PostsList';
+import TodayList from './TodayPosts';
 
 class PostPage extends Component {
     state = {
@@ -8,6 +9,7 @@ class PostPage extends Component {
     render() {
         return (
             <div>
+                <TodayList posts={this.state.posts} />
                 <PostsList posts={this.state.posts} />
             </div>
         );

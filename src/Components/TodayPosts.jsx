@@ -4,20 +4,29 @@ import RatingsPage from './RatingsPage';
 import PostModal from './PostModal';
 // import FontAwesome from 'react-fontawesome'
 
-class PostsList extends Component {
+class TodayList extends Component {
     state = {
         posts: [],
         postModal: false,
-        selectedPost: undefined
+        selectedPost: undefined,
+        curTime : new Date().toISOString().substring(0, 10)
     }
-
+    
+  
+    // this.setState = {
+    //     posts: createdAt === curTime this.posts.filter(post => post.createdAt == curTime);
+    // }
     render() {
         return (
             <Fade>
-                <div>
-                <h2>All posts</h2>
+                
+                <h2>Today</h2>
                 {this.state.postModal && <PostModal open={this.state.postModal} toggle={this.togglePostModal} post={this.state.selectedPost} />}
-                {this.state.posts && this.props.posts.map((post, index) =>
+                { this.props.posts
+                .filter(onePost=>onePost.createdAt.substring(0, 10) === this.state.curTime)
+                
+                
+                .map((post, index) =>
                     <Container className="m-4 mx-auto post" key={index}>
                         <Row>
                             <div className="m-2">
@@ -31,7 +40,6 @@ class PostsList extends Component {
                         </Row>
                     </Container>
                 )}
-                </div>
             </Fade>
         );
     }
@@ -41,6 +49,7 @@ class PostsList extends Component {
             postModal: !this.state.postModal
         })
     }
+    
 }
 
-export default PostsList;
+export default TodayList;
