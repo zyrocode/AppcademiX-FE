@@ -8,6 +8,9 @@ import OldPosts from './OldPosts';
 import { Row, Col, Container } from 'reactstrap';
 import FontAwesome from "react-fontawesome";
 import FilterComponent from './FilterComponent';
+import { connect } from "react-redux"
+
+const mapStateToProps = state => state
 
 
 class PostPage extends Component {
@@ -20,7 +23,7 @@ class PostPage extends Component {
 
           <div className="container">
                 <div className="row">
-                   
+                    
            <Container>
                
            <div className="row">  
@@ -32,7 +35,7 @@ class PostPage extends Component {
                               <TodayList posts={this.state.posts} />
                 <YesterdayPosts posts={this.state.posts} />
                 <OldPosts posts={this.state.posts} />
-                <PostsList posts={this.state.posts} />
+              
                              <PostsList posts={this.state.posts} refresh={()=>this.fetchPosts()}/>
              </div>
                            </div>            
@@ -43,21 +46,28 @@ class PostPage extends Component {
         )
     }
 
+    componentDidUpdate = async (prevProps, prevState)=>{
+        if(prevProps.accessToken !== this.props.accessToken){
+            await this.filterby()
+            console.log("POST UPDATED")
+        }
+    }
+
     componentDidMount = async () => {
-        await this.fetchPosts()
-        console.log("mounted")
+        await this.filterby()
+       
     }
 
     filterby = async(params)=>{
         try {
            if(params){
-               console.log("stringify params",params)
+            //    console.log("stringify params",params)
             let response = await fetch(`http://localhost:9000/api/posts?sort=${params}&number=1`)
           
            
             let posts = await response.json()
             const newPost = posts.postsList
-            console.log("our new PostList", newPost)
+            // console.log("our new PostList", newPost)
       
             setTimeout(() => {
                 this.setState({
@@ -66,8 +76,9 @@ class PostPage extends Component {
             }, 200);
            }
            else{
-               console.log("no params")
+               
             await this.fetchPosts()
+            console.log("no params so ran the fetchpost")
            }
            
           }
@@ -97,4 +108,4 @@ class PostPage extends Component {
     }
 }
 
-export default PostPage;
+export default connect (mapStateToProps) (PostPage);

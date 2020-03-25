@@ -15,6 +15,17 @@ import { NavLink } from 'react-router-dom'
 import Login from './Login'
 import RubberBand from 'react-reveal/RubberBand';
 
+import  { connect } from "react-redux"
+
+
+ import { getUsersWithThunk } from '../Actions/setUser' 
+
+const mapStateToProps = state => state
+
+const mapDispatchToProps = dispatch => ({
+    loadUsers: (userInfos,t) => dispatch(getUsersWithThunk(userInfos,t))
+}) 
+
 
 class NavBar extends Component {
     state = {
@@ -69,11 +80,11 @@ class NavBar extends Component {
 
     toggleLogout = () => {
         localStorage.clear()
-        
+        this.props.loadUsers(null,null)
         this.setState({})
         toast.success(`Good bye`)
 
     }
 }
 
-export default NavBar;
+export default connect(mapStateToProps,mapDispatchToProps) (NavBar);

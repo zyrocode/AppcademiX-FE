@@ -9,12 +9,12 @@ export const getUsersWithThunk = (userInfos, token) => {
         })
 
 
-        if(token){
+       
             dispatch({
                 type: "SET_TOKEN",
                 payload: token
             })
-        }
+        
     };
 
 

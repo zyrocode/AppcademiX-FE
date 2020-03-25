@@ -6,17 +6,19 @@ import errorReducer from '../Reducers/errorReducer'
 import loginReducer from '../Reducers/loginReducer'
 
 const initialState = { 
+    accessToken: '',
     userInfo:[],
     loading: false,
-    errorMessage: '',
-    accessToken: ''
+    errorMessage: ''
+
 }
 
 const combinedReducers = combineReducers({
+    accessToken: loginReducer,
     userInfo: userReducer,
     loading: loaderReducer,
-    errorMessage: errorReducer,
-    accessToken: loginReducer
+    errorMessage: errorReducer
+  
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
