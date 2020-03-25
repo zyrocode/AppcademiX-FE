@@ -10,7 +10,7 @@ import {
     ToastBody,
     ToastHeader
 } from 'reactstrap';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 import { NavLink } from 'react-router-dom'
 import Login from './Login'
 import RubberBand from 'react-reveal/RubberBand';
@@ -21,28 +21,20 @@ class NavBar extends Component {
         loginModal: false
     }
 
-    
+
     render() {
         return (
             <Fade>
                 <Navbar>
-             
-
-         
-       
-  
-                <NavbarBrand href="/"> <RubberBand>
-          <h5>Appcademix</h5>
-        </RubberBand></NavbarBrand>
-    
-
-                   
+                    <NavbarBrand href="/"> <RubberBand>
+                        <h5>Appcademix</h5>
+                    </RubberBand></NavbarBrand>
                     <Nav className="mr-auto" >
                         <NavItem>
                             <NavLink className="nav-link" to="/">Home</NavLink>
                         </NavItem>
                         <NavItem>
-                                </NavItem>
+                        </NavItem>
                         {localStorage.getItem("access_token") !== "" && localStorage.getItem("access_token") !== null &&
                             <>
                                 <NavItem>
