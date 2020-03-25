@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PostsList from './PostsList';
+import TodayList from './TodayPosts';
 import { Row, Col, Container } from 'reactstrap';
 import FontAwesome from "react-fontawesome";
 import FilterComponent from './FilterComponent';
@@ -21,7 +22,10 @@ class PostPage extends Component {
                              <Container className="mx-auto"> <FilterComponent  filter={this.filterby}/> </Container>
                               </div>
                                
-                           <div className="col"> <PostsList posts={this.state.posts} refresh={()=>this.fetchPosts()}/></div>
+                           <div className="col">
+                             <TodayList posts={this.state.posts} />
+                             <PostsList posts={this.state.posts} refresh={()=>this.fetchPosts()}/>
+             </div>
                            </div>            
            </Container>
     
