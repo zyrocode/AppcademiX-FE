@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import PostsList from './PostsList';
 import TodayList from './TodayPosts';
+
+import YesterdayPosts from './YesterdayPosts';
+import OldPosts from './OldPosts';
+
 import { Row, Col, Container } from 'reactstrap';
 import FontAwesome from "react-fontawesome";
 import FilterComponent from './FilterComponent';
+
 
 class PostPage extends Component {
     state = {
@@ -11,6 +16,7 @@ class PostPage extends Component {
     }
     render() {
         return (
+
 
           <div className="container">
                 <div className="row">
@@ -23,7 +29,10 @@ class PostPage extends Component {
                               </div>
                                
                            <div className="col">
-                             <TodayList posts={this.state.posts} />
+                              <TodayList posts={this.state.posts} />
+                <YesterdayPosts posts={this.state.posts} />
+                <OldPosts posts={this.state.posts} />
+                <PostsList posts={this.state.posts} />
                              <PostsList posts={this.state.posts} refresh={()=>this.fetchPosts()}/>
              </div>
                            </div>            
@@ -31,7 +40,7 @@ class PostPage extends Component {
     
                 </div>
           </div>
-        );
+        )
     }
 
     componentDidMount = async () => {
