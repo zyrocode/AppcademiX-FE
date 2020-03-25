@@ -73,7 +73,6 @@ class PostModal extends Component {
         try {
             let response = await fetch("http://localhost:9000/api/comments/" + this.props.post._id)
             let comments = await response.json()
-            console.log(comments)
             this.setState({
                 post: this.props.post,
                 comments: comments
