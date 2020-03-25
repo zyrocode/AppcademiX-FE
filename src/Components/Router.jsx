@@ -17,7 +17,6 @@ class RouterBrowse extends Component {
   }
   render() {
     return (
-
       <Router>
         {this.state.load
           ?
@@ -26,13 +25,13 @@ class RouterBrowse extends Component {
           <>
             <NavBar />
             <Switch>
-
               <Route path="/" exact component={PostPage} />
               <Route path="/profile/:username" exact component={ProfilePage} />
               <Route path="/createpost" exact component={CreatePost} />
               <Route path="/register" exact component={Register} />
               <Route component={NotFound} />
             </Switch>
+            <ToastContainer autoClose={2000} position="top-center"  />
           </>
         }
       </Router>
@@ -51,7 +50,6 @@ class RouterBrowse extends Component {
           method: "POST"
         }
       );
-
       if (response.ok) return await response.json();
     } catch (error) {
       console.log(error);
@@ -59,10 +57,8 @@ class RouterBrowse extends Component {
   };
 
   componentDidMount = async () => {
-
     const access_token = localStorage.getItem("access_token");
     const sessionToken = sessionStorage.getItem("access_token");
-
     if (access_token || sessionToken) {
       if (!access_token)
         return
@@ -70,8 +66,6 @@ class RouterBrowse extends Component {
         if (access_token) {
           console.log(access_token)
           const userJson = await this.refreshTokenAPI(access_token);
-
-
         } else {
           localStorage.clear();
           sessionStorage.clear();

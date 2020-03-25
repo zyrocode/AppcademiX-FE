@@ -13,8 +13,8 @@ class PostPage extends Component {
         );
     }
 
-    componentDidMount = async() => { 
-      await this.fetchPosts()
+    componentDidMount = async () => {
+        await this.fetchPosts()
     }
 
 
@@ -22,11 +22,11 @@ class PostPage extends Component {
         let response = await fetch("http://localhost:9000/api/posts?sort=ratingsCount")
         let posts = await response.json()
         const newPosts = posts.postsList
-
+        console.log("Posts fetched: ",newPosts)
         setTimeout(() => {
             this.setState({
-                posts: newPosts.sort(function (a, b) { return b.ratingsCount - a.ratingsCount})
-               })
+                posts: newPosts.sort(function (a, b) { return b.ratingsCount - a.ratingsCount })
+            })
         }, 200);
     }
 }
