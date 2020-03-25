@@ -45,24 +45,28 @@ class PostPage extends Component {
 
     componentDidMount = async () => {
         await this.fetchPosts()
+        console.log("mounted")
     }
 
     filterby = async(params)=>{
         try {
            if(params){
-            let response = await fetch("http://localhost:9000/api/posts?sort="+ params)
+               console.log("stringify params",params)
+            let response = await fetch(`http://localhost:9000/api/posts?sort=${params}&number=1`)
+          
            
             let posts = await response.json()
-            const newPosts = posts.postsList
-            console.log("our new PostList", newPosts)
+            const newPost = posts.postsList
+            console.log("our new PostList", newPost)
       
             setTimeout(() => {
                 this.setState({
-                    posts: newPosts
+                    posts: newPost
                    })
             }, 200);
            }
            else{
+               console.log("no params")
             await this.fetchPosts()
            }
            
@@ -75,13 +79,15 @@ class PostPage extends Component {
 
     fetchPosts = async () => {
         try {
+
+            // http://localhost:9000/api/posts?sort=category&number=-1
           let response = await fetch("http://localhost:9000/api/posts?sort=ratingsCount")
           let posts = await response.json()
-          const newPosts = posts.postsList
-    
+           const newPosts = posts.postsList
+            // const nowPost = newPosts.sort(function (a, b) { return b.ratingsCount - a.ratingsCount})
           setTimeout(() => {
               this.setState({
-                  posts: newPosts.sort(function (a, b) { return b.ratingsCount - a.ratingsCount})
+                  posts: newPosts
                  })
           }, 200);
         }

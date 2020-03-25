@@ -10,6 +10,21 @@ import NotFound from "./NotFound";
 import NavBar from './NavBar'
 import Loader from "./Loader";
 
+import  { connect } from "react-redux"
+
+
+
+
+ import { getUsersWithThunk } from '../Actions/setUser' 
+
+const mapStateToProps = state => state
+
+const mapDispatchToProps = dispatch => ({
+    loadUsers: (userInfos, token) => dispatch(getUsersWithThunk(userInfos, token))
+}) 
+
+
+
 class RouterBrowse extends Component {
   state = {
     load: true
@@ -58,21 +73,30 @@ class RouterBrowse extends Component {
 
   componentDidMount = async () => {
     const access_token = localStorage.getItem("access_token");
-    const sessionToken = sessionStorage.getItem("access_token");
-    if (access_token || sessionToken) {
-      if (!access_token)
-        return
-      if (access_token || sessionToken) {
-        if (access_token) {
-          console.log(access_token)
-          const userJson = await this.refreshTokenAPI(access_token);
-        } else {
-          localStorage.clear();
-          sessionStorage.clear();
-          //   delete localStorage["access_token"];
-          //   delete sessionStorage["access_token"];
-        }
-      };
+    const username = localStorage.getItem("username");
+    if (access_token && username) { 
+
+        const userJson = await this.refreshTokenAPI(access_token);
+
+        this.props.loadUsers(userJson.userInfo,userJson.access_token )
+
+
+    //   if (!access_token)
+    //     return
+    //   if (access_token || sessionToken) {
+    //     if (access_token) {
+    //       console.log(access_token)
+    //       const userJson = await this.refreshTokenAPI(access_token);
+    //       console.log("refreshed", userJson)
+    //     } else {
+    //       localStorage.clear();
+    //       sessionStorage.clear();
+    //       //   delete localStorage["access_token"];
+    //       //   delete sessionStorage["access_token"];
+    //     }
+    //   };
+    } else{
+        localStorage.clear();
     }
     setTimeout(() => {
       this.setState({
@@ -82,4 +106,4 @@ class RouterBrowse extends Component {
   }
 }
 
-export default RouterBrowse;
+export default connect (mapStateToProps,mapDispatchToProps) (RouterBrowse);

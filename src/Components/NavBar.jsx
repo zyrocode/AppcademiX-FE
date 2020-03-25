@@ -68,8 +68,8 @@ class NavBar extends Component {
     toggleLoginModal = () => this.setState({ loginModal: !this.state.loginModal })
 
     toggleLogout = () => {
-        localStorage.setItem("access_token", "")
-        localStorage.setItem("username", "")
+        localStorage.clear()
+        
         this.setState({})
         toast.success(`Good bye`)
 
