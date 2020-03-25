@@ -31,7 +31,7 @@ class RouterBrowse extends Component {
 
   }
   render() {
-    return (
+    return ( 
       <Router>
         {this.state.load
           ?

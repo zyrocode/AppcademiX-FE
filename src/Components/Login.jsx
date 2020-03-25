@@ -10,7 +10,7 @@ import  { connect } from "react-redux"
 const mapStateToProps = state => state
 
 const mapDispatchToProps = dispatch => ({
-    loadUsers: (userInfos) => dispatch(getUsersWithThunk(userInfos))
+    loadUsers: (userInfos,token) => dispatch(getUsersWithThunk(userInfos,token))
 }) 
 
 
@@ -60,11 +60,11 @@ class Login extends Component {
                 },
                 body: JSON.stringify(login)
             })
-            
+             
             if (response.ok) {
                 let token = await response.json()
                 console.log(token)
-                this.props.loadUsers(token)
+                this.props.loadUsers(token.userInfo,token.access_token)
                 localStorage.setItem("access_token", token.access_token)
                 localStorage.setItem("username", token.userInfo.username)
                 toast.success(`Welcome ${token.userInfo.firstname}`)

@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import { Container, Col, Fade, Row } from "reactstrap";
 import FontAwesome from "react-fontawesome";
 
+import { connect } from "react-redux"
+
+const mapStateToProps = state => state
+
 class RatingsPage extends Component {
   state = {
     upVoteCount: 0,
-     upVotedByUser: true
+    upVotedByUser: true
   };
 
   render() {
-
     return (
       <>
         <Col>
@@ -21,7 +24,7 @@ class RatingsPage extends Component {
                   <span className="rate-number">{this.state.upVoteCount}</span>
                 </span>
               ) : (
-                <span onClick={this.downRatePost}  className="rate2">
+                <span onClick={this.downRatePost} className="rate2">
                   <FontAwesome name="star" size="2x" />
                   <span className="rate-number"> {this.state.upVoteCount}</span>
                 </span>
@@ -37,12 +40,12 @@ class RatingsPage extends Component {
     await this.countUpvotes(this.props.id);
   };
 
-  componentDidUpdate = async (prevProps,prevState)=>{
-    if(prevProps.id !== this.props.id){
-        await this.countUpvotes(this.props.id);
+  componentDidUpdate =  (prevProps, prevState) => {
+    if (prevProps.accessToken !== this.props.accessToken) {
+      this.countUpvotes(this.props.id);
+      
     }
-  }
-
+  };
 
   countUpvotes = async id => {
     try {
@@ -50,24 +53,20 @@ class RatingsPage extends Component {
       const allUpVotes = await fetch(`http://localhost:9000/api/ratings/${id}`);
       const response = await allUpVotes.json();
 
-
       this.setState({
-        // response.post.ratingsCount
-      upVoteCount:response.post.ratingsCount
-    });
-        const upVotedByUserAvailable = response.post.ratings.find(
-          user => user.upvotedBy === localStorage.getItem("username")
-        );
-
-        upVotedByUserAvailable
-          ? this.setState({
-              upVotedByUser: true
-            })
-          : this.setState({
-              upVotedByUser: false
-            });
-    
-     
+        upVoteCount: response.post.ratingsCount
+      });
+      const upVotedByUserAvailable = response.post.ratings.find(
+        user => user.upvotedBy === localStorage.getItem("username")
+      );
+      // console.log("ratings found", upVotedByUserAvailable);
+      upVotedByUserAvailable 
+        ? this.setState({
+            upVotedByUser: true
+          })
+        : this.setState({
+            upVotedByUser: false
+          });
     } catch (error) {
       console.log(error);
     }
@@ -88,14 +87,13 @@ class RatingsPage extends Component {
         }
       );
       if (response.ok) {
-       
-            this.setState({
-              upVotedByUser: true
-            })
- 
+        this.setState({
+          upVotedByUser: true
+        });
+
         await this.countUpvotes(this.props.id);
         await this.props.refresh();
-        console.log("total", this.state.upVoteCount)
+        console.log("total", this.state.upVoteCount);
       }
     } catch (error) {
       console.log(error);
@@ -118,11 +116,11 @@ class RatingsPage extends Component {
       );
       if (response.ok) {
         this.setState({
-            upVotedByUser: false
-          })
+          upVotedByUser: false
+        });
         await this.countUpvotes(this.props.id);
         await this.props.refresh();
-        console.log("total", this.state.upVoteCount)
+        console.log("total", this.state.upVoteCount);
       }
     } catch (error) {
       console.log(error);
@@ -130,4 +128,4 @@ class RatingsPage extends Component {
   };
 }
 
-export default RatingsPage;
+export default connect (mapStateToProps)(RatingsPage);

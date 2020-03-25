@@ -1,12 +1,12 @@
 export default function (state = {}, action) {
     switch (action.type) {
         case "SET_TOKEN":
-            return  action.payload
+            return  action.payload 
         
 
             case "UNSET_TOKEN":
                 return {
-                    ...state,
+                    ...state, 
                     accessToken: ''
                 }
 

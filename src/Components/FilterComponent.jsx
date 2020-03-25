@@ -50,7 +50,8 @@ class FilterComponent extends Component {
   handleChange = (_e, { value }) => {
     console.log(value)
     this.setState({ value });
-     this.props.filter(value) //classname: _e.currentTarget.firstElementChild.className
+    let string = value.toLowerCase()
+     this.props.filter(string) //classname: _e.currentTarget.firstElementChild.className
   };
   searchFn = (_e, searchQuery) => {
     const filteredList = tagOptions.filter(
