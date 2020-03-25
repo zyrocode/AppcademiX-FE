@@ -22,11 +22,12 @@ class PostsList extends Component {
                             <div className="m-2">
                                 <img className="post-image" src={post.image} alt="Post Default Pic" />
                             </div>
-                            <Col>
+                            <Col onClick={() => { this.setState({ selectedPost: post }); this.togglePostModal() }}>
                                 <Row><h4>{post.title}</h4></Row>
                                 <Row>{post.description}</Row>
+                                <Row>{post.difficulty + " - " + post.category}</Row>
                             </Col>
-                            <RatingsPage id={post._id} refresh={this.props.refresh} count={post.ratingsCount}/>
+                            <RatingsPage id={post._id} refresh={this.props.refresh} count={post.ratingsCount} />
                         </Row>
                     </Container>
                 )}

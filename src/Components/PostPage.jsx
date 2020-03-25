@@ -30,9 +30,8 @@ class PostPage extends Component {
         );
     }
 
-    componentDidMount = async() => { 
-      await this.fetchPosts()
-     
+    componentDidMount = async () => {
+        await this.fetchPosts()
     }
 
     filterby = async(params)=>{
@@ -49,7 +48,6 @@ class PostPage extends Component {
                     posts: newPosts
                    })
             }, 200);
-
            }
            else{
             await this.fetchPosts()
@@ -63,7 +61,6 @@ class PostPage extends Component {
     }
 
     fetchPosts = async () => {
-      
         try {
           let response = await fetch("http://localhost:9000/api/posts?sort=ratingsCount")
           let posts = await response.json()
@@ -75,7 +72,6 @@ class PostPage extends Component {
                  })
           }, 200);
         }
-          
        catch (error) {
           console.log(error)
         }  
