@@ -3,16 +3,13 @@ import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } 
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import  { connect } from "react-redux"
-
-
- import { getUsersWithThunk } from '../Actions/setUser' 
+import { getUsersWithThunk } from '../Actions/setUser' 
 
 const mapStateToProps = state => state
 
 const mapDispatchToProps = dispatch => ({
     loadUsers: (userInfos,token) => dispatch(getUsersWithThunk(userInfos,token))
 }) 
-
 
 class Login extends Component {
     state = {
@@ -39,8 +36,6 @@ class Login extends Component {
                             </FormGroup>
                             <Button className="btn-modal-primary">Login</Button>
                             <Button className="btn-modal-secondary" color="secondary" onClick={this.props.toggle}>Cancel</Button>
-
-  
                         </Form>
                     </ModalBody>
                 </Modal>
@@ -62,7 +57,6 @@ class Login extends Component {
                 },
                 body: JSON.stringify(login)
             })
-             
             if (response.ok) {
                 let token = await response.json()
                 console.log(token)

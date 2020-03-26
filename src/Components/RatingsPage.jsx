@@ -30,7 +30,6 @@ class RatingsPage extends Component {
                   <span className="rate-number"> {this.state.upVoteCount}</span>
                 </span>
               )}
-
               {
                 !this.props.accessToken && this.state.loginModal && <Login toggle={this.toggleLoginModal} open={this.state.loginModal} />
               }
@@ -61,7 +60,6 @@ class RatingsPage extends Component {
       //http://localhost:9000/api/ratings/5e72afef19ef022fd996c4ef
       const allUpVotes = await fetch(`http://localhost:9000/api/ratings/${id}`);
       const response = await allUpVotes.json();
-
       this.setState({
         upVoteCount: response.post.ratingsCount
       });
@@ -99,12 +97,10 @@ class RatingsPage extends Component {
         this.setState({
           upVotedByUser: true
         });
-
         await this.countUpvotes(this.props.id);
         await this.props.refresh();
         console.log("total", this.state.upVoteCount);
       }
-
       else{
         console.log("You are not authorised to upVote")
         this.setState({
@@ -138,8 +134,6 @@ class RatingsPage extends Component {
         await this.props.refresh();
         console.log("total", this.state.upVoteCount);
       }
-
-     
     } catch (error) {
       console.log(error);
     }

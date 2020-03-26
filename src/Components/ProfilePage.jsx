@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
-/* import { connect } from "react-redux" */
 import { Container, Col, Row, Fade } from 'reactstrap'
 import PostsList from './PostsList';
 import FontAwesome from 'react-fontawesome';
 import { withRouter } from 'react-router-dom'
 import EditInfoModal from './EditInfoModal';
-
-/* import { getUsersWithThunk } from '../Actions/setUser' */
-
-/* const mapStateToProps = state => state
-
-const mapDispatchToProps = dispatch => ({
-    loadUsers: (userInfos) => dispatch(getUsersWithThunk(userInfos))
-}) */
 
 class ProfilePage extends Component {
     state = {
@@ -70,7 +61,6 @@ class ProfilePage extends Component {
             console.log(e)
         }
     }
-
 
     componentDidMount = async () => {
         await this.initialFetcher()

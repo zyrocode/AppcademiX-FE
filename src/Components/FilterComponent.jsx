@@ -51,7 +51,7 @@ class FilterComponent extends Component {
     console.log(value)
     this.setState({ value });
     let string = value.toLowerCase()
-     this.props.filter(string) //classname: _e.currentTarget.firstElementChild.className
+    this.props.filter(string) //classname: _e.currentTarget.firstElementChild.className
   };
   searchFn = (_e, searchQuery) => {
     const filteredList = tagOptions.filter(
@@ -84,19 +84,12 @@ class FilterComponent extends Component {
           className="icon"
           clearable={true}
           placeholder="Sort Posts"
-          // fluid={true}
-
-          // className="selection"
-          // search={this.searchFn}
-          // clearable={true}
           onChange={this.handleChange}
           onClose={this.handleClose}
           value={this.state.value}
           text={this.state.value}
-          // onSearchChange={this.handleSearchChange}
         >
           <Dropdown.Menu>
-            {/* <Input icon='search' iconPosition='left' className='search' /> */}
             <Dropdown.Divider />
             <Dropdown.Header icon="tags" content="Tag Label" />
             <Dropdown.Menu scrolling>
@@ -115,41 +108,5 @@ class FilterComponent extends Component {
     );
   }
 }
-
-// class FilterComponent extends Component {
-
-//   state = {dropdownOptions: defaultOpts}
-// onInputClick = (e) => {
-//   e.preventDefault()
-//   e.stopPropagation()
-// }
-// //example search algorithm using lodash
-// onChange = (e) => {
-//   const searchQuery = e.target.value
-//   if(searchQuery == '') {
-//     this.setState({dropdownOptions: defaultOpts})
-
-//   }
-//   else{
-
-// var r = searchQuery.filter(this.state.dropdownOptions, function(o) {
-//   return searchQuery.startsWith(searchQuery.lowerCase(o.text), searchQuery.lowerCase(searchQuery))
-// });
-// this.setState({dropdownOptions: r})
-// }
-// }
-// render() {
-//   return (
-//    <Dropdown text='Filter Example' icon='plus' floating labeled button className='icon' onChange={this.onChange} >
-//     <Dropdown.Menu>
-//       <Input icon='search' iconPosition='left' className='search' onClick={this.onInputClick} />
-//         <Dropdown.Menu scrolling>
-//            {this.state.dropdownOptions.map(option => <Dropdown.Item key={option.value} {...option} />)}
-//          </Dropdown.Menu>
-//        </Dropdown.Menu>
-//     </Dropdown>
-//   )
-// }
-// }
 
 export default FilterComponent;

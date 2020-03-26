@@ -105,7 +105,6 @@ class PostModal extends Component {
                     body: JSON.stringify(comment)
                 })
                 comment = await response.json()
-
                 if (response.ok) {
                     this.setState({
                         comments: [

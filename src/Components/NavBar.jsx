@@ -14,18 +14,14 @@ import { toast } from 'react-toastify'
 import { NavLink, Link } from 'react-router-dom'
 import Login from './Login'
 import RubberBand from 'react-reveal/RubberBand';
-
-import  { connect } from "react-redux"
-
-
- import { getUsersWithThunk } from '../Actions/setUser' 
+import { connect } from "react-redux"
+import { getUsersWithThunk } from '../Actions/setUser'
 
 const mapStateToProps = state => state
 
 const mapDispatchToProps = dispatch => ({
-    loadUsers: (userInfos,t) => dispatch(getUsersWithThunk(userInfos,t))
-}) 
-
+    loadUsers: (userInfos, t) => dispatch(getUsersWithThunk(userInfos, t))
+})
 
 class NavBar extends Component {
     state = {
@@ -56,7 +52,7 @@ class NavBar extends Component {
                                     ?
                                     this.state.usersFiltered.slice(0, 5).map((user, index) =>
                                         <p onClick={() => this.setState({ searchOpen: false, search: "" })} key={index}>
-                                            <img width="30px" src={user.image}/>
+                                            <img width="30px" src={user.image} />
                                             <Link to={"/profile/" + user.username} key={index}> {user.firstname + " " + user.lastname} </Link>
                                         </p>
                                     )
@@ -88,8 +84,8 @@ class NavBar extends Component {
                                 </NavItem>
                             </>
                         }
-                    </Nav> 
-                    {!this.props.accessToken || localStorage.getItem("access_token") === "" 
+                    </Nav>
+                    {!this.props.accessToken || localStorage.getItem("access_token") === ""
                         ? <Button onClick={this.toggleLoginModal}>Log in / Register</Button>
                         : <Button onClick={this.toggleLogout}>Log out</Button>}
                 </Navbar>
@@ -106,7 +102,7 @@ class NavBar extends Component {
 
     toggleLogout = () => {
         localStorage.clear()
-        this.props.loadUsers("","")
+        this.props.loadUsers("", "")
         this.setState({})
         toast.success(`Good bye`)
     }
@@ -157,4 +153,4 @@ class NavBar extends Component {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps) (NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 
-
 class EditInfoModal extends Component {
     state = {
         firstname: "",
@@ -41,7 +40,7 @@ class EditInfoModal extends Component {
     }
 
     componentDidMount = async () => {
-       try { 
+        try {
             let response = await fetch("http://localhost:9000/api/users/" + localStorage.getItem("username"))
             let profile = await response.json()
             this.setState({
@@ -49,12 +48,11 @@ class EditInfoModal extends Component {
                 lastname: this.capFirst(profile.lastname)
             })
             console.log(profile)
-            
         } catch (e) {
             console.log(e)
         }
     }
-    
+
 
     capFirst = string => {
         if (string)
