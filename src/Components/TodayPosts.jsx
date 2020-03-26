@@ -12,7 +12,6 @@ class TodayList extends Component {
         curTime : new Date().toISOString().substring(0, 10)
     }
     
-  
     // this.setState = {
     //     posts: createdAt === curTime this.posts.filter(post => post.createdAt == curTime);
     // }

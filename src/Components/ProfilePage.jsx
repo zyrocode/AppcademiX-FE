@@ -28,7 +28,7 @@ class ProfilePage extends Component {
                         <Container className="profile">
                             <Row>
                                 <Col className="col-sm-4 col-md-3 col-l-2">
-                                    <img className="profile-img" src={this.state.profile.image} alt="Profile Pic"/>
+                                    <img className="profile-img" src={this.state.profile.image} alt="Profile Pic" />
                                 </Col>
                                 <Col>
                                     <div className="profile-info ml-1">
@@ -40,14 +40,19 @@ class ProfilePage extends Component {
                             </Row>
                         </Container>
                         {this.state.openEditInfo && <EditInfoModal open={this.state.openEditInfo} toggle={this.toggleEditInfo} />}
-                        <PostsList posts={this.state.posts} nrefresh={this.initialFetcher}/>
+                        {this.state.posts && this.state.posts.length > 0
+                            ?
+                            <PostsList posts={this.state.posts} nrefresh={this.initialFetcher} />
+                            :
+                                <span className="center-msg">No Posts</span>
+                            }
                     </Fade>
                 }
             </div>
         );
     }
 
-    initialFetcher = async () =>{
+    initialFetcher = async () => {
         try {
             let response = await fetch("http://localhost:9000/api/users/" + this.props.match.params.username)
             if (response.status === 500)
@@ -65,7 +70,7 @@ class ProfilePage extends Component {
             console.log(e)
         }
     }
-    
+
 
     componentDidMount = async () => {
         await this.initialFetcher()
@@ -76,17 +81,22 @@ class ProfilePage extends Component {
             return string.charAt(0).toUpperCase() + string.slice(1)
     }
 
+    componentDidUpdate = async(prevProps, prevStates) => {
+        if(prevProps.match.params.username !== this.props.match.params.username)
+            await this.initialFetcher()
+    }
+
     toggleEditInfo = (update) => {
-        this.setState({ openEditInfo: !this.state.openEditInfo})
-        if(update !== undefined && update.firstname !== undefined && update.lastname !== undefined)
-        this.setState({
-            profile: {
-                ...this.state.profile,
-                firstname: update.firstname,
-                lastname: update.lastname,
-                image: update.image
-            }
-        })
+        this.setState({ openEditInfo: !this.state.openEditInfo })
+        if (update !== undefined && update.firstname !== undefined && update.lastname !== undefined)
+            this.setState({
+                profile: {
+                    ...this.state.profile,
+                    firstname: update.firstname,
+                    lastname: update.lastname,
+                    image: update.image
+                }
+            })
     }
 }
 

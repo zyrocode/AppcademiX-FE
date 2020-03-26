@@ -118,6 +118,7 @@ body.dark-mode {
 
 .navbar {
   background-color: #272727;
+  z-index: 1000 !important;
 }
 
 .navbar-brand {
@@ -195,10 +196,57 @@ input[type="file"] {
   max-width: 100% !important;
   border-radius: 10px;
   box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.5);
-  display:flex;
+  display: flex;
   margin: 3em auto;
 }
 
 .modal-dialog {
   max-width: 600px !important;
+}
+
+.search-bar {
+  background-color: #181818 !important;
+  border: 1px solid #272727 !important;
+}
+
+.search-bar:hover {
+  border: 1px solid #EF3C59 !important;
+}
+
+.search-bar:focus {
+  border: 1px solid #EF3C59 !important;
+  color: white !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.collapse,
+.collapsing {
+  position: absolute !important;
+  z-index: 999;
+  background-color: #272727 !important;
+  color: white;
+  padding: 1em 2em;
+  margin-top: 1em;
+  border: 1px solid #EF3C59 !important;
+  border-radius: 4px;
+  box-shadow: 2px 2px 7px 1px rgba(0, 0, 0, 0.6);
+  min-width: 300px;
+}
+
+.background-layer {
+  position: fixed;
+  z-index: 999;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0.6;
+}
+
+.center-msg {
+  font-size: 50px;
+  color: rgba(32, 32, 32, 0.397);
+  text-align: center !important;
+  display: block;
+  margin-top: 3em;
 }
