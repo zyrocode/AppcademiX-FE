@@ -46,7 +46,7 @@ class NavBar extends Component {
                         </NavItem>
                         <NavItem>
                         </NavItem>
-                        {localStorage.getItem("access_token") !== "" && localStorage.getItem("access_token") !== null &&
+                        {this.props.accessToken && localStorage.getItem("access_token") !== "" &&
                             <>
                                 <NavItem>
                                     <NavLink className="nav-link" to={"/profile/" + localStorage.getItem("username")}>Profile</NavLink>
@@ -56,8 +56,8 @@ class NavBar extends Component {
                                 </NavItem>
                             </>
                         }
-                    </Nav>
-                    {localStorage.getItem("access_token") === "" || localStorage.getItem("access_token") === null
+                    </Nav> 
+                    {!this.props.accessToken || localStorage.getItem("access_token") === "" 
                         ? <Button onClick={this.toggleLoginModal}>Log in / Register</Button>
                         : <Button onClick={this.toggleLogout}>Log out</Button>}
                 </Navbar>
@@ -80,7 +80,7 @@ class NavBar extends Component {
 
     toggleLogout = () => {
         localStorage.clear()
-        this.props.loadUsers(null,null)
+        this.props.loadUsers("","")
         this.setState({})
         toast.success(`Good bye`)
 

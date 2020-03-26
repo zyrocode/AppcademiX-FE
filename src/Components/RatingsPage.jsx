@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Col, Fade, Row } from "reactstrap";
 import FontAwesome from "react-fontawesome";
-
+import Login from "./Login"
 import { connect } from "react-redux"
 
 const mapStateToProps = state => state
@@ -9,7 +9,8 @@ const mapStateToProps = state => state
 class RatingsPage extends Component {
   state = {
     upVoteCount: 0,
-    upVotedByUser: true
+    upVotedByUser: true,
+    loginModal: false
   };
 
   render() {
@@ -18,7 +19,7 @@ class RatingsPage extends Component {
         <Col>
           <Row>
             <Col>
-              {!this.state.upVotedByUser ? (
+              { !this.state.upVotedByUser ? (
                 <span onClick={this.upRatePost} className="rate">
                   <FontAwesome name="star" size="2x" />
                   <span className="rate-number">{this.state.upVoteCount}</span>
@@ -29,12 +30,20 @@ class RatingsPage extends Component {
                   <span className="rate-number"> {this.state.upVoteCount}</span>
                 </span>
               )}
+
+              {
+                !this.props.accessToken && this.state.loginModal && <Login toggle={this.toggleLoginModal} open={this.state.loginModal} />
+              }
             </Col>
           </Row>
         </Col>
       </>
     );
   }
+
+
+  toggleLoginModal = () => this.setState({ loginModal: !this.state.loginModal })
+
 
   componentDidMount = async () => {
     await this.countUpvotes(this.props.id);
@@ -47,7 +56,7 @@ class RatingsPage extends Component {
     }
   };
 
-  countUpvotes = async id => {
+  countUpvotes = async id => { 
     try {
       //http://localhost:9000/api/ratings/5e72afef19ef022fd996c4ef
       const allUpVotes = await fetch(`http://localhost:9000/api/ratings/${id}`);
@@ -95,6 +104,13 @@ class RatingsPage extends Component {
         await this.props.refresh();
         console.log("total", this.state.upVoteCount);
       }
+
+      else{
+        console.log("You are not authorised to upVote")
+        this.setState({
+          loginModal: true
+        })
+      }
     } catch (error) {
       console.log(error);
     }
@@ -122,6 +138,8 @@ class RatingsPage extends Component {
         await this.props.refresh();
         console.log("total", this.state.upVoteCount);
       }
+
+     
     } catch (error) {
       console.log(error);
     }
