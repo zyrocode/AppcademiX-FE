@@ -86,8 +86,12 @@ class NavBar extends Component {
                         }
                     </Nav>
                     {!this.props.accessToken || localStorage.getItem("access_token") === ""
-                        ? <Button onClick={this.toggleLoginModal}>Log in / Register</Button>
-                        : <Button onClick={this.toggleLogout}>Log out</Button>}
+                        ? 
+                        <>
+                            <Button onClick={this.toggleLoginModal}>Log In</Button>
+                            <Link to="/register"><Button className="ml-2 btn-modal-primary">Register</Button></Link>
+                        </>
+                        : <Button onClick={this.toggleLogout}>Sign Out</Button>}
                 </Navbar>
                 {this.state.searchOpen &&
                     <div onClick={() => this.setState({ searchOpen: false })} className="background-layer">

@@ -14,32 +14,42 @@ class Register extends Component {
     render() {
         return (
             <Fade>
-                <Container className="create-post">
+                <Container className="create-post register">
                     <Row>
                         <Col>
-                            <Form onSubmit={this.submitPost}>
+                            <Container>
                                 <FormGroup>
-                                    <Label>Firstname</Label>
-                                    <Input type="text" onChange={(e) => this.setState({ firstname: e.target.value })} value={this.state.firstname} required></Input>
+                                <h4 className="text-center">Register with:</h4>
+                                    <Button href="http://localhost:9000/api/auth/google/callback" className="fab fa-google m-2"></Button>
+                                    <Button href="http://localhost:9000/api/auth/facebook/callback" className="fab fa-facebook-f m-2"></Button>
                                 </FormGroup>
-                                <FormGroup>
-                                    <Label>Lastname</Label>
-                                    <Input type="text" onChange={(e) => this.setState({ lastname: e.target.value })} value={this.state.lastname} required></Input>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label>Username</Label>
-                                    <Input type="text" onChange={(e) => this.setState({ username: e.target.value })} value={this.state.username} required></Input>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label>Password</Label>
-                                    <Input type="password" onChange={(e) => this.setState({ password: e.target.value })} value={this.state.password} required></Input>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label>E-Mail</Label>
-                                    <Input type="email" onChange={(e) => this.setState({ email: e.target.value })} value={this.state.email} required />
-                                </FormGroup>
-                                <Button className="btn-modal-primary">Register</Button>
-                            </Form>
+                            </Container>
+                            <h4 className="text-center">OR</h4>
+                            <Container>
+                                <Form onSubmit={this.submitPost}>
+                                    <FormGroup>
+                                        <Label>Firstname</Label>
+                                        <Input type="text" onChange={(e) => this.setState({ firstname: e.target.value })} value={this.state.firstname} required></Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Lastname</Label>
+                                        <Input type="text" onChange={(e) => this.setState({ lastname: e.target.value })} value={this.state.lastname} required></Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Username</Label>
+                                        <Input type="text" onChange={(e) => this.setState({ username: e.target.value })} value={this.state.username} required></Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Password</Label>
+                                        <Input type="password" onChange={(e) => this.setState({ password: e.target.value })} value={this.state.password} required></Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>E-Mail</Label>
+                                        <Input type="email" onChange={(e) => this.setState({ email: e.target.value })} value={this.state.email} required />
+                                    </FormGroup>
+                                    <Button className="btn-modal-primary">Register</Button>
+                                </Form>
+                            </Container>
                         </Col>
                     </Row>
                 </Container>

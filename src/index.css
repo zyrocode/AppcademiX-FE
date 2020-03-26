@@ -250,3 +250,7 @@ input[type="file"] {
   display: block;
   margin-top: 3em;
 }
+
+.register {
+  max-width: 600px !important;
+}

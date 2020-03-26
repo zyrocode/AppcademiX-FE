@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import PostsList from './PostsList';
-import TodayList from './TodayPosts';
 import { toast } from 'react-toastify'
-import YesterdayPosts from './YesterdayPosts';
-import OldPosts from './OldPosts';
 import { Row, Col, Container } from 'reactstrap';
 import FontAwesome from "react-fontawesome";
 import FilterComponent from './FilterComponent';
@@ -16,7 +13,6 @@ const mapStateToProps = state => state
 const mapDispatchToProps = dispatch => ({
     loadUsers: (userInfos, token) => dispatch(getUsersWithThunk(userInfos, token))
 })
-
 
 class PostPage extends Component {
     state = {
@@ -32,10 +28,9 @@ class PostPage extends Component {
                                 <Container className="mx-auto"> <FilterComponent filter={this.filterby} /> </Container>
                             </div>
                             <div className="col">
-                                <TodayList posts={this.state.posts} />
-                                <YesterdayPosts posts={this.state.posts} />
-                                <OldPosts posts={this.state.posts} />
-                                <PostsList posts={this.state.posts} refresh={() => this.fetchPosts()} />
+                                <PostsList posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"}/>
+                                <PostsList posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"}/>
+                                <PostsList posts={this.state.posts} refresh={() => this.fetchPosts()}/>
                             </div>
                         </div>
                     </Container>
