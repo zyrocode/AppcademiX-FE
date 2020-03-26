@@ -83,7 +83,7 @@ class FilterComponent extends Component {
           button
           className="icon"
           clearable={true}
-          placeholder="Filter Posts"
+          placeholder="Sort Posts"
           // fluid={true}
 
           // className="selection"

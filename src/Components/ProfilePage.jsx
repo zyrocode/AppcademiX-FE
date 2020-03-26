@@ -53,6 +53,7 @@ class ProfilePage extends Component {
             if (response.status === 500)
                 this.props.history.push("/")
             let profile = await response.json()
+            console.log(profile)
             response = await fetch("http://localhost:9000/api/posts/username/" + this.props.match.params.username)
             let posts = await response.json()
             posts.sort(function (a, b) { return b.ratings.length - a.ratings.length })

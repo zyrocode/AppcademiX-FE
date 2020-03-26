@@ -9,7 +9,7 @@ import ProfilePage from "./ProfilePage";
 import NotFound from "./NotFound";
 import NavBar from './NavBar'
 import Loader from "./Loader";
-
+import { refreshTokenAPI } from "../API/refresh"
 import  { connect } from "react-redux"
 
 
@@ -54,29 +54,31 @@ class RouterBrowse extends Component {
   }
 
 
-  refreshTokenAPI = async token => {
-    try {
-      const response = await fetch(
-        "http://localhost:9000/api/auth/refreshtoken",
-        {
-          headers: {
-            Authorization: "Bearer " + token
-          },
-          method: "POST"
-        }
-      );
-      if (response.ok) return await response.json();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // refreshTokenAPI = async token => {
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:9000/api/auth/refreshtoken",
+  //       {
+  //         headers: {
+  //           Authorization: "Bearer " + token
+  //         },
+  //         method: "POST"
+  //       }
+  //     );
+  //     if (response.ok) return await response.json();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   componentDidMount = async () => {
+
+
     const access_token = localStorage.getItem("access_token");
     const username = localStorage.getItem("username");
     if (access_token && username) { 
 
-        const userJson = await this.refreshTokenAPI(access_token);
+        const userJson = await refreshTokenAPI(access_token);
 
         this.props.loadUsers(userJson.userInfo,userJson.access_token )
 

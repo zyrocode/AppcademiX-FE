@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PostsList from './PostsList';
 import TodayList from './TodayPosts';
-
+import { toast } from 'react-toastify'
 import YesterdayPosts from './YesterdayPosts';
 import OldPosts from './OldPosts';
 
@@ -9,8 +9,15 @@ import { Row, Col, Container } from 'reactstrap';
 import FontAwesome from "react-fontawesome";
 import FilterComponent from './FilterComponent';
 import { connect } from "react-redux"
+import { refreshTokenAPI } from "../API/refresh"
+
+import { getUsersWithThunk } from '../Actions/setUser' 
 
 const mapStateToProps = state => state
+
+const mapDispatchToProps = dispatch => ({
+    loadUsers: (userInfos, token) => dispatch(getUsersWithThunk(userInfos, token))
+}) 
 
 
 class PostPage extends Component {
@@ -46,6 +53,10 @@ class PostPage extends Component {
         )
     }
 
+
+
+
+
     componentDidUpdate = async (prevProps, prevState)=>{
         if(prevProps.accessToken !== this.props.accessToken){
             await this.filterby()
@@ -54,6 +65,20 @@ class PostPage extends Component {
     }
 
     componentDidMount = async () => {
+      
+
+        let search = new URLSearchParams(this.props.location.search)
+       const access_token = search.get("token")
+        const userName = search.get("username")
+        if(access_token && userName){
+            const userJson = await refreshTokenAPI(access_token);
+            this.props.loadUsers(userJson.userInfo,userJson.access_token )
+            localStorage.setItem("access_token",userJson.access_token )
+            localStorage.setItem("username",userJson.userInfo.username )
+            toast.success(`Welcome ${userJson.userInfo.firstname}`)
+        }
+        
+        
         await this.filterby()
        
     }
@@ -108,4 +133,4 @@ class PostPage extends Component {
     }
 }
 
-export default connect (mapStateToProps) (PostPage);
+export default connect (mapStateToProps, mapDispatchToProps) (PostPage);
