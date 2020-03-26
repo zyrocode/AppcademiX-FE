@@ -15,7 +15,6 @@ class PostsList extends Component {
         return (
             <Fade>
                 <div>
-                <h2>All posts</h2>
                 {this.state.postModal && <PostModal open={this.state.postModal} toggle={this.togglePostModal} post={this.state.selectedPost} />}
                 {this.state.posts && this.props.posts.map((post, index) =>
                     <Container className="m-4 mx-auto post" key={index}>

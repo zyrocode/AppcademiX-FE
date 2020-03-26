@@ -11,26 +11,21 @@ class PostPage extends Component {
     }
     render() {
         return (
-
-          <div className="container">
+            <div className="container">
                 <div className="row">
-                   
-           <Container>
-               
-           <div className="row">  
-                          <div className=" col-md-2 col-lg-1 col-sm-12 col-xs-12">  
-                             <Container className="mx-auto"> <FilterComponent  filter={this.filterby}/> </Container>
-                              </div>
-                               
-                           <div className="col">
-                             <TodayList posts={this.state.posts} />
-                             <PostsList posts={this.state.posts} refresh={()=>this.fetchPosts()}/>
-             </div>
-                           </div>            
-           </Container>
-    
+                    <Container>
+                        <div className="row">
+                            <div className=" col-md-2 col-lg-1 col-sm-12 col-xs-12">
+                                <Container className="mx-auto"> <FilterComponent filter={this.filterby} /> </Container>
+                            </div>
+                            <div className="col">
+                                <TodayList posts={this.state.posts} />
+                                <PostsList posts={this.state.posts} refresh={() => this.fetchPosts()} />
+                            </div>
+                        </div>
+                    </Container>
                 </div>
-          </div>
+            </div>
         );
     }
 
@@ -38,47 +33,42 @@ class PostPage extends Component {
         await this.fetchPosts()
     }
 
-    filterby = async(params)=>{
+    filterby = async (params) => {
         try {
-           if(params){
-            let response = await fetch("http://localhost:9000/api/posts?sort="+ params)
-           
-            let posts = await response.json()
-            const newPosts = posts.postsList
-            console.log("our new PostList", newPosts)
-      
-            setTimeout(() => {
-                this.setState({
-                    posts: newPosts
-                   })
-            }, 200);
-           }
-           else{
-            await this.fetchPosts()
-           }
-           
-          }
-            
-         catch (error) {
+            if (params) {
+                let response = await fetch("http://localhost:9000/api/posts?sort=" + params)
+                let posts = await response.json()
+                const newPosts = posts.postsList
+                console.log("our new PostList", newPosts)
+                setTimeout(() => {
+                    this.setState({
+                        posts: newPosts
+                    })
+                }, 200);
+            }
+            else {
+                await this.fetchPosts()
+            }
+        }
+        catch (error) {
             console.log(error)
-          }  
+        }
     }
 
     fetchPosts = async () => {
         try {
-          let response = await fetch("http://localhost:9000/api/posts?sort=ratingsCount")
-          let posts = await response.json()
-          const newPosts = posts.postsList
-    
-          setTimeout(() => {
-              this.setState({
-                  posts: newPosts.sort(function (a, b) { return b.ratingsCount - a.ratingsCount})
-                 })
-          }, 200);
+            let response = await fetch("http://localhost:9000/api/posts?sort=ratingsCount")
+            let posts = await response.json()
+            const newPosts = posts.postsList
+            setTimeout(() => {
+                this.setState({
+                    posts: newPosts.sort(function (a, b) { return b.ratingsCount - a.ratingsCount })
+                })
+            }, 200);
         }
-       catch (error) {
-          console.log(error)
-        }  
+        catch (error) {
+            console.log(error)
+        }
     }
 }
 
