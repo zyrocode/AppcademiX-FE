@@ -12,6 +12,7 @@ import Loader from "./Loader";
 import { refreshTokenAPI } from "../API/refresh"
 import { connect } from "react-redux"
 import { getUsersWithThunk } from '../Actions/setUser'
+import NewPostMetaGrab from "./NewPostMetaGrab";
 
 const mapStateToProps = state => state
 
@@ -34,9 +35,10 @@ class RouterBrowse extends Component {
           <>
             <NavBar />
             <Switch>
+            <Route path="/createpost" exact component={NewPostMetaGrab} />
               <Route path="/" exact component={PostPage} />
               <Route path="/profile/:username" exact component={ProfilePage} />
-              <Route path="/createpost" exact component={CreatePost} />
+              {/* <Route path="/createpost" exact component={CreatePost} /> */}
               <Route path="/register" exact component={Register} />
               <Route component={NotFound} />
             </Switch>
