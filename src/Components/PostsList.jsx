@@ -25,7 +25,7 @@ class PostsList extends Component {
                 <div>
                     {this.state.postModal && <PostModal open={this.state.postModal} toggle={this.togglePostModal} post={this.state.selectedPost} />}
                     {this.state.posts && this.state.posts.length > 0 &&
-                        <Container className="m-5">
+                        <Container>
                             <h2>{this.state.title}</h2>
                             {this.state.posts.map((post, index) =>
                                 <Container className="m-4 mx-auto post" key={index}>

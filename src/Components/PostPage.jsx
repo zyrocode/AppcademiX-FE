@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PostsList from './PostsList';
 import { toast } from 'react-toastify'
-import { Row, Col, Container } from 'reactstrap';
+import { Row, Col, Container, Fade } from 'reactstrap';
 import FontAwesome from "react-fontawesome";
 import FilterComponent from './FilterComponent';
 import { connect } from "react-redux"
@@ -20,25 +20,37 @@ class PostPage extends Component {
     }
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <Container>
-                        <div className="row">
-                            <div className="mt-5 col-md-2 col-lg-1 col-sm-12 col-xs-12">
-                                <Container className="mx-auto"> 
-                                <FilterComponent filter={this.filterby} /> 
-                                </Container>
-                            </div>
-                            <div className="col">
-                                {this.state.posts.length > 0 &&
+
+            /* <Fade>
+                <Container>
+                    <Row className="mx-auto">
+                        <FilterComponent filter={this.filterby} />
+                        <Col>
+                            {this.state.posts.length > 0 &&
                                 <>
-                                <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"}/>
-                                <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"}/>
-                                <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()}/>
+                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"} />
+                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"} />
+                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} />
                                 </>}
+                        </Col>
+                    </Row>
+                </Container>
+            </Fade> */
+            <div className="container mt-5">
+                <div className="row">
+                        <div className="row">
+                            <div className="mx-auto mt-5 col-md-2 col-lg-1 col-sm-3 col-xs-4">
+                                    <FilterComponent filter={this.filterby} />
                             </div>
+                            <Col className="mx-auto">
+                                {this.state.posts.length > 0 &&
+                                    <>
+                                        <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"} />
+                                        <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"} />
+                                        <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} />
+                                    </>}
+                            </Col>
                         </div>
-                    </Container>
                 </div>
             </div>
         )
@@ -94,14 +106,14 @@ class PostPage extends Component {
             this.setState({
                 posts: newPosts
             })
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
     }
 
     updateRatings = (posts) => {
         this.setState({
-            posts: posts.sort((a,b) => b.ratings.length - a.ratings.length)
+            posts: posts.sort((a, b) => b.ratings.length - a.ratings.length)
         })
     }
 }
