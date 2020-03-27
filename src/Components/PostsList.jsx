@@ -20,7 +20,7 @@ class PostsList extends Component {
                 <div>
                     {this.state.postModal && <PostModal open={this.state.postModal} toggle={this.togglePostModal} post={this.state.selectedPost} />}
                     {this.state.posts && this.state.posts.length > 0 &&
-                        <>
+                        <Container>
                             <h2>{this.state.title}</h2>
                             {this.state.posts.map((post, index) =>
                                 <Container className="m-4 mx-auto post" key={index}>
@@ -37,19 +37,27 @@ class PostsList extends Component {
                                     </Row>
                                 </Container>
                             )}
-                        </>}
+                        </Container>}
                 </div>
             </Fade>
         );
     }
-    
+
+    componentDidMount = () => {
+        if(this.props.posts.length > 0){
+            this.filterPosts(this.props.posts)
+            console.log("hereee", this.props.posts)
+        }
+    }
+
     componentDidUpdate = (prevProps, prevStates) => {
-        if(this.props.posts !== prevProps.posts)
-        this.filterPosts(this.props.posts)
+        if (this.props.posts !== prevProps.posts) {
+            this.filterPosts(this.props.posts)
+            console.log("here", this.props.posts)
+        }
     }
 
     filterPosts = (postsList) => {
-        console.log(postsList)
         switch (this.props.section) {
             case "today": {
                 let posts = postsList.filter(post => post.createdAt.substring(0, 10) === this.state.today)
@@ -68,9 +76,9 @@ class PostsList extends Component {
             default: {
                 this.setState({
                     posts: postsList,
-                    title: "All"
+                    title: "All Posts"
                 })
-            } break
+            } break;
         }
     }
 

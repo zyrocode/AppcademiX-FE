@@ -7,7 +7,6 @@ class Loader extends Component {
     return (
       <div className="container">
         <div className="row">
-
           <div className="col mt-5 pt-5">
             <div className="brand ">
               <div className="logo">

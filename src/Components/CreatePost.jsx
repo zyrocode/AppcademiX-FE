@@ -11,7 +11,7 @@ class CreatePost extends Component {
         difficulty: "",
         category: "",
         selectedFile: null,
-        uploadFileChecker:false
+        uploadFileChecker: false
     }
 
     render() {
@@ -53,13 +53,12 @@ class CreatePost extends Component {
                                     </Input>
                                 </FormGroup>
 
-                                    <FormGroup>
+                                <FormGroup>
                                     <Label className="btn btn-primary">Upload Image
-                                        <Input type="file" onChange={(val) => this.setState({ selectedFile: val.target.files[0], uploadFileChecker:true })} ></Input>
+                                        <Input type="file" onChange={(val) => this.setState({ selectedFile: val.target.files[0], uploadFileChecker: true })} ></Input>
                                     </Label>
-                                  <span>  {this.state.selectedFile && this.state.selectedFile.name || this.state.selectedFile}</span>
+                                    <span>  {this.state.selectedFile && this.state.selectedFile.name || this.state.selectedFile}</span>
                                 </FormGroup>
-
                                 <Button className="btn-modal-primary">Create Post</Button>
                             </Form>
                         </Col>
@@ -70,19 +69,19 @@ class CreatePost extends Component {
     }
 
 
-    componentDidMount= () =>{
-        console.log("mounteed with data",this.props.data)
-       
+    componentDidMount = () => {
+        console.log("mounteed with data", this.props.data)
 
-            this.setState({
-                link: this.props.link,
-                title: this.props.data.title,
-                description: this.props.data.description,
-                selectedFile: this.props.data.image
-              
-            })
 
-        
+        this.setState({
+            link: this.props.link,
+            title: this.props.data.title,
+            description: this.props.data.description,
+            selectedFile: this.props.data.image
+
+        })
+
+
     }
 
 
@@ -94,7 +93,7 @@ class CreatePost extends Component {
     //             title: this.props.title,
     //             description: this.props.description,
     //             selectedFile: this.props.image
-              
+
     //         })
 
     //     }
@@ -149,4 +148,4 @@ class CreatePost extends Component {
     }
 }
 
-export default withRouter (CreatePost);
+export default withRouter(CreatePost);

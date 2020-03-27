@@ -35,7 +35,7 @@ class RouterBrowse extends Component {
           <>
             <NavBar />
             <Switch>
-            <Route path="/createpost" exact component={NewPostMetaGrab} />
+              <Route path="/createpost" exact component={NewPostMetaGrab} />
               <Route path="/" exact component={PostPage} />
               <Route path="/profile/:username" exact component={ProfilePage} />
               {/* <Route path="/createpost" exact component={CreatePost} /> */}
@@ -50,19 +50,26 @@ class RouterBrowse extends Component {
   }
 
   componentDidMount = async () => {
-    const access_token = localStorage.getItem("access_token");
-    const username = localStorage.getItem("username");
-    if (access_token && username) {
-      const userJson = await refreshTokenAPI(access_token);
-      this.props.loadUsers(userJson.userInfo, userJson.access_token)
-    } else {
-      localStorage.clear();
+    try {
+      const access_token = localStorage.getItem("access_token");
+      const username = localStorage.getItem("username");
+      if (access_token && username) {
+        const userJson = await refreshTokenAPI(access_token);
+        if(!userJson)
+          localStorage.clear();
+        console.log(userJson)
+        this.props.loadUsers(userJson.userInfo, userJson.access_token)
+      } else {
+        localStorage.clear();
+      }
+      setTimeout(() => {
+        this.setState({
+          load: false
+        })
+      }, 1000);
+    } catch(e) {
+      console.log(e)
     }
-    setTimeout(() => {
-      this.setState({
-        load: false
-      })
-    }, 1000);
   }
 }
 

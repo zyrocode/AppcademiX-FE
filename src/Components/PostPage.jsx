@@ -28,9 +28,12 @@ class PostPage extends Component {
                                 <Container className="mx-auto"> <FilterComponent filter={this.filterby} /> </Container>
                             </div>
                             <div className="col">
+                                {this.state.posts.length > 0 &&
+                                <>
                                 <PostsList posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"}/>
                                 <PostsList posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"}/>
                                 <PostsList posts={this.state.posts} refresh={() => this.fetchPosts()}/>
+                                </>}
                             </div>
                         </div>
                     </Container>
@@ -56,6 +59,7 @@ class PostPage extends Component {
             localStorage.setItem("access_token", userJson.access_token)
             localStorage.setItem("username", userJson.userInfo.username)
             toast.success(`Welcome ${userJson.userInfo.firstname}`)
+            this.props.history.push("/")
         }
         await this.filterby()
     }

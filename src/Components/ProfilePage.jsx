@@ -31,9 +31,9 @@ class ProfilePage extends Component {
                             </Row>
                         </Container>
                         {this.state.openEditInfo && <EditInfoModal open={this.state.openEditInfo} toggle={this.toggleEditInfo} />}
-                        {this.state.posts && this.state.posts.length > 0
+                        {this.state.posts.length > 0
                             ?
-                            <PostsList posts={this.state.posts} nrefresh={this.initialFetcher} />
+                            <PostsList posts={this.state.posts} nrefresh={this.initialFetcher} posts={this.state.posts}/>
                             :
                                 <span className="center-msg">No Posts</span>
                             }
