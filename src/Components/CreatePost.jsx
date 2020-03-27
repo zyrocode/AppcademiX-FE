@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Col, Row, Fade, Container, Form, FormGroup, Label, Input } from 'reactstrap';
+import { withRouter } from "react-router-dom"
+
 
 class CreatePost extends Component {
     state = {
@@ -8,7 +10,8 @@ class CreatePost extends Component {
         link: "",
         difficulty: "",
         category: "",
-        selectedFile: null
+        selectedFile: null,
+        uploadFileChecker:false
     }
 
     render() {
@@ -24,12 +27,12 @@ class CreatePost extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label>Description</Label>
-                                    <Input type="text" onChange={(e) => this.setState({ description: e.target.value })} value={this.state.description} required></Input>
+                                    <Input type="textarea" onChange={(e) => this.setState({ description: e.target.value })} value={this.state.description} required ></Input>
                                 </FormGroup>
-                                <FormGroup>
+                                {/* <FormGroup>
                                     <Label>Link</Label>
                                     <Input type="url" onChange={(e) => this.setState({ link: e.target.value })} value={this.state.link} required></Input>
-                                </FormGroup>
+                                </FormGroup> */}
                                 <FormGroup>
                                     <Label>Difficulty</Label>
                                     <Input type="select" onChange={(e) => this.setState({ difficulty: e.target.value })} value={this.state.difficulty} required>
@@ -49,12 +52,14 @@ class CreatePost extends Component {
                                         <option>Other</option>
                                     </Input>
                                 </FormGroup>
-                                <FormGroup>
+
+                                    <FormGroup>
                                     <Label className="btn btn-primary">Upload Image
-                                        <Input type="file" onChange={(val) => this.setState({ selectedFile: val.target.files[0] })} ></Input>
+                                        <Input type="file" onChange={(val) => this.setState({ selectedFile: val.target.files[0], uploadFileChecker:true })} ></Input>
                                     </Label>
-                                    {this.state.selectedFile && this.state.selectedFile.name}
+                                  <span>  {this.state.selectedFile && this.state.selectedFile.name || this.state.selectedFile}</span>
                                 </FormGroup>
+
                                 <Button className="btn-modal-primary">Create Post</Button>
                             </Form>
                         </Col>
@@ -64,14 +69,49 @@ class CreatePost extends Component {
         );
     }
 
+
+    componentDidMount= () =>{
+        console.log("mounteed with data",this.props.data)
+       
+
+            this.setState({
+                link: this.props.link,
+                title: this.props.data.title,
+                description: this.props.data.description,
+                selectedFile: this.props.data.image
+              
+            })
+
+        
+    }
+
+
+    // componentDidUpdate= (prevProps, prevState) =>{
+    //     console.log("mounteed with data",this.props.data)
+    //     if(prevProps.data !== this.props.data){
+
+    //         this.setState({
+    //             title: this.props.title,
+    //             description: this.props.description,
+    //             selectedFile: this.props.image
+              
+    //         })
+
+    //     }
+    // }
+
+
+
+
     submitPost = async (e) => {
         e.preventDefault()
         let post = {
             title: this.state.title,
             description: this.state.description,
-            link: this.state.link,
             difficulty: this.state.difficulty,
-            category: this.state.category
+            category: this.state.category,
+            link: this.state.link,
+            image: this.state.selectedFile
         }
         try {
             let response = await fetch("http://localhost:9000/api/posts/" + localStorage.getItem("username"), {
@@ -82,7 +122,7 @@ class CreatePost extends Component {
                 },
                 body: JSON.stringify(post)
             })
-            if (this.state.selectedFile) {
+            if (this.state.selectedFile && this.state.uploadFileChecker) {
                 let post = await response.json()
                 console.log(post)
                 let id = post.newPost._id
@@ -104,7 +144,9 @@ class CreatePost extends Component {
         } catch (e) {
             console.log(e)
         }
+
+        this.props.history.push("/")
     }
 }
 
-export default CreatePost;
+export default withRouter (CreatePost);
