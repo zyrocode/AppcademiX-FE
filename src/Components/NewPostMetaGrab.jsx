@@ -13,28 +13,6 @@ class NewPostMetaGrab extends Component {
     openMainForm: false
 
   };
-  handleSubmit = e => {
-    e.preventDefault();
-    this.setState({ showImage: true });
-  };
-
-  isUrlValid = (e) => {
-    let userInput = e.currentTarget.value
-    let res = userInput.match(
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-    );
-    if (res == null) {
-      this.setState({ link: null })
-    }
-
-    else {
-      this.setState({
-        link: e.currentTarget.value,
-        showImage: true
-      })
-    }
-
-  };
 
   render() {
     return (<>
@@ -52,11 +30,9 @@ class NewPostMetaGrab extends Component {
               value={this.state.link}
               onChange={this.isUrlValid}
             />
-
           </FormGroup>
           {/* <Button>Submit</Button>
         </Form> */}
-
           {this.state.showImage && this.state.link && (
             <ReactTinyLink
               cardSize="small"
@@ -66,33 +42,40 @@ class NewPostMetaGrab extends Component {
               url={this.state.link}
             />
           )
-
-
           }
-
           {
             this.state.link === null && (<h2> Invalid Url, try Again!</h2>)
           }
-
-          {
-            this.state.showImage && this.state.link &&
+          {this.state.showImage && this.state.link &&
             (
               <div className="text-center m-5">
                 <Button onClick={() => this.handleMetaTag(this.state.link)}>Submit</Button>
-              </div>
-
-            )
-          }
-
+              </div>)}
         </Container>)}
-
-
       {this.state.openMainForm && (<CreatePost data={this.state.urlMetaTags} link={this.state.link} />)}
-
-
-
     </>);
   }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.setState({ showImage: true });
+  };
+
+  isUrlValid = (e) => {
+    let userInput = e.currentTarget.value
+    let res = userInput.match(
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+    );
+    if (res == null) {
+      this.setState({ link: null })
+    }
+    else {
+      this.setState({
+        link: e.currentTarget.value,
+        showImage: true
+      })
+    }
+  };
 
   handleMetaTag = async (url) => {
     // http://localhost:9000/api/metatag?url=https://www.youtube.com/watch?v=93p3LxR9xfM

@@ -24,15 +24,17 @@ class PostPage extends Component {
                 <div className="row">
                     <Container>
                         <div className="row">
-                            <div className=" col-md-2 col-lg-1 col-sm-12 col-xs-12">
-                                <Container className="mx-auto"> <FilterComponent filter={this.filterby} /> </Container>
+                            <div className="mt-5 col-md-2 col-lg-1 col-sm-12 col-xs-12">
+                                <Container className="mx-auto"> 
+                                <FilterComponent filter={this.filterby} /> 
+                                </Container>
                             </div>
                             <div className="col">
                                 {this.state.posts.length > 0 &&
                                 <>
-                                <PostsList posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"}/>
-                                <PostsList posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"}/>
-                                <PostsList posts={this.state.posts} refresh={() => this.fetchPosts()}/>
+                                <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"}/>
+                                <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"}/>
+                                <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()}/>
                                 </>}
                             </div>
                         </div>
@@ -95,6 +97,12 @@ class PostPage extends Component {
         }catch(e){
             console.log(e)
         }
+    }
+
+    updateRatings = (posts) => {
+        this.setState({
+            posts: posts.sort((a,b) => b.ratings.length - a.ratings.length)
+        })
     }
 }
 

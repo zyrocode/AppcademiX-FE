@@ -10,7 +10,9 @@ class RatingsPage extends Component {
   state = {
     upVoteCount: 0,
     upVotedByUser: true,
-    loginModal: false
+    loginModal: false,
+    ratings: 0,
+    users: []
   };
 
   render() {
@@ -22,12 +24,12 @@ class RatingsPage extends Component {
               { !this.state.upVotedByUser ? (
                 <span onClick={this.upRatePost} className="rate">
                   <FontAwesome name="star" size="2x" />
-                  <span className="rate-number">{this.state.upVoteCount}</span>
+                  <span className="rate-number">{this.state.upVoteCount + " " + this.props.count}</span>
                 </span>
               ) : (
                 <span onClick={this.downRatePost} className="rate2">
                   <FontAwesome name="star" size="2x" />
-                  <span className="rate-number"> {this.state.upVoteCount}</span>
+                  <span className="rate-number"> {this.state.upVoteCount + " " + this.props.count}</span>
                 </span>
               )}
               {
@@ -61,7 +63,7 @@ class RatingsPage extends Component {
       const allUpVotes = await fetch(`http://localhost:9000/api/ratings/${id}`);
       const response = await allUpVotes.json();
       this.setState({
-        upVoteCount: response.post.ratingsCount
+        upVoteCount: this.props.count
       });
       const upVotedByUserAvailable = response.post.ratings.find(
         user => user.upvotedBy === localStorage.getItem("username")
