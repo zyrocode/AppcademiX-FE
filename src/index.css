@@ -32,11 +32,13 @@ body.dark-mode {
 }
 
 .profile-img {
-  max-width: 100px;
+  width: 100px;
+  height: 100px;
   border: 2px solid #EF3C59;
   border-radius: 100%;
   display: block;
   margin-left: auto;
+
 }
 
 .profile-info {
@@ -182,6 +184,7 @@ input[type="file"] {
   max-width: 40px;
   max-height: 40px;
   margin: 0.3em 1em;
+  border-radius: 25px;
 }
 
 .section-modal {
@@ -253,4 +256,22 @@ input[type="file"] {
 
 .register {
   max-width: 600px !important;
+}
+
+.search-result {
+  padding: 1.3em;
+  color: white;
+}
+
+.search-result:hover {
+  background-color: #2e2e2e !important;
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+
+.user-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 25px;
+  margin: -0.5em 1em;
 }

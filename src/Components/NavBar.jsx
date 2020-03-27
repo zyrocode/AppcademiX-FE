@@ -7,7 +7,9 @@ import {
     Button,
     Fade,
     Input,
-    Collapse
+    Collapse,
+    Row,
+    Col
 
 } from 'reactstrap';
 import { toast } from 'react-toastify'
@@ -16,6 +18,7 @@ import Login from './Login'
 import RubberBand from 'react-reveal/RubberBand';
 import { connect } from "react-redux"
 import { getUsersWithThunk } from '../Actions/setUser'
+import PostModal from './PostModal'
 
 const mapStateToProps = state => state
 
@@ -31,12 +34,15 @@ class NavBar extends Component {
         allPosts: [],
         postsFiltered: [],
         usersFiltered: [],
-        allUsers: []
+        allUsers: [],
+        postModal: false,
+        selectedPost: ""
     }
 
     render() {
         return (
             <Fade>
+                {this.state.postModal && <PostModal open={this.state.postModal} toggle={() => this.setState({postModal: !this.state.postModal})} post={this.state.selectedPost}/>}
                 <Navbar>
                     <NavbarBrand href="/">
                         <RubberBand>
@@ -47,25 +53,33 @@ class NavBar extends Component {
                         <NavItem>
                             <Input placeholder="Search users, posts..." className="search-bar" type="text" value={this.state.search} onChange={(e) => this.searchFilter(e.target.value)} />
                             {this.state.searchOpen && <Collapse isOpen={this.state.searchOpen}>
-                                <h5>Users</h5>
-                                {this.state.usersFiltered && this.state.usersFiltered.length > 0
+                                <h4>USERS</h4>
+                                {this.state.usersFiltered.length > 0
                                     ?
                                     this.state.usersFiltered.slice(0, 5).map((user, index) =>
-                                        <p onClick={() => this.setState({ searchOpen: false, search: "" })} key={index}>
-                                            <img width="30px" src={user.image} />
-                                            <Link to={"/profile/" + user.username} key={index}> {user.firstname + " " + user.lastname} </Link>
-                                        </p>
+                                        <Link to={"/profile/" + user.username} key={index}>
+                                            <Row className="search-result m-2" onClick={() => this.setState({ searchOpen: false, search: "" })}>
+                                                <img className="user-pic" src={user.image} />
+                                                <span>{user.firstname + " " + user.lastname} </span>
+                                            </Row>
+                                        </Link>
                                     )
                                     :
-                                    <p>No User Found</p>
+                                    <h5 className="m-5">No User Found</h5>
                                 }
-                                <h5>Posts</h5>
-                                {this.state.postsFiltered
+                                <h4>POSTS</h4>
+                                {this.state.postsFiltered.length > 0
                                     ?
                                     this.state.postsFiltered.slice(0, 5).map((post, index) =>
-                                        <p key={index}> {post.title + " " + post.description} </p>)
+                                        <Row key={index} className="search-result m-2" onClick={() => this.setState({ searchOpen: false, search: "", postModal: true, selectedPost: post })}>
+                                            <img className="user-pic" src={post.image} />
+                                            <Col>
+                                                <h5>{post.title} </h5>
+                                                <span>{post.description} </span>
+                                            </Col>
+                                        </Row>)
                                     :
-                                    <p>No Post Found</p>
+                                    <h5 className="m-5">No Post Found</h5>
                                 }
                             </Collapse>}
                         </NavItem>
@@ -86,7 +100,7 @@ class NavBar extends Component {
                         }
                     </Nav>
                     {!this.props.accessToken || localStorage.getItem("access_token") === ""
-                        ? 
+                        ?
                         <>
                             <Button onClick={this.toggleLoginModal}>Log In</Button>
                             <Link to="/register"><Button className="ml-2 btn-modal-primary">Register</Button></Link>
