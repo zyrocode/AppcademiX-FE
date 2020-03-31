@@ -85,7 +85,7 @@ class SinglePostPage extends Component {
         if (localStorage.getItem("username")) {
             let comment = {
                 comment: this.state.comment,
-                postid: this.props.post._id
+                postid: this.state.post._id
             }
             try {
                 let response = await fetch("http://localhost:9000/api/comments/" + this.props.post._id + "/" + localStorage.getItem("username"), {

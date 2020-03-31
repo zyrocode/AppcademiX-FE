@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PostsList from './PostsList';
 import { toast } from 'react-toastify'
-import { Row, Col, Container } from 'reactstrap';
+import { Fade, Row, Col, Container } from 'reactstrap';
 import FontAwesome from "react-fontawesome";
 import FilterComponent from './FilterComponent';
 import { connect } from "react-redux"
@@ -20,27 +20,27 @@ class PostPage extends Component {
     }
     render() {
         return (
-
             <Fade>
-            <div className="container">
-                <div className="row">
-                    <Container>
-                        <div className="row">
-                            <div className="mt-5 col-md-2 col-lg-1 col-sm-12 col-xs-12">
-                                <Container className="mx-auto"> 
-                                <FilterComponent filter={this.filterby} /> 
-                                </Container>
+                <div className="container mt-5">
+                    <div className="row">
+                        <Container>
+                            <div className="row">
+                                <div className="mt-5 col-md-2 col-lg-1 col-sm-12 col-xs-12">
+                                    <Container className="mx-auto">
+                                        <FilterComponent filter={this.filterby} />
+                                    </Container>
+                                </div>
+                                <div className="col">
+                                    {this.state.posts.length > 0 &&
+                                        <>
+                                            <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"} />
+                                            <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"} />
+                                            <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} />
+                                        </>}
+                                </div>
                             </div>
-                            <div className="col">
-                                {this.state.posts.length > 0 &&
-                                <>
-                                <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"}/>
-                                <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"}/>
-                                <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()}/>
-                                </>}
-                            </div>
-                        </div>
-                    </Container>
+                        </Container>
+                    </div>
                 </div>
             </Fade>
         )
@@ -92,7 +92,7 @@ class PostPage extends Component {
         try {
             let response = await fetch("http://localhost:9000/api/posts?sort=ratingsCount")
             let posts = await response.json()
-            
+
             console.log("all posts", posts)
             const newPosts = posts.postsList
             this.setState({
@@ -101,14 +101,14 @@ class PostPage extends Component {
 
 
 
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
     }
 
     updateRatings = (posts) => {
         this.setState({
-            posts: posts.sort((a,b) => b.ratings.length - a.ratings.length)
+            posts: posts.sort((a, b) => b.ratings.length - a.ratings.length)
         })
     }
 }

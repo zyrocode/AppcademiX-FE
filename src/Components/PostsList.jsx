@@ -28,12 +28,12 @@ class PostsList extends Component {
                         <Container>
                             <h2>{this.state.title}</h2>
                             {this.state.posts.map((post, index) =>
-                                <Container className="m-4 mx-auto post" key={index}>
+                                <Container className="m-4 mx-auto post" onClick={() => { this.setState({ selectedPost: post }); this.togglePostModal() }} key={index}>
                                     <Row>
                                         <div className="m-2">
                                             <img className="post-image" src={post.image} alt="Post Default Pic" />
                                         </div>
-                                        <Col onClick={() => { this.setState({ selectedPost: post }); this.togglePostModal() }}>
+                                        <Col>
                                             <Row><h4>{post.title}</h4></Row>
                                             <Row>{post.description}</Row>
                                             <Row>{post.difficulty + " - " + post.category}</Row>
@@ -41,7 +41,7 @@ class PostsList extends Component {
                                         <Col>
                                             <Row>
                                                 <Col>
-                                                    <span onClick={() => this.ratePost(post)} className="rate">
+                                                    <span onClick={(e) => this.ratePost(post, e)} className="rate">
                                                         <FontAwesome name="star" size="2x" />
                                                         <span className="rate-number">{post.ratingsCount}</span>
                                                     </span>
@@ -90,7 +90,8 @@ class PostsList extends Component {
         console.log(result)
     }
 
-    ratePost = async (post) => {
+    ratePost = async (post, e) => {
+        e.stopPropagation()
         if (this.props.accessToken && this.props.userInfo.username) {
             let allPosts = this.props.posts
             console.log(allPosts)

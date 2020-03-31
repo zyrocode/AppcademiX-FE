@@ -15,6 +15,7 @@ import { connect } from "react-redux"
 import { getUsersWithThunk } from '../Actions/setUser'
 import NewPostMetaGrab from "./NewPostMetaGrab";
 import SinglePostPage from "./SinglePostPage";
+import PostModal from "./PostModal";
 
 const mapStateToProps = state => state
 
