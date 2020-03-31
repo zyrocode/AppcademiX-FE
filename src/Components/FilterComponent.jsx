@@ -77,7 +77,7 @@ class FilterComponent extends Component {
       <>
         <Dropdown
           ref={this.dropdownRef}
-          icon="filter"
+          icon="sort"
           floating
           labeled
           button
