@@ -20,27 +20,12 @@ class PostPage extends Component {
     }
     render() {
         return (
-
-            /* <Fade>
-                <Container>
-                    <Row className="mx-auto">
-                        <FilterComponent filter={this.filterby} />
-                        <Col>
-                            {this.state.posts.length > 0 &&
-                                <>
-                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"} />
-                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"} />
-                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} />
-                                </>}
-                        </Col>
-                    </Row>
-                </Container>
-            </Fade> */
-            <div className="container mt-5">
-                <div className="row">
+            <Fade>
+                <div className="container mt-5">
+                    <div className="row">
                         <div className="row">
                             <div className="mx-auto mt-5 col-md-2 col-lg-1 col-sm-3 col-xs-4">
-                                    <FilterComponent filter={this.filterby} />
+                                <FilterComponent filter={this.filterby} />
                             </div>
                             <Col className="mx-auto">
                                 {this.state.posts.length > 0 &&
@@ -51,8 +36,9 @@ class PostPage extends Component {
                                     </>}
                             </Col>
                         </div>
+                    </div>
                 </div>
-            </div>
+            </Fade>
         )
     }
 

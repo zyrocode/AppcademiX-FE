@@ -33,10 +33,10 @@ class ProfilePage extends Component {
                         {this.state.openEditInfo && <EditInfoModal open={this.state.openEditInfo} toggle={this.toggleEditInfo} />}
                         {this.state.posts.length > 0
                             ?
-                            <PostsList posts={this.state.posts} nrefresh={this.initialFetcher} posts={this.state.posts}/>
+                            <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} nrefresh={this.initialFetcher} posts={this.state.posts} />
                             :
-                                <span className="center-msg">No Posts</span>
-                            }
+                            <span className="center-msg">No Posts</span>
+                        }
                     </Fade>
                 }
             </div>
@@ -71,8 +71,8 @@ class ProfilePage extends Component {
             return string.charAt(0).toUpperCase() + string.slice(1)
     }
 
-    componentDidUpdate = async(prevProps, prevStates) => {
-        if(prevProps.match.params.username !== this.props.match.params.username)
+    componentDidUpdate = async (prevProps, prevStates) => {
+        if (prevProps.match.params.username !== this.props.match.params.username)
             await this.initialFetcher()
     }
 
@@ -87,6 +87,12 @@ class ProfilePage extends Component {
                     image: update.image
                 }
             })
+    }
+
+    updateRatings = (posts) => {
+        this.setState({
+            posts: posts.sort((a, b) => b.ratings.length - a.ratings.length)
+        })
     }
 }
 
