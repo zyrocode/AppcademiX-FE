@@ -23,7 +23,7 @@ class PostsList extends Component {
         return (
             <Fade>
                 <div>
-                    {this.state.postModal && <PostModal open={this.state.postModal} toggle={this.togglePostModal} post={this.state.selectedPost} />}
+                    {this.state.postModal && <PostModal open={this.state.postModal} toggle={this.togglePostModal} post={this.state.selectedPost} refresh={this.props.refresh} />}
                     {this.state.posts && this.state.posts.length > 0 &&
                         <Container>
                             <h2>{this.state.title}</h2>
@@ -67,7 +67,7 @@ class PostsList extends Component {
                 </div>
             </Fade>
         );
-    }
+    } 
 
     componentDidMount = () => {
         if (this.props.posts.length > 0) {

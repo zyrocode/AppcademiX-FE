@@ -193,6 +193,8 @@ input[type="file"] {
   margin: 1em;
   border-radius: 10px;
   box-shadow: 2px 2px 7px 1px rgba(0, 0, 0, 0.1);
+
+  
 }
 
 .modal-image {
@@ -275,3 +277,22 @@ input[type="file"] {
   border-radius: 25px;
   margin: -0.5em 1em;
 }
+
+.section-modal:hover .penBg{
+  display :block !important;
+
+}
+.penBg{
+  display :none !important;
+}
+
+.penBg:hover{
+  background: #EF3C59;
+ 
+  border-radius: 4px;
+  padding: .5em;
+  color: white;
+
+}
+
+
