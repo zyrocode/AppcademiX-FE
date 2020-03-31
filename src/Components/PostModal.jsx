@@ -5,6 +5,7 @@ import Moment from "react-moment"
 import FontAwesome from "react-fontawesome";
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
+import ReactPlayer from 'react-player'
 
 const mapStateToProps = state => state
 
@@ -27,6 +28,7 @@ class PostModal extends Component {
                     <ModalBody>
                         <Container className="section-modal">
                             <Row>
+                                <img className="modal-image" src={this.props.post.image} />
                                 <Col>
                                     <h4 className="mb-3">{this.props.post.title.toUpperCase()}</h4>
                                     <h5 className="mb-3">{this.props.post.description}</h5>
@@ -41,9 +43,7 @@ class PostModal extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>
-                                    <img className="modal-image" src={this.props.post.image} />
-                                </Col>
+                            <ReactPlayer url={this.props.post.link} playing />
                             </Row>
                         </Container>
                         <Container className="section-modal">
