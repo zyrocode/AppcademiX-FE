@@ -10,7 +10,6 @@ import {
     Collapse,
     Row,
     Col
-
 } from 'reactstrap';
 import { toast } from 'react-toastify'
 import { NavLink, Link } from 'react-router-dom'
@@ -34,15 +33,12 @@ class NavBar extends Component {
         allPosts: [],
         postsFiltered: [],
         usersFiltered: [],
-        allUsers: [],
-        postModal: false,
-        selectedPost: ""
+        allUsers: []
     }
 
     render() {
         return (
             <Fade>
-                {this.state.postModal && <PostModal open={this.state.postModal} toggle={() => this.setState({postModal: !this.state.postModal})} post={this.state.selectedPost}/>}
                 <Navbar>
                     <NavbarBrand href="/">
                         <RubberBand>
@@ -71,13 +67,15 @@ class NavBar extends Component {
                                 {this.state.postsFiltered.length > 0
                                     ?
                                     this.state.postsFiltered.slice(0, 5).map((post, index) =>
-                                        <Row key={index} className="search-result m-2" onClick={() => this.setState({ searchOpen: false, search: "", postModal: true, selectedPost: post })}>
-                                            <img className="user-pic" src={post.image} />
-                                            <Col>
-                                                <h5>{post.title} </h5>
-                                                <span>{post.description} </span>
-                                            </Col>
-                                        </Row>)
+                                        <Link to={"/post/" + post._id} key={index}>
+                                            <Row className="search-result m-2" onClick={() => this.setState({ searchOpen: false, search: "" })}>
+                                                <img className="user-pic" src={post.image} />
+                                                <Col>
+                                                    <h5>{post.title} </h5>
+                                                    <span>{post.description} </span>
+                                                </Col>
+                                            </Row>
+                                        </Link>)
                                     :
                                     <h5 className="m-5">No Post Found</h5>
                                 }

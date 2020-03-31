@@ -52,7 +52,6 @@ class CreatePost extends Component {
                                         <option>Other</option>
                                     </Input>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label className="btn btn-primary">Upload Image
                                         <Input type="file" onChange={(val) => this.setState({ selectedFile: val.target.files[0], uploadFileChecker: true })} ></Input>

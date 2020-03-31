@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, FormGroup, Label, Input, Container, Button } from "reactstrap";
+import { Row, Form, FormGroup, Label, Input, Container, Button } from "reactstrap";
 import { ReactTinyLink } from "react-tiny-link";
 import CreatePost from "./CreatePost"
 
@@ -19,38 +19,38 @@ class NewPostMetaGrab extends Component {
       {!this.state.openMainForm && (
 
         <Container className="m-5">
-          {/* <Form onSubmit={this.handleSubmit}> */}
-          <FormGroup>
-            <Label for="exampleUrl">Paste the URL of the New Post</Label>
-            <Input
-              type="url"
-              name="url"
-              id="exampleUrl"
-              placeholder="url placeholder"
-              value={this.state.link}
-              onChange={this.isUrlValid}
-            />
-          </FormGroup>
-          {/* <Button>Submit</Button>
+          <Row>
+            {/* <Form onSubmit={this.handleSubmit}> */}
+            <FormGroup>
+              <Label for="exampleUrl">Paste the URL of the New Post</Label>
+              <Input
+                type="url"
+                name="url"
+                id="exampleUrl"
+                placeholder="URL"
+                value={this.state.link}
+                onChange={this.isUrlValid}
+              />
+            </FormGroup>
+            {/* <Button>Submit</Button>
         </Form> */}
-          {this.state.showImage && this.state.link && (
-            <ReactTinyLink
-              cardSize="small"
-              showGraphic={true}
-              maxLine={2}
-              minLine={1}
-              url={this.state.link}
-            />
-          )
-          }
-          {
-            this.state.link === null && (<h2> Invalid Url, try Again!</h2>)
-          }
-          {this.state.showImage && this.state.link &&
-            (
-              <div className="text-center m-5">
-                <Button onClick={() => this.handleMetaTag(this.state.link)}>Submit</Button>
-              </div>)}
+            {this.state.showImage && this.state.link && (
+              <ReactTinyLink
+                cardSize="small"
+                showGraphic={true}
+                maxLine={2}
+                minLine={1}
+                url={this.state.link}
+              />)}
+            {
+              this.state.link === null && (<h2> Invalid Url, try Again!</h2>)
+            }
+            {this.state.showImage && this.state.link &&
+              (
+                <div className="text-center m-5">
+                  <Button onClick={() => this.handleMetaTag(this.state.link)}>Submit</Button>
+                </div>)}
+          </Row>
         </Container>)}
       {this.state.openMainForm && (<CreatePost data={this.state.urlMetaTags} link={this.state.link} />)}
     </>);
