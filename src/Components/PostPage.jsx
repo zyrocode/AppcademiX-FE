@@ -20,6 +20,8 @@ class PostPage extends Component {
     }
     render() {
         return (
+
+            <Fade>
             <div className="container">
                 <div className="row">
                     <Container>
@@ -40,7 +42,7 @@ class PostPage extends Component {
                         </div>
                     </Container>
                 </div>
-            </div>
+            </Fade>
         )
     }
 
