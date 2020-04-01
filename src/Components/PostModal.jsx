@@ -25,7 +25,7 @@ class PostModal extends Component {
                 <Modal isOpen={this.props.open} toggle={this.props.toggle} >
                     <ModalHeader toggle={this.props.toggle}></ModalHeader>
                     <ModalBody>
-                        <Container className="section-modal">
+                        <Container  className="section-modal">
                             <Row>
                                 <Col>
                                     <h4 className="mb-3">{this.props.post.title.toUpperCase()}</h4>
@@ -50,8 +50,13 @@ class PostModal extends Component {
                             <Form onSubmit={this.postComment}>
                                 <Col></Col>
                                 <FormGroup>
-                                    <img className="comment-pic" src={this.props.userInfo.image} className=" mr-3 p-2 " style={{ maxHeight: "40px", maxWidth: "40px" }} />
-                                    <Label className="font-weight-bold">{this.capFirst(this.props.userInfo.firstname) + " " + this.capFirst(this.props.userInfo.lastname)}</Label>
+                                    <img className="comment-pic" src={this.props.userInfo.image || "https://ph-static.imgix.net/guest-user-avatar.png?auto=format&auto=compress&codec=mozjpeg&cs=strip&w=30&h=30&fit=crop&dpr=2"} className=" mr-3 p-2 mb-2" style={{ maxHeight: "40px", maxWidth: "40px" }} />
+                                    
+                                    {this.props.userInfo.username && 
+                                        <Label className="font-weight-bold">{this.capFirst(this.props.userInfo.firstname) + " " + this.capFirst(this.props.userInfo.lastname)}</Label>
+                                    }
+                                    
+
                                     <Input type="text" onChange={(e) => this.setState({ comment: e.target.value })} value={this.state.comment} placeholder="Comment this post" />
                                 </FormGroup>
                                 <Button className="btn-modal-primary">Comment</Button>
