@@ -44,22 +44,20 @@ class PostsList extends Component {
                                             </Row>
                                             <Row>
                                                 <div className="details-post">
-                                                    <h6>
-                                                        <FontAwesome name="comment" />
-                                                        <span className="m-1">{Math.floor(Math.random() * 30) + 1}</span>
-                                                    </h6>
+                                                    <FontAwesome name="comment" />
+                                                    <span className="m-1">{Math.floor(Math.random() * 30) + 1}</span>
                                                 </div>
                                                 <div className="details-post">
-                                                    <h6>
+                                                    <span>
                                                         {post.category == "Tech" &&
                                                             <FontAwesome className="mr-1" name="laptop" />}
                                                         {post.category == "Sales" &&
                                                             <FontAwesome className="mr-1" name="chart-bar" />}
                                                         {post.category}
-                                                    </h6>
+                                                    </span>
                                                 </div>
                                                 <div className="details-post">
-                                                    <h6>
+                                                    <span>
                                                         {post.difficulty == "Medium" &&
                                                             <FontAwesome name="dot-circle" />}
                                                         {post.difficulty == "Hard" &&
@@ -69,8 +67,14 @@ class PostsList extends Component {
                                                             </>}
                                                         <FontAwesome className="mr-1" name="dot-circle" />
                                                         {post.difficulty}
-                                                    </h6>
+                                                    </span>
                                                 </div>
+                                            </Row>
+                                            <Row>
+                                                {post.tags.length > 0 && 
+                                                post.tags.map((tag, i) =>
+                                                        <span key={i}>{"#" + tag} &nbsp;</span>
+                                                    )}
                                             </Row>
                                             <Row>
                                                 <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontSize: "medium", paddingTop: "0.5em" }}>Posted By <Link className="post-username" to={"/profile/" + post.username}>{"@" + post.username}</Link></h6>
@@ -80,18 +84,18 @@ class PostsList extends Component {
                                             </Row>
                                         </Col>
                                         <Col className="p-0">
-                                                    {post.ratings.length > 0 && post.ratings.find(({ upvotedBy }) => upvotedBy === this.props.userInfo.username)
-                                                        ?
-                                                        <span onClick={(e) => this.ratePost(post, e)} className="rate2">
-                                                            <FontAwesome name="star" size="2x" />
-                                                            <span className="rate-number">{post.ratingsCount}</span>
-                                                        </span>
-                                                        :
-                                                        <span onClick={(e) => this.ratePost(post, e)} className="rate">
-                                                            <FontAwesome name="star" size="2x" />
-                                                            <span className="rate-number">{post.ratingsCount}</span>
-                                                        </span>
-                                                    }
+                                            {post.ratings.length > 0 && post.ratings.find(({ upvotedBy }) => upvotedBy === this.props.userInfo.username)
+                                                ?
+                                                <span onClick={(e) => this.ratePost(post, e)} className="rate2">
+                                                    <FontAwesome name="star" size="2x" />
+                                                    <span className="rate-number">{post.ratingsCount}</span>
+                                                </span>
+                                                :
+                                                <span onClick={(e) => this.ratePost(post, e)} className="rate">
+                                                    <FontAwesome name="star" size="2x" />
+                                                    <span className="rate-number">{post.ratingsCount}</span>
+                                                </span>
+                                            }
                                         </Col>
                                     </Row>
                                 </Container>

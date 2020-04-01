@@ -60,12 +60,15 @@ class RouterBrowse extends Component {
       const username = localStorage.getItem("username");
       if (access_token && username) {
         const userJson = await refreshTokenAPI(access_token);
-        if (!userJson || userJson === undefined)
-          localStorage.clear();
+        if (!userJson || userJson === undefined){
+          localStorage.removeItem("username")
+          localStorage.removeItem("access_token")
+        }
         console.log(userJson)
         this.props.loadUsers(userJson.userInfo, userJson.access_token)
       } else {
-        localStorage.clear();
+        localStorage.removeItem("username")
+        localStorage.removeItem("access_token")
       }
       setTimeout(() => {
         this.setState({

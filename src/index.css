@@ -13,11 +13,6 @@ code {
     monospace;
 }
 
-body {
-  background-color: #f4f4f4 !important;
-}
-
-
 .profile {
   padding: 3em;
   background-color: #272727;
@@ -61,6 +56,7 @@ body {
 }
 
 .rate {
+  background-color: #ffffff00 !important;
   padding: 0.3em;
   color: #7e7e7e75;
   border-radius: 7px;
@@ -77,6 +73,7 @@ body {
 }
 
 .rate2 {
+  background-color: #ffffff00 !important;
   padding: 0.3em;
   color: #EF3C59;
   border-radius: 7px;

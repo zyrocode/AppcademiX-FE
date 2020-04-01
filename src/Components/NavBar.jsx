@@ -98,7 +98,7 @@ class NavBar extends Component {
                             </>
                         }
                     </Nav>
-                    <DarkModeToggle/>
+                    <DarkModeToggle />
                     {!this.props.accessToken || localStorage.getItem("access_token") === ""
                         ?
                         <>
@@ -119,7 +119,8 @@ class NavBar extends Component {
     toggleLoginModal = () => this.setState({ loginModal: !this.state.loginModal })
 
     toggleLogout = () => {
-        localStorage.clear()
+        localStorage.removeItem("username")
+        localStorage.removeItem("access_token")
         this.props.loadUsers("", "")
         this.setState({})
         toast.success(`Good bye`)
