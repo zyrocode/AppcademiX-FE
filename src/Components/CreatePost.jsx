@@ -38,7 +38,7 @@ class CreatePost extends Component {
                                 <FormGroup>
                                     <Label>Difficulty</Label>
                                     <Input type="select" onChange={(e) => this.setState({ difficulty: e.target.value })} value={this.state.difficulty} required>
-                                        <option>-</option>
+                                        <option value="">Select an option...</option>
                                         <option>Easy</option>
                                         <option>Medium</option>
                                         <option>Hard</option>
@@ -47,7 +47,7 @@ class CreatePost extends Component {
                                 <FormGroup>
                                     <Label>Category</Label>
                                     <Input type="select" onChange={(e) => this.setState({ category: e.target.value })} value={this.state.category} required>
-                                        <option>-</option>
+                                        <option value="">Select an option...</option>
                                         <option>Tech</option>
                                         <option>Sales</option>
                                         <option>Productivity</option>

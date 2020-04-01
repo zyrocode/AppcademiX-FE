@@ -198,11 +198,14 @@ input[type="file"] {
 }
 
 .modal-image {
-  max-width: 100% !important;
   border-radius: 10px;
   box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.5);
   display: flex;
-  margin: 3em auto;
+  width: 100px;
+  height:100%;
+  top:0;
+  left: 0;
+
 }
 
 .modal-dialog {
