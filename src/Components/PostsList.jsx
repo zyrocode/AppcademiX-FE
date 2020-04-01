@@ -37,6 +37,15 @@ class PostsList extends Component {
                                             <Row><h4>{post.title}</h4></Row>
                                             <Row>{post.description}</Row>
                                             <Row>{post.difficulty + " - " + post.category}</Row>
+                                            <Row> {
+                                                
+                                                post.tags.map((tag,i)=>
+                                                   
+                                                       <span key={i}>{ "#" + tag} &nbsp;</span>
+                                                       
+                                                    )
+                                            }
+                                             </Row>
                                         </Col>
                                         <Col>
                                             <Row>

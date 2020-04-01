@@ -9,6 +9,7 @@
     "bootstrap": "^4.4.1",
     "bootstrap-social": "^5.1.1",
     "darkmode-js": "^1.5.5",
+    "evergreen-ui": "^4.24.0",
     "moment": "^2.24.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
