@@ -5,6 +5,22 @@ import Moment from "react-moment"
 import FontAwesome from "react-fontawesome";
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
+import ReactPlayer from 'react-player'
+import {
+    FacebookShareButton,
+    TwitterShareButton,
+    LinkedinShareButton
+  
+    
+  } from "react-share";
+  import {
+      FacebookIcon,
+      TwitterIcon,
+      LinkedinIcon
+   
+    } from "react-share";
+  
+    
 
 const mapStateToProps = state => state
 
@@ -18,15 +34,18 @@ class PostModal extends Component {
         commentForEditID: "",
         commentForEditPostID: ""
     }
-
+    
     render() {
+    const shareUrl = window.location.href + "post/" + this.props.post._id
+    const title = this.props.post.title; 
         return (
             <div>
                 <Modal isOpen={this.props.open} toggle={this.props.toggle} >
                     <ModalHeader toggle={this.props.toggle}></ModalHeader>
                     <ModalBody>
-                        <Container className="section-modal">
+                        <Container  className="section-modal">
                             <Row>
+                                <img className="modal-image" src={this.props.post.image} />
                                 <Col>
                                     <h4 className="mb-3">{this.props.post.title.toUpperCase()}</h4>
                                     <h5 className="mb-3">{this.props.post.description}</h5>
@@ -41,20 +60,64 @@ class PostModal extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>
-                                    <img className="modal-image" src={this.props.post.image} />
-                                </Col>
+                            <ReactPlayer url={this.props.post.link} playing />
                             </Row>
                         </Container>
+                        <Container>
+                        <ul className="social-share list-unstyled list-inline">
+                            <li class="list-inline-item">
+                                <FacebookShareButton
+                                url={shareUrl}
+                                quote={title}
+                                className="button" 
+                                >
+                                <FacebookIcon
+                                size={32}
+                                round={true} />
+                            </FacebookShareButton>
+
+                            </li>
+                            <li class="list-inline-item">
+                                <TwitterShareButton
+                                url={shareUrl}
+                                title={title}
+                                className="button">
+                                <TwitterIcon
+                                size={32}
+                                round={true} />
+                            </TwitterShareButton>
+                            </li>
+                          
+                            <li class="list-inline-item">
+                                <LinkedinShareButton
+                                url={shareUrl}
+                                title={title}
+                                windowWidth={750}
+                                windowHeight={600}
+                                className="button">
+                                <LinkedinIcon
+                                size={32}
+                                round={true} />
+                            </LinkedinShareButton>
+
+                            </li>
+                            
+                        </ul>
+                        </Container>
+
                         <Container className="section-modal">
                             <Form onSubmit={this.postComment}>
-                                <Col></Col>
+                                <Col>
                                 <FormGroup>
-                                    <img className="comment-pic" src={this.props.userInfo.image} className=" mr-3 p-2 " style={{ maxHeight: "40px", maxWidth: "40px" }} />
+                                    {this.props.userInfo.username && 
+                                    <>
+                                    <img className="comment-pic mr-3 p-2 " src={this.props.userInfo.image} style={{ maxHeight: "40px", maxWidth: "40px" }} alt=" profile"/>
                                     <Label className="font-weight-bold">{this.capFirst(this.props.userInfo.firstname) + " " + this.capFirst(this.props.userInfo.lastname)}</Label>
+                                    </>}
                                     <Input type="text" onChange={(e) => this.setState({ comment: e.target.value })} value={this.state.comment} placeholder="Comment this post" />
                                 </FormGroup>
                                 <Button className="btn-modal-primary">Comment</Button>
+                                </Col>
                             </Form>
                         </Container>
                         {this.state.comments && !this.state.commentLoading && this.state.comments.map((comment, index) =>
