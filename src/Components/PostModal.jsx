@@ -41,7 +41,7 @@ class PostModal extends Component {
                 <Modal isOpen={this.props.open} toggle={this.props.toggle} >
                     <ModalHeader toggle={this.props.toggle}></ModalHeader>
                     <ModalBody>
-                        <Container className="section-modal">
+                        <Container  className="section-modal">
                             <Row>
                                 <Col>
                                     <Row>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Col, Row, Fade, Container, Form, FormGroup, Label, Input } from 'reactstrap';
 import { withRouter } from "react-router-dom"
-
+import { TagInput } from 'evergreen-ui'
 
 class CreatePost extends Component {
     state = {
@@ -11,7 +11,9 @@ class CreatePost extends Component {
         difficulty: "",
         category: "",
         selectedFile: null,
-        uploadFileChecker: false
+        uploadFileChecker: false,
+        hashTag:[],
+        newId:""
     }
 
     render() {
@@ -57,14 +59,34 @@ class CreatePost extends Component {
                                     </Label>
                                     <span>  {this.state.selectedFile && this.state.selectedFile.name || this.state.selectedFile}</span>
                                 </FormGroup>
+                                <FormGroup>
+                                    <Label>
+                                    Add your #hashTags here...
+                                    </Label>
+                                <TagInput
+      inputProps={{ placeholder: ' hit the Enter button on your keyboard after each hashtag' }}
+      width="100%"
+      values={this.state.hashTag}
+      onChange={values => {
+        this.setState({ hashTag:values })
+      }}
+    />
+     </FormGroup>
+     
                                 <Button className="btn-modal-primary">Create Post</Button>
+
+      
                             </Form>
+                            
+                         
+  
                         </Col>
                     </Row>
                 </Container>
             </Fade>
         );
     }
+
 
 
     componentDidMount = () => {
@@ -111,6 +133,7 @@ class CreatePost extends Component {
             image: this.state.selectedFile
         }
         try {
+            var id;
             let response = await fetch("http://localhost:9000/api/posts/" + localStorage.getItem("username"), {
                 method: "POST",
                 headers: {
@@ -123,6 +146,7 @@ class CreatePost extends Component {
                 let post = await response.json()
                 console.log(post)
                 let id = post.newPost._id
+                this.setState({newId: id})
                 let fd = new FormData();
                 fd.append("postImage", this.state.selectedFile)
                 let fileUploaded = await fetch("http://localhost:9000/api/posts/image/" + id + "/" + localStorage.getItem("username"), {
@@ -133,11 +157,37 @@ class CreatePost extends Component {
                     body: fd
                 })
             }
-            if (response.ok) {
-                this.props.history.push("/")
+            if (response.ok && this.state.hashTag) {
+            let newResp = await response.json()
+            let newId = newResp.newPost._id
+            const { hashTag } = this.state
+            const hashStrings = hashTag.join()
+            let tagBody = { tags: hashStrings}
+            
+            console.log("id", newId,"body", tagBody )
+
+                let tagResponse = await fetch("http://localhost:9000/api/posts/hastag/" + newId, {
+                    method: "POST",
+                    headers: {
+                        // "Authorization": "Bearer " + localStorage.getItem("access_token"),
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(tagBody)
+                })  
+
+                if (tagResponse.ok){
+                    this.props.history.push("/")
+                }
+                    
+                    else{
+                        console.log("didnt tag")
+                    }
             }
             else
                 console.log("Error")
+
+
+
         } catch (e) {
             console.log(e)
         }

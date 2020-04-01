@@ -18,6 +18,7 @@ import RubberBand from 'react-reveal/RubberBand';
 import { connect } from "react-redux"
 import { getUsersWithThunk } from '../Actions/setUser'
 import PostModal from './PostModal'
+import DarkModeToggle from './DarkModeToggle';
 
 const mapStateToProps = state => state
 
@@ -97,6 +98,7 @@ class NavBar extends Component {
                             </>
                         }
                     </Nav>
+                    <DarkModeToggle/>
                     {!this.props.accessToken || localStorage.getItem("access_token") === ""
                         ?
                         <>
