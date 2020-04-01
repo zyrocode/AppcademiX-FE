@@ -4,6 +4,8 @@ import Login from './Login';
 import PostModal from './PostModal';
 import FontAwesome from "react-fontawesome";
 import { connect } from 'react-redux'
+import Moment from "react-moment"
+import { Link } from 'react-router-dom'
 
 const mapStateToProps = state => state
 
@@ -16,67 +18,90 @@ class PostsList extends Component {
         today: new Date().toISOString().substring(0, 10),
         yesterday: new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().substring(0, 10),
         title: undefined,
-        openLogin: false
+        openLogin: false,
     }
 
     render() {
         return (
             <Fade>
                 <div>
-                    {this.state.postModal && <PostModal open={this.state.postModal} toggle={this.togglePostModal} post={this.state.selectedPost} refresh={this.props.refresh} />}
+                    {this.state.postModal && <PostModal open={this.state.postModal} toggle={this.togglePostModal} post={this.state.selectedPost} refresh={this.props.refresh} rate={(post) => this.ratePost(post)} />}
                     {this.state.posts && this.state.posts.length > 0 &&
                         <Container>
                             <h2>{this.state.title}</h2>
                             {this.state.posts.map((post, index) =>
-                                <Container className="m-4 mx-auto post" onClick={() => { this.setState({ selectedPost: post }); this.togglePostModal() }} key={index}>
+                                <Container className="m-4 mx-auto post " onClick={() => { this.setState({ selectedPost: post }); this.togglePostModal() }} key={index}>
                                     <Row>
                                         <div className="m-2">
                                             <img className="post-image" src={post.image} alt="Post Default Pic" />
                                         </div>
-                                        <Col>
-                                            <Row><h4>{post.title}</h4></Row>
-                                            <Row>{post.description}</Row>
-                                            <Row>{post.difficulty + " - " + post.category}</Row>
-                                            <Row> {
-                                                
-                                                post.tags.map((tag,i)=>
-                                                   
-                                                       <span key={i}>{ "#" + tag} &nbsp;</span>
-                                                       
-                                                    )
-                                            }
-                                             </Row>
-                                        </Col>
-                                        <Col>
+                                        <Col className="col-6">
+                                            <Row className="mb-2">
+                                                <h4>{post.title.toUpperCase()}</h4>
+                                            </Row>
                                             <Row>
-                                                <Col>
-                                                    <span onClick={(e) => this.ratePost(post, e)} className="rate">
-                                                        <FontAwesome name="star" size="2x" />
-                                                        <span className="rate-number">{post.ratingsCount}</span>
-                                                    </span>
-                                                    {/* {post.ratings.length > 0 && post.ratings.find(({ upvotedBy }) => upvotedBy === this.props.userInfo.username)
+                                                <h5 style={{ color: "#8c8c8c" }}>{post.description}</h5>
+                                            </Row>
+                                            <Row>
+                                                <div className="details-post">
+                                                    <h6>
+                                                        <FontAwesome name="comment" />
+                                                        <span className="m-1">{Math.floor(Math.random() * 30) + 1}</span>
+                                                    </h6>
+                                                </div>
+                                                <div className="details-post">
+                                                    <h6>
+                                                        {post.category == "Tech" &&
+                                                            <FontAwesome className="mr-1" name="laptop" />}
+                                                        {post.category == "Sales" &&
+                                                            <FontAwesome className="mr-1" name="chart-bar" />}
+                                                        {post.category}
+                                                    </h6>
+                                                </div>
+                                                <div className="details-post">
+                                                    <h6>
+                                                        {post.difficulty == "Medium" &&
+                                                            <FontAwesome name="dot-circle" />}
+                                                        {post.difficulty == "Hard" &&
+                                                            <>
+                                                                <FontAwesome name="dot-circle" />
+                                                                <FontAwesome name="dot-circle" />
+                                                            </>}
+                                                        <FontAwesome className="mr-1" name="dot-circle" />
+                                                        {post.difficulty}
+                                                    </h6>
+                                                </div>
+                                            </Row>
+                                            <Row>
+                                                <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontSize: "medium", paddingTop: "0.5em" }}>Posted By <Link className="post-username" to={"/profile/" + post.username}>{"@" + post.username}</Link></h6>
+                                            </Row>
+                                            <Row>
+                                                <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{post.createdAt}</Moment></h6>
+                                            </Row>
+                                        </Col>
+                                        <Col className="p-0">
+                                                    {post.ratings.length > 0 && post.ratings.find(({ upvotedBy }) => upvotedBy === this.props.userInfo.username)
                                                         ?
-                                                        <span onClick={this.ratePost(post)} className="rate2">
+                                                        <span onClick={(e) => this.ratePost(post, e)} className="rate2">
                                                             <FontAwesome name="star" size="2x" />
                                                             <span className="rate-number">{post.ratingsCount}</span>
                                                         </span>
                                                         :
-                                                        <span onClick={this.ratePost(post)} className="rate">
+                                                        <span onClick={(e) => this.ratePost(post, e)} className="rate">
                                                             <FontAwesome name="star" size="2x" />
-                                                            <span className="rate-number"> {post.ratingsCount}</span>
-                                                        </span>} */}
-                                                    {!this.props.accessToken && this.state.openLogin && <Login toggle={() => this.setState({ openLogin: !this.state.openLogin })} open={this.state.openLogin} />}
-                                                </Col>
-                                            </Row>
+                                                            <span className="rate-number">{post.ratingsCount}</span>
+                                                        </span>
+                                                    }
                                         </Col>
                                     </Row>
                                 </Container>
                             )}
                         </Container>}
                 </div>
-            </Fade>
+                {!this.props.userInfo.accessToken && this.state.openLogin && <Login toggle={() => this.setState({ openLogin: !this.state.openLogin })} open={this.state.openLogin} />}
+            </Fade >
         );
-    } 
+    }
 
     componentDidMount = () => {
         if (this.props.posts.length > 0) {
@@ -100,7 +125,8 @@ class PostsList extends Component {
     }
 
     ratePost = async (post, e) => {
-        e.stopPropagation()
+        if (e)
+            e.stopPropagation()
         if (this.props.accessToken && this.props.userInfo.username) {
             let allPosts = this.props.posts
             console.log(allPosts)
@@ -192,9 +218,10 @@ class PostsList extends Component {
                 })
             } break;
             default: {
+                let posts = postsList.filter(post => post.createdAt.substring(0, 10) < this.state.yesterday)
                 this.setState({
-                    posts: postsList,
-                    title: "All Posts"
+                    posts: posts,
+                    title: "Older Posts"
                 })
             } break;
         }

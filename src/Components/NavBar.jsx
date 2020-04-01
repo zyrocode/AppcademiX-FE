@@ -39,7 +39,7 @@ class NavBar extends Component {
 
     render() {
         return (
-            <Fade>
+            <>
                 <Navbar>
                     <NavbarBrand href="/">
                         <RubberBand>
@@ -112,7 +112,7 @@ class NavBar extends Component {
                     </div>
                 }
                 {this.state.loginModal && <Login toggle={this.toggleLoginModal} open={this.state.loginModal} />}
-            </Fade>
+            </>
         );
     }
 

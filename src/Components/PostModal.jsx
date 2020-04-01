@@ -4,23 +4,20 @@ import { toast } from 'react-toastify'
 import Moment from "react-moment"
 import FontAwesome from "react-fontawesome";
 import { connect } from "react-redux"
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import ReactPlayer from 'react-player'
 import {
     FacebookShareButton,
     TwitterShareButton,
     LinkedinShareButton
-  
-    
-  } from "react-share";
-  import {
-      FacebookIcon,
-      TwitterIcon,
-      LinkedinIcon
-   
-    } from "react-share";
-  
-    
+} from "react-share";
+import {
+    FacebookIcon,
+    TwitterIcon,
+    LinkedinIcon
+} from "react-share";
+
+
 
 const mapStateToProps = state => state
 
@@ -32,12 +29,13 @@ class PostModal extends Component {
         openForEdit: false,
         commentForEdit: "",
         commentForEditID: "",
-        commentForEditPostID: ""
+        commentForEditPostID: "",
+        videoPlayer: true
     }
-    
+
     render() {
-    const shareUrl = window.location.href + "post/" + this.props.post._id
-    const title = this.props.post.title; 
+        const shareUrl = window.location.href + "post/" + this.props.post._id
+        const title = this.props.post.title;
         return (
             <div>
                 <Modal isOpen={this.props.open} toggle={this.props.toggle} >
@@ -45,78 +43,138 @@ class PostModal extends Component {
                     <ModalBody>
                         <Container  className="section-modal">
                             <Row>
-                                <img className="modal-image" src={this.props.post.image} />
                                 <Col>
-                                    <h4 className="mb-3">{this.props.post.title.toUpperCase()}</h4>
-                                    <h5 className="mb-3">{this.props.post.description}</h5>
+                                    <Row>
+                                        <img className="modal-image" src={this.props.post.image} />
+                                        <Col>
+                                            <h4 className="m-2">{this.props.post.title.toUpperCase()}</h4>
+                                            <a href={this.props.post.link}><Button className="m-2">View Link</Button></a>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col>
+                                            <h5 className="m-3">{this.props.post.description}</h5>
+                                        </Col>
+                                    </Row>
                                 </Col>
                                 <Col className="col-3">
                                     <Row>
-                                        <h6 >{this.props.post.difficulty}</h6><br />
+                                        <Col>
+                                            {this.props.post.ratings.length > 0 && this.props.post.ratings.find(({ upvotedBy }) => upvotedBy === this.props.userInfo.username)
+                                                ?
+                                                <span onClick={() => this.props.rate(this.props.post)} className="rate2 mr-0">
+                                                    <FontAwesome name="star" size="2x" />
+                                                    <span className="rate-number">{this.props.post.ratingsCount}</span>
+                                                </span>
+                                                :
+                                                <span onClick={() => this.props.rate(this.props.post)} className="rate mr-0">
+                                                    <FontAwesome name="star" size="2x" />
+                                                    <span className="rate-number">{this.props.post.ratingsCount}</span>
+                                                </span>}
+                                        </Col>
                                     </Row>
                                     <Row>
-                                        <h6 >{this.props.post.category}</h6>
+                                        <div className="details-post">
+                                            <h6>
+                                                <FontAwesome name="comment" />
+                                                <span className="m-1">{Math.floor(Math.random() * 30) + 1}</span>
+                                            </h6>
+                                        </div>
+                                    </Row>
+                                    <Row>
+                                        <div className="details-post">
+                                            <h6>
+                                                {this.props.post.category == "Tech" &&
+                                                    <FontAwesome className="mr-1" name="laptop" />}
+                                                {this.props.post.category == "Sales" &&
+                                                    <FontAwesome className="mr-1" name="chart-bar" />}
+                                                {this.props.post.category}
+                                            </h6>
+                                        </div>
+                                    </Row>
+                                    <Row>
+                                        <div className="details-post">
+                                            <h6>
+                                                {this.props.post.difficulty == "Medium" &&
+                                                    <FontAwesome name="dot-circle" />}
+                                                {this.props.post.difficulty == "Hard" &&
+                                                    <>
+                                                        <FontAwesome name="dot-circle" />
+                                                        <FontAwesome name="dot-circle" />
+                                                    </>}
+                                                <FontAwesome className="mr-1" name="dot-circle" />
+                                                {this.props.post.difficulty}
+                                            </h6>
+                                        </div>
                                     </Row>
                                 </Col>
                             </Row>
+                            <Row className="p-4">
+                                    {this.state.videoPlayer && <ReactPlayer url={this.props.post.link} onError={() => this.setState({ videoPlayer: false })} />}
+                            </Row>
                             <Row>
-                            <ReactPlayer url={this.props.post.link} playing />
+                                <Col className="mt-2 ml-4 ">
+                                    <Row>
+                                        <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontSize: "medium", paddingTop: "0.5em" }}>Posted By <Link className="post-username" to={"/profile/" + this.props.post.username}>{"@" + this.props.post.username}</Link></h6>
+                                    </Row>
+                                    <Row>
+                                        <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{this.props.post.createdAt}</Moment></h6>
+                                    </Row>
+                                </Col>
+                                <Col className="m-2">
+                                    <Container className="text-right">
+                                        <h5 className="mr-4">Share it on:</h5>
+                                        <ul className="social-share list-unstyled list-inline">
+                                            <li className="list-inline-item">
+                                                <FacebookShareButton
+                                                    url={shareUrl}
+                                                    quote={title}
+                                                    className="button"
+                                                >
+                                                    <FacebookIcon
+                                                        size={32}
+                                                        round={true} />
+                                                </FacebookShareButton>
+                                            </li>
+                                            <li className="list-inline-item">
+                                                <TwitterShareButton
+                                                    url={shareUrl}
+                                                    title={title}
+                                                    className="button">
+                                                    <TwitterIcon
+                                                        size={32}
+                                                        round={true} />
+                                                </TwitterShareButton>
+                                            </li>
+                                            <li className="list-inline-item">
+                                                <LinkedinShareButton
+                                                    url={shareUrl}
+                                                    title={title}
+                                                    windowWidth={750}
+                                                    windowHeight={600}
+                                                    className="button">
+                                                    <LinkedinIcon
+                                                        size={32}
+                                                        round={true} />
+                                                </LinkedinShareButton>
+                                            </li>
+                                        </ul>
+                                    </Container>
+                                </Col>
                             </Row>
                         </Container>
-                        <Container>
-                        <ul className="social-share list-unstyled list-inline">
-                            <li class="list-inline-item">
-                                <FacebookShareButton
-                                url={shareUrl}
-                                quote={title}
-                                className="button" 
-                                >
-                                <FacebookIcon
-                                size={32}
-                                round={true} />
-                            </FacebookShareButton>
-
-                            </li>
-                            <li class="list-inline-item">
-                                <TwitterShareButton
-                                url={shareUrl}
-                                title={title}
-                                className="button">
-                                <TwitterIcon
-                                size={32}
-                                round={true} />
-                            </TwitterShareButton>
-                            </li>
-                          
-                            <li class="list-inline-item">
-                                <LinkedinShareButton
-                                url={shareUrl}
-                                title={title}
-                                windowWidth={750}
-                                windowHeight={600}
-                                className="button">
-                                <LinkedinIcon
-                                size={32}
-                                round={true} />
-                            </LinkedinShareButton>
-
-                            </li>
-                            
-                        </ul>
-                        </Container>
-
                         <Container className="section-modal">
                             <Form onSubmit={this.postComment}>
                                 <Col>
-                                <FormGroup>
-                                    {this.props.userInfo.username && 
-                                    <>
-                                    <img className="comment-pic mr-3 p-2 " src={this.props.userInfo.image} style={{ maxHeight: "40px", maxWidth: "40px" }} alt=" profile"/>
-                                    <Label className="font-weight-bold">{this.capFirst(this.props.userInfo.firstname) + " " + this.capFirst(this.props.userInfo.lastname)}</Label>
-                                    </>}
-                                    <Input type="text" onChange={(e) => this.setState({ comment: e.target.value })} value={this.state.comment} placeholder="Comment this post" />
-                                </FormGroup>
-                                <Button className="btn-modal-primary">Comment</Button>
+                                    <FormGroup>
+                                        {this.props.userInfo.username &&
+                                            <>
+                                                <img className="comment-pic mr-3 p-2 " src={this.props.userInfo.image} style={{ maxHeight: "40px", maxWidth: "40px" }} alt=" profile" />
+                                                <Label className="font-weight-bold">{this.capFirst(this.props.userInfo.firstname) + " " + this.capFirst(this.props.userInfo.lastname)}</Label>
+                                            </>}
+                                        <Input type="text" onChange={(e) => this.setState({ comment: e.target.value })} value={this.state.comment} placeholder="Comment this post" />
+                                    </FormGroup>
+                                    <Button className="btn-modal-primary">Comment</Button>
                                 </Col>
                             </Form>
                         </Container>
@@ -124,38 +182,34 @@ class PostModal extends Component {
                             <Container className="section-modal" key={index}>
                                 {this.props.userInfo.username === comment.userInfo.username && !this.state.openForEdit && <div className="penBg float-right" onClick={() => this.setState({ openForEdit: true, commentForEdit: comment.comment, commentForEditID: comment._id, commentForEditPostID: comment.postid })}><FontAwesome name="pen" className=" penEdit" /></div>
                                 }
-                                <Fade>
-                                    <Row>
-                                        <img className="comment-pic" src={comment.userInfo.image} />
-                                        {this.state.commentForEditID !== comment._id &&
-                                            <Col>
-                                                <Row>
-                                                    <h5 className="font-weight-bold">{this.capFirst(comment.userInfo.firstname) + " " + this.capFirst(comment.userInfo.lastname)}</h5>
-                                                </Row>
-                                                <Row>
-                                                    <h6 className="mt-3 mb-3">{comment.comment}</h6>
-                                                </Row>
-                                                <Row>
-                                                    <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{comment.createdAt}</Moment></h6>
-                                                </Row>
-                                            </Col>}
-                                        {this.state.openForEdit && this.state.commentForEditID === comment._id && <Col>
-                                            <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForEdit: false, commentForEditID: "", commentForEditPostID: "" })}>
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <FormGroup >
-                                                <Label>Edit this comment:</Label>
-                                                <Input type="textarea" onChange={(e) => this.setState({ commentForEdit: e.target.value })} value={this.state.commentForEdit} />
-                                            </FormGroup>
+                                <Row>
+                                    <img className="comment-pic" src={comment.userInfo.image} />
+                                    {this.state.commentForEditID !== comment._id &&
+                                        <Col>
                                             <Row>
-                                                <Button className="btn-modal-success ml-3" onClick={this.updateComment}>Update</Button>
-                                                <Col>
-                                                    <Button className="btn-modal-danger" onClick={this.deleteComment}>Delete</Button>
-                                                </Col>
+                                                <h5 className="font-weight-bold"><Link className="comment-name" to={"/profile/" + comment.userInfo.username}>{this.capFirst(comment.userInfo.firstname) + " " + this.capFirst(comment.userInfo.lastname)}</Link></h5>
+                                            </Row>
+                                            <Row>
+                                                <h6 className="mt-3 mb-3">{comment.comment}</h6>
+                                            </Row>
+                                            <Row>
+                                                <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{comment.createdAt}</Moment></h6>
                                             </Row>
                                         </Col>}
-                                    </Row>
-                                </Fade>
+                                    {this.state.openForEdit && this.state.commentForEditID === comment._id && <Col>
+                                        <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForEdit: false, commentForEditID: "", commentForEditPostID: "" })}>
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <FormGroup >
+                                            <Label>Edit this comment:</Label>
+                                            <Input type="textarea" onChange={(e) => this.setState({ commentForEdit: e.target.value })} value={this.state.commentForEdit} />
+                                        </FormGroup>
+                                        <Row>
+                                            <Button className="btn-modal-primary m-3" onClick={this.updateComment}>Update</Button>
+                                            <Button onClick={this.deleteComment}>Delete</Button>
+                                        </Row>
+                                    </Col>}
+                                </Row>
                             </Container>
                         )}
                     </ModalBody>

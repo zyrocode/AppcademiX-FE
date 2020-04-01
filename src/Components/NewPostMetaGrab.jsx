@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Row, Form, FormGroup, Label, Input, Container, Button } from "reactstrap";
+import { Row, Col, Input, Container, Button } from "reactstrap";
+import { connect } from 'react-redux'
 import { ReactTinyLink } from "react-tiny-link";
 import CreatePost from "./CreatePost"
 
-
+const mapStateToProps = state => state
 
 class NewPostMetaGrab extends Component {
   state = {
@@ -15,45 +16,51 @@ class NewPostMetaGrab extends Component {
   };
 
   render() {
-    return (<>
-      {!this.state.openMainForm && (
+    return (
+      <>
+        {!this.state.openMainForm &&
+          <Col>
+            <Container className="text-center">
+              <Row>
+                <Col>
+                  {this.state.link === null &&
+                    <h4 className="alert-url">Insert a valid url!</h4>
+                  }
+                  <Input
+                    className="create-url"
+                    type="url"
+                    placeholder="Type an URL..."
+                    value={this.state.link}
+                    onChange={this.isUrlValid}
+                  />
+                </Col>
+                {this.state.showImage && this.state.link &&
+                  <Button onClick={() => this.handleMetaTag(this.state.link)} className="paste-button">Next</Button>}
+              </Row>
+            </Container>
+            <Container className="text-center">
+              {this.state.showImage && this.state.link &&
+                <>
+                  <h4 className="m-5">Preview</h4>
+                  <div className="not-clickable" onclick="return false">
+                    <ReactTinyLink
+                      cardSize="small"
+                      showGraphic={true}
+                      maxLine={2}
+                      minLine={1}
+                      url={this.state.link}
+                    />
+                  </div>
+                </>}
+            </Container>
+          </Col>}
+        {this.state.openMainForm && (<CreatePost data={this.state.urlMetaTags} link={this.state.link} />)}
+      </>);
+  }
 
-        <Container className="m-5">
-          <Row>
-            {/* <Form onSubmit={this.handleSubmit}> */}
-            <FormGroup>
-              <Label for="exampleUrl">Paste the URL of the New Post</Label>
-              <Input
-                type="url"
-                name="url"
-                id="exampleUrl"
-                placeholder="URL"
-                value={this.state.link}
-                onChange={this.isUrlValid}
-              />
-            </FormGroup>
-            {/* <Button>Submit</Button>
-        </Form> */}
-            {this.state.showImage && this.state.link && (
-              <ReactTinyLink
-                cardSize="small"
-                showGraphic={true}
-                maxLine={2}
-                minLine={1}
-                url={this.state.link}
-              />)}
-            {
-              this.state.link === null && (<h2> Invalid Url, try Again!</h2>)
-            }
-            {this.state.showImage && this.state.link &&
-              (
-                <div className="text-center m-5">
-                  <Button onClick={() => this.handleMetaTag(this.state.link)}>Submit</Button>
-                </div>)}
-          </Row>
-        </Container>)}
-      {this.state.openMainForm && (<CreatePost data={this.state.urlMetaTags} link={this.state.link} />)}
-    </>);
+  componentDidMount = () => {
+    if(!this.props.accessToken)
+      this.props.history.push("/")
   }
 
   handleSubmit = e => {
@@ -92,4 +99,4 @@ class NewPostMetaGrab extends Component {
 
 }
 
-export default NewPostMetaGrab;
+export default connect(mapStateToProps)(NewPostMetaGrab);

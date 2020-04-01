@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 
 body {
-  margin: 0;
+  margin: 0 !important;
   font-family: 'Nunito' !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -14,13 +14,9 @@ code {
 }
 
 body {
-  background-color: #f4f4f4;
+  background-color: #f4f4f4 !important;
 }
 
-body.dark-mode {
-  background-color: #1a1919;
-  color: #999;
-}
 
 .profile {
   padding: 3em;
@@ -38,7 +34,6 @@ body.dark-mode {
   border-radius: 100%;
   display: block;
   margin-left: auto;
-
 }
 
 .profile-info {
@@ -47,11 +42,10 @@ body.dark-mode {
 
 .post {
   border-radius: 7px;
-  border: 1px solid rgba(239, 60, 90, 0.055);
+  border: 1px solid #94949444;
   background-color: #ffffff;
   color: black;
-  padding: 20px;
-  box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.52);
+  padding: 1em !important;
   transition-duration: 0.3s;
 }
 
@@ -61,13 +55,14 @@ body.dark-mode {
 }
 
 .post-image {
-  max-width: 100px;
+  max-width: 130px;
+  border-radius: 5px !important;
+  margin: 0.7em;
 }
 
 .rate {
   padding: 0.3em;
-  color: #EF3C59;
-  border: 1px solid #c5c5c5;
+  color: #7e7e7e75;
   border-radius: 7px;
   padding: 1em;
   float: right;
@@ -75,18 +70,15 @@ body.dark-mode {
 }
 
 .rate:hover {
-  color: white;
-  background-color: #181818;
-  border: 1px solid #EF3C59;
+  color: #EF3C59;
   cursor: pointer;
+  border: none;
   transform: scale(0.85);
 }
 
 .rate2 {
   padding: 0.3em;
-  color: white;
-  background-color: #EF3C59;
-  border: 1px solid #EF3C59;
+  color: #EF3C59;
   border-radius: 7px;
   padding: 1em;
   float: right;
@@ -94,17 +86,20 @@ body.dark-mode {
 }
 
 .rate2:hover {
-  color: #EF3C59;
-  background-color: #181818;
-  border: 1px solid #c5c5c5;
+  color: #212020;
   cursor: pointer;
   transform: scale(0.85);
 }
 
 .rate-number {
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.5em;
   padding: 0.5em;
-  vertical-align: super;
+  vertical-align: top;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .icon {
@@ -142,6 +137,7 @@ body.dark-mode {
   margin: 3em;
   box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.52);
   border-radius: 7px;
+  max-width:500px !important;
 }
 
 input[type="file"] {
@@ -150,7 +146,7 @@ input[type="file"] {
 
 .btn {
   background-color: #181818 !important;
-  border: 1px solid rgb(239, 60, 90) !important;
+  border: none !important
 }
 
 .btn:hover {
@@ -194,7 +190,7 @@ input[type="file"] {
   border-radius: 10px;
   box-shadow: 2px 2px 7px 1px rgba(0, 0, 0, 0.1);
 
-  
+
 }
 
 .modal-image {
@@ -202,10 +198,10 @@ input[type="file"] {
   box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.5);
   display: flex;
   width: 100px;
-  height:100%;
-  top:0;
+  height: 100%;
+  top: 0;
   left: 0;
-
+  margin: 1em
 }
 
 .modal-dialog {
@@ -281,21 +277,125 @@ input[type="file"] {
   margin: -0.5em 1em;
 }
 
-.section-modal:hover .penBg{
-  display :block !important;
-
-}
-.penBg{
-  display :none !important;
+.section-modal:hover .penBg {
+  display: flex !important;
+  transition-duration: 0.3s;
 }
 
-.penBg:hover{
+.penBg {
+  display: none !important;
+  padding: .5em;
+
+}
+
+.penBg:hover {
   background: #EF3C59;
- 
+  cursor: pointer;
   border-radius: 4px;
   padding: .5em;
   color: white;
-
 }
 
+.logo-loading {
+  animation: loading 1s;
+  animation-direction: alternate-reverse;
+}
 
+.logo-load {
+  max-width: 80% !important;
+}
+
+@keyframes loading {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.2);
+  }
+}
+
+.details-post {
+  margin: 0.4em;
+  margin-left: 0;
+  padding: 0.3em;
+  padding-top: 0.7em;
+  border-radius: 7px;
+  color: rgba(90, 90, 90, 0.63);
+}
+
+.details-post:hover {
+  background-color: rgba(201, 201, 201, 0.288);
+}
+
+.post-username {
+  color: #EF3C59 !important;
+}
+
+.comment-name {
+  color: black !important;
+}
+
+.modal-header {
+  padding-bottom: 0 !important;
+}
+
+.create-url {
+  border-radius: 4em !important;
+  padding: 1.5em !important;
+  font-size: 2em !important;
+  margin-top: 250px !important;
+}
+
+.paste-button {
+  height: 86x;
+  margin-top: 250px;
+  border-radius: 4em !important;
+  font-size: 2em !important;
+  background-color: #EF3C59 !important;
+  transition-duration: 0.3s !important;
+  padding: 0.8em !important;
+  letter-spacing: 5px;
+}
+
+.paste-button:hover {
+  background-color: #181818 !important;
+}
+
+.alert-url {
+  position: flex;
+  font-size: large;
+  margin-top: 150px !important;
+  font-weight: 600;
+  letter-spacing: 2px;
+  animation-name: redBlink;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+  animation-duration: 0.8s;
+  font-size: 40px;
+  float: center;
+  margin-bottom: -195px;
+}
+
+@keyframes redBlink {
+  from {
+    color: black
+  }
+
+  to {
+    color: red
+  }
+}
+
+.bfifxy {
+  max-width: 100% !important;
+  border-radius: 4.5em;
+}
+
+.hNTVMq {
+  padding: 15px !important;
+}
+
+.not-clickable {
+  pointer-events: none;
+}
