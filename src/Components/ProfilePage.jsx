@@ -16,6 +16,7 @@ class ProfilePage extends Component {
             <div>
                 {this.state.profile &&
                     <Fade>
+                        <Container style={{maxWidth: "800px"}}>
                         <Container className="profile">
                             <Row>
                                 <Col className="col-sm-4 col-md-3 col-l-2">
@@ -37,6 +38,7 @@ class ProfilePage extends Component {
                             :
                             <span className="center-msg">No Posts</span>
                         }
+                        </Container>
                     </Fade>
                 }
             </div>

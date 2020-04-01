@@ -21,27 +21,23 @@ class PostPage extends Component {
     render() {
         return (
             <Fade>
-                <div className="container mt-5">
+                <Container className="mt-5">
                     <div className="row">
-                        <Container>
-                            <div className="row">
-                                <div className="mt-5 col-md-2 col-lg-1 col-sm-12 col-xs-12">
-                                    <Container className="mx-auto">
-                                        <FilterComponent filter={this.filterby} />
-                                    </Container>
-                                </div>
-                                <div className="col">
-                                    {this.state.posts.length > 0 &&
-                                        <>
-                                            <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"} />
-                                            <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"} />
-                                            <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} />
-                                        </>}
-                                </div>
-                            </div>
-                        </Container>
+                        <div className="mt-5 col-md-2 col-lg-1 col-sm-12 col-xs-12">
+                            <Container className="mx-auto">
+                                <FilterComponent filter={this.filterby} />
+                            </Container>
+                        </div>
+                        <div className="col">
+                            {this.state.posts.length > 0 &&
+                                <>
+                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"} />
+                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"} />
+                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} />
+                                </>}
+                        </div>
                     </div>
-                </div>
+                </Container>
             </Fade>
         )
     }

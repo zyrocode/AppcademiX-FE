@@ -47,8 +47,7 @@ class CreatePost extends Component {
                                     <Input type="select" onChange={(e) => this.setState({ category: e.target.value })} value={this.state.category} required>
                                         <option value="">Select an option...</option>
                                         <option>Tech</option>
-                                        <option>Sales</option>
-                                        <option>Productivity</option>
+                                        <option>Business</option>
                                         <option>Other</option>
                                     </Input>
                                 </FormGroup>
