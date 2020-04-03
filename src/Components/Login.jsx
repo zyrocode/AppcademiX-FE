@@ -75,6 +75,7 @@ class Login extends Component {
                 localStorage.setItem("access_token", token.access_token)
                 localStorage.setItem("username", token.userInfo.username)
                 toast.success(`Welcome ${token.userInfo.firstname}`)
+                this.props.toggle()
             }
             else {
                 let errorMessage = await response.json()
@@ -88,7 +89,6 @@ class Login extends Component {
             toast.error(`Username or password incorect`)
             console.log(e)
         }
-        this.props.toggle()
     }
 }
 

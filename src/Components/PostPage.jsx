@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PostsList from './PostsList';
 import { toast } from 'react-toastify'
-import { Fade, Row, Col, Container } from 'reactstrap';
+import { Fade, Row, Col, Container, Input, Button } from 'reactstrap';
 import FontAwesome from "react-fontawesome";
 import FilterComponent from './FilterComponent';
 import { connect } from "react-redux"
@@ -22,6 +22,21 @@ class PostPage extends Component {
         return (
             <Fade>
                 <Container className="mt-5">
+                    <Row>
+                        <Input type="select">
+                            <option default>Filter by category</option>
+                            <option>Tech</option>
+                            <option>Sales</option>
+                            <option>Other</option>
+                        </Input>
+                        <Input type="select">
+                            <option default>Filter by difficulty</option>
+                            <option>Tech</option>
+                            <option>Sales</option>
+                            <option>Other</option>
+                        </Input>
+                        <Button>Filter</Button>
+                    </Row>
                     <div className="row">
                         <div className="mt-5 col-md-2 col-lg-1 col-sm-12 col-xs-12">
                             <Container className="mx-auto">
@@ -88,7 +103,6 @@ class PostPage extends Component {
         try {
             let response = await fetch("http://localhost:9000/api/posts?sort=ratingsCount")
             let posts = await response.json()
-
             console.log("all posts", posts)
             const newPosts = posts.postsList
             this.setState({
