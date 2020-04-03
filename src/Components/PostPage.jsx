@@ -62,7 +62,7 @@ class PostPage extends Component {
             await this.filterby()
             console.log("POST UPDATED")
         }
-    }
+    } 
 
     componentDidMount = async () => {
         let search = new URLSearchParams(this.props.location.search)

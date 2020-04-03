@@ -16,6 +16,7 @@ import { getUsersWithThunk } from '../Actions/setUser'
 import NewPostMetaGrab from "./NewPostMetaGrab";
 import SinglePostPage from "./SinglePostPage";
 import PostModal from "./PostModal";
+import TagDisplayComponent from "./TagDisplayComponent";
 
 const mapStateToProps = state => state
 
@@ -44,6 +45,7 @@ class RouterBrowse extends Component {
                 <Route path="/profile/:username" exact component={ProfilePage} />
                 <Route path="/post/:id" exact component={SinglePostPage}/>
                 <Route path="/register" exact component={Register} />
+                <Route path="/tags/:tag" exact component={TagDisplayComponent}/>
                 <Route component={NotFound} />
               </Switch>
             </Fade>
