@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { Fade, Row, Col, Container, Input, Button } from 'reactstrap';
 import FontAwesome from "react-fontawesome";
 import FilterComponent from './FilterComponent';
+import FilterCategory from './FilterCategory';
 import { connect } from "react-redux"
 import { refreshTokenAPI } from "../API/refresh"
 import { getUsersWithThunk } from '../Actions/setUser'
@@ -16,39 +17,28 @@ const mapDispatchToProps = dispatch => ({
 
 class PostPage extends Component {
     state = {
-        posts: []
+        posts: [],
+        filteredPosts: []
     }
     render() {
         return (
             <Fade>
                 <Container className="mt-5">
-                    <Row>
-                        <Input type="select">
-                            <option default>Filter by category</option>
-                            <option>Tech</option>
-                            <option>Sales</option>
-                            <option>Other</option>
-                        </Input>
-                        <Input type="select">
-                            <option default>Filter by difficulty</option>
-                            <option>Tech</option>
-                            <option>Sales</option>
-                            <option>Other</option>
-                        </Input>
-                        <Button>Filter</Button>
-                    </Row>
                     <div className="row">
-                        <div className="mt-5 col-md-2 col-lg-1 col-sm-12 col-xs-12">
-                            <Container className="mx-auto">
+                        <div className="mt-5">
+                            <Row className="mr-5">
                                 <FilterComponent filter={this.filterby} />
-                            </Container>
+                            </Row>
+                            <Row className="mr-5 mt-3">
+                                <FilterCategory filter={this.filterbycategory} />
+                            </Row>
                         </div>
                         <div className="col">
                             {this.state.posts.length > 0 &&
                                 <>
-                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"today"} />
-                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"yesterday"} />
-                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} />
+                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.filteredPosts} refresh={() => this.fetchPosts()} section={"today"} />
+                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.filteredPosts} refresh={() => this.fetchPosts()} section={"yesterday"} />
+                                    <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.filteredPosts} refresh={() => this.fetchPosts()} />
                                 </>}
                         </div>
                     </div>
@@ -62,7 +52,7 @@ class PostPage extends Component {
             await this.filterby()
             console.log("POST UPDATED")
         }
-    } 
+    }
 
     componentDidMount = async () => {
         let search = new URLSearchParams(this.props.location.search)
@@ -86,7 +76,8 @@ class PostPage extends Component {
                 let posts = await response.json()
                 const newPost = posts.postsList
                 this.setState({
-                    posts: newPost
+                    posts: newPost,
+                    filteredPosts: newPost
                 })
             }
             else {
@@ -99,6 +90,30 @@ class PostPage extends Component {
         }
     }
 
+    filterbycategory = (param) => {
+        if (param) {
+            try {
+                let posts = this.state.posts.filter(post => post.category == this.capFirst(param))
+                console.log(posts)
+                this.setState({
+                    filteredPosts: posts
+                })
+            } catch (e) {
+                console.log(e)
+            }
+        } else {
+            this.setState({
+                filteredPosts: this.state.posts
+            })
+        }
+    }
+
+    capFirst = string => {
+        if (string)
+            return string.charAt(0).toUpperCase() + string.slice(1)
+    }
+
+
     fetchPosts = async () => {
         try {
             let response = await fetch("http://localhost:9000/api/posts?sort=ratingsCount")
@@ -106,7 +121,8 @@ class PostPage extends Component {
             console.log("all posts", posts)
             const newPosts = posts.postsList
             this.setState({
-                posts: newPosts
+                posts: newPosts,
+                filteredPosts: newPosts
             })
         } catch (e) {
             console.log(e)
