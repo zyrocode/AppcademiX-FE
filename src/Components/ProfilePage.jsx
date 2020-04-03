@@ -4,12 +4,17 @@ import PostsList from './PostsList';
 import FontAwesome from 'react-fontawesome';
 import { withRouter } from 'react-router-dom'
 import EditInfoModal from './EditInfoModal';
+import { connect } from 'react-redux'
+
+
+const mapStateToProps = state => state
 
 class ProfilePage extends Component {
     state = {
         profile: undefined,
         posts: [],
-        openEditInfo: false
+        openEditInfo: false,
+        updateIcons:false
     }
     render() {
         return (
@@ -22,7 +27,7 @@ class ProfilePage extends Component {
                                 <Col className="col-sm-4 col-md-3 col-l-2">
                                     <img className="profile-img" src={this.state.profile.image} alt="Profile Pic" />
                                 </Col>
-                                <Col>
+                                <Col> 
                                     <div className="profile-info ml-1">
                                         <h4>{this.capFirst(this.state.profile.firstname) + " " + this.capFirst(this.state.profile.lastname)}</h4>
                                         <h6 style={{ color: "#666" }}>{"@" + this.state.profile.username}</h6>
@@ -34,7 +39,7 @@ class ProfilePage extends Component {
                         {this.state.openEditInfo && <EditInfoModal open={this.state.openEditInfo} toggle={this.toggleEditInfo} />}
                         {this.state.posts.length > 0
                             ?
-                            <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} nrefresh={this.initialFetcher} posts={this.state.posts} />
+                            <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} newrefresh={this.initialFetcher} posts={this.state.posts} updateIcons={this.state.updateIcons} />
                             :
                             <span className="center-msg">No Posts</span>
                         }
@@ -59,6 +64,12 @@ class ProfilePage extends Component {
                 profile: profile,
                 posts: posts
             })
+
+          if(this.props.match.params.username === this.props.userInfo.username){
+              this.setState({
+                updateIcons:true
+              })
+          }  
         } catch (e) {
             console.log(e)
         }
@@ -98,5 +109,5 @@ class ProfilePage extends Component {
     }
 }
 
-export default /* connect(mapStateToProps, mapDispatchToProps) */ProfilePage;
+export default  connect(mapStateToProps) (ProfilePage);
 
