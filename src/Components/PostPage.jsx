@@ -24,7 +24,13 @@ class PostPage extends Component {
                 <Container className="mt-5">
                     <Row>
                         <Input type="select">
-                            <option>Filter by category</option>
+                            <option default>Filter by category</option>
+                            <option>Tech</option>
+                            <option>Sales</option>
+                            <option>Other</option>
+                        </Input>
+                        <Input type="select">
+                            <option default>Filter by difficulty</option>
                             <option>Tech</option>
                             <option>Sales</option>
                             <option>Other</option>
