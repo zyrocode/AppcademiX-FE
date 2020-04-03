@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Col, Fade, Row } from 'reactstrap'
+import { Container, Col, Fade, Row, Modal, ModalHeader, ModalBody,ModalFooter,Button } from 'reactstrap'
 import Login from './Login';
 import PostModal from './PostModal';
 import FontAwesome from "react-fontawesome";
 import { connect } from 'react-redux'
 import Moment from "react-moment"
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const mapStateToProps = state => state
 
@@ -19,88 +20,123 @@ class PostsList extends Component {
         yesterday: new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().substring(0, 10),
         title: undefined,
         openLogin: false,
+        deleteModalIsOpen: false,
+        postIdForDelete:""
     }
 
+
+   
     render() {
         return (
             <Fade>
                 <div>
+
+                  
+                {this.state.postIdForDelete && this.state.deleteModalIsOpen &&
+
+<Modal isOpen={this.state.deleteModalIsOpen} toggle={this.toggleDelete} >
+<ModalHeader toggle={this.toggleDelete}></ModalHeader>
+<ModalBody>
+
+Do you really want to Delete this post?
+</ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={this.toggleDelete}>Cancel</Button>
+          <Button color="danger" onClick={()=>this.deletePost(this.state.postIdForDelete)}>Delete</Button>
+        </ModalFooter>
+      </Modal>
+                    }
+
+
                     {this.state.postModal && <PostModal open={this.state.postModal} toggle={this.togglePostModal} post={this.state.selectedPost} refresh={this.props.refresh} rate={(post) => this.ratePost(post)} />}
                     {this.state.posts && this.state.posts.length > 0 &&
                         <Container>
                             <h2>{this.state.title}</h2>
                             {this.state.posts.map((post, index) =>
-                                <Container className="m-4 mx-auto post " onClick={() => { this.setState({ selectedPost: post }); this.togglePostModal() }} key={index}>
-                                    <Row>
-                                        <div className="m-2">
-                                            <img className="post-image" src={post.image} alt="Post Default Pic" />
-                                        </div>
-                                        <Col className="col-6">
-                                            <Row className="mb-2">
-                                                <h4>{post.title.toUpperCase()}</h4>
-                                            </Row>
-                                            <Row>
-                                                <h5 style={{ color: "#8c8c8c" }}>{post.description}</h5>
-                                            </Row>
-                                            <Row>
-                                                <div className="details-post">
-                                                    <FontAwesome name="comment" />
-                                                    <span className="m-1">{post.commentsCount}</span>
-                                                </div>
-                                                <div className="details-post">
-                                                    <span>
-                                                        {post.category == "Tech" &&
-                                                            <FontAwesome className="mr-1" name="laptop" />}
-                                                        {post.category == "Sales" &&
-                                                            <FontAwesome className="mr-1" name="chart-bar" />}
-                                                        {post.category}
-                                                    </span>
-                                                </div>
-                                                <div className="details-post">
-                                                    <span>
-                                                        {post.difficulty == "Medium" &&
-                                                            <FontAwesome name="dot-circle" />}
-                                                        {post.difficulty == "Hard" &&
-                                                            <>
-                                                                <FontAwesome name="dot-circle" />
-                                                                <FontAwesome name="dot-circle" />
-                                                            </>}
-                                                        <FontAwesome className="mr-1" name="dot-circle" />
-                                                        {post.difficulty}
-                                                    </span>
-                                                </div>
-                                            </Row>
-                                            <Row>
-                                                {post.tags.length > 0 &&
-                                                    post.tags.map((tag, i) =>
-                                                        <span key={i}>
-                                                            <Link className="post-hashtag" to={"/tags/" + tag}>&nbsp;{"#" + tag} &nbsp;</Link>
+                               <div key={index}>
+                                 { this.props.updateIcons && <Row>
+                                
+                                      <Col>  <span onClick={()=>this.setState({postIdForDelete:post._id, deleteModalIsOpen:true})} ><FontAwesome className="mr-1" name="trash" /></span>
+                                      &nbsp; &nbsp;
+                                      <Link  to={"/editpost/" + post._id}><span><FontAwesome className="mr-1" name="edit" /></span></Link>
+                                      </Col>
+                                      
+                                          
+                                  </Row>}
+                                    <Container className="m-4 mx-auto post " onClick={() => { this.setState({ selectedPost: post }); this.togglePostModal() }} >
+    
+                                       
+                                        <Row>
+                                            <div className="m-2">
+                                                <img className="post-image" src={post.image} alt="Post Default Pic" />
+                                            </div>
+                                            <Col className="col-6">
+                                                <Row className="mb-2">
+                                                    <h4>{post.title.toUpperCase()}</h4>
+                                                </Row>
+                                                <Row>
+                                                    <h5 style={{ color: "#8c8c8c" }}>{post.description}</h5>
+                                                </Row>
+                                                <Row>
+                                                    <div className="details-post">
+                                                        <FontAwesome name="comment" />
+                                                        <span className="m-1">{post.commentsCount}</span>
+                                                    </div>
+                                                    <div className="details-post">
+                                                        <span>
+                                                            {post.category == "Tech" &&
+                                                                <FontAwesome className="mr-1" name="laptop" />}
+                                                            {post.category == "Sales" &&
+                                                                <FontAwesome className="mr-1" name="chart-bar" />}
+                                                            {post.category}
                                                         </span>
-                                                    )}
-                                            </Row>
-                                            <Row>
-                                                <h6 style={{ fontSize: "medium", paddingTop: "0.5em" }}>Posted By <Link className="post-username" to={"/profile/" + post.username}>{"@" + post.username}</Link></h6>
-                                            </Row>
-                                            <Row>
-                                                <h6 style={{ fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{post.createdAt}</Moment></h6>
-                                            </Row>
-                                        </Col>
-                                        <Col className="p-0">
-                                            {post.ratings.length > 0 && post.ratings.find(({ upvotedBy }) => upvotedBy === this.props.userInfo.username)
-                                                ?
-                                                <span onClick={(e) => this.ratePost(post, e)} className="rate2">
-                                                    <FontAwesome className="rate2-color" name="star" size="2x" />
-                                                    <span className="rate-number">{post.ratingsCount}</span>
-                                                </span>
-                                                :
-                                                <span onClick={(e) => this.ratePost(post, e)} className="rate">
-                                                    <FontAwesome className="rate-color" name="star" size="2x" />
-                                                    <span className="rate-number">{post.ratingsCount}</span>
-                                                </span>
-                                            }
-                                        </Col>
-                                    </Row>
-                                </Container>
+                                                    </div>
+                                                    <div className="details-post">
+                                                        <span>
+                                                            {post.difficulty == "Medium" &&
+                                                                <FontAwesome name="dot-circle" />}
+                                                            {post.difficulty == "Hard" &&
+                                                                <>
+                                                                    <FontAwesome name="dot-circle" />
+                                                                    <FontAwesome name="dot-circle" />
+                                                                </>}
+                                                            <FontAwesome className="mr-1" name="dot-circle" />
+                                                            {post.difficulty}
+                                                        </span>
+                                                    </div>
+                                                </Row>
+                                                <Row>
+                                                    {post.tags.length > 0 &&
+                                                        post.tags.map((tag, i) =>
+                                                            <span key={i}>
+                                                                <Link className="post-hashtag" to={"/tags/" + tag}>&nbsp;{"#" + tag} &nbsp;</Link>
+                                                            </span>
+                                                        )}
+                                                </Row>
+                                                <Row>
+                                                    <h6 style={{ fontSize: "medium", paddingTop: "0.5em" }}>Posted By <Link className="post-username" to={"/profile/" + post.username}>{"@" + post.username}</Link></h6>
+                                                </Row>
+                                                <Row>
+                                                    <h6 style={{ fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{post.createdAt}</Moment></h6>
+                                                </Row>
+                                            </Col>
+                                            <Col className="p-0">
+                                                {post.ratings.length > 0 && post.ratings.find(({ upvotedBy }) => upvotedBy === this.props.userInfo.username)
+                                                    ?
+                                                    <span onClick={(e) => this.ratePost(post, e)} className="rate2">
+                                                        <FontAwesome className="rate2-color" name="star" size="2x" />
+                                                        <span className="rate-number">{post.ratingsCount}</span>
+                                                    </span>
+                                                    :
+                                                    <span onClick={(e) => this.ratePost(post, e)} className="rate">
+                                                        <FontAwesome className="rate-color" name="star" size="2x" />
+                                                        <span className="rate-number">{post.ratingsCount}</span>
+                                                    </span>
+                                                }
+                                            </Col>
+                                        </Row>
+                                    </Container>
+                               </div>
                             )}
                         </Container>}
                 </div>
@@ -244,6 +280,41 @@ class PostsList extends Component {
         this.setState({
             postModal: !this.state.postModal
         })
+    }
+
+    toggleDelete = () => {
+        this.setState({
+            deleteModalIsOpen: !this.state.deleteModalIsOpen,
+            postIdForDelete:""
+        })
+    }
+
+
+    deletePost=async (id)=>{
+        // api/posts/:username/:id
+
+        try {
+
+           const resp =  await fetch(
+                `http://localhost:9000/api/posts/${this.props.userInfo.username}/${id}/`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: "Bearer " + this.props.accessToken,
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+            if(resp.ok){
+                this.toggleDelete()
+                this.props.newrefresh()
+                toast.success(`Post successfully deleted`)
+            }
+            
+        } catch (error) {
+           console.log(error) 
+        }
     }
 }
 export default connect(mapStateToProps)(PostsList);

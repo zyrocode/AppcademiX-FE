@@ -31,7 +31,7 @@ class PostModal extends Component {
         commentForEditID: "",
         commentForEditPostID: "",
         videoPlayer: true,
-        openForReply: false
+        upvotes: false
     }
 
     render() {
@@ -199,8 +199,30 @@ class PostModal extends Component {
                                                     <h6><span style={{ cursor: "pointer" }} onClick={() => this.setState({ openForReply: !this.state.openForReply, replyToCommentID: comment._id })}>Reply</span></h6>
                                                 </Col>
                                             </Row>
+
                                         </Col>}
-                                    {/* {this.state.openForReply && this.state.replyToCommentID === comment._id &
+
+                                            <Row>
+                                                <div>
+                                           <span onClick={() => this.rateComment(comment._id)}>
+                                            
+                                    {comment.upvoted ?  <span className="rate2"><FontAwesome name="heart" size="2x" /></span>:  <span className="rate"><FontAwesome name="heart" size="2x" /></span>}
+                                    
+                                           </span>
+                                           <span className="rate-number"> {comment.upvotes}</span>
+                                           </div>
+                                           
+                                           </Row>
+                                        </Col>
+                                        }
+                                    {this.state.openForEdit && this.state.commentForEditID === comment._id && <Col>
+                                        <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForEdit: false, commentForEditID: "", commentForEditPostID: "" })}>
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <FormGroup >
+                                            <Label>Edit this comment:</Label>
+                                            <Input type="textarea" onChange={(e) => this.setState({ commentForEdit: e.target.value })} value={this.state.commentForEdit} />
+                                        </FormGroup>
                                         <Row>
                                             <Label>Reply:</Label>
                                             {/* <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForReply: false, replyToCommentID: ""})}>
@@ -249,6 +271,18 @@ class PostModal extends Component {
         }
     }
 
+    rateComment = async (id) => {
+        let response = await fetch(`http://localhost:9000/api/rate/comment/${id}`, {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + this.props.accessToken
+                }
+        
+            })
+        this.getAllComments()
+            
+    }
+                      
     getAllComments = async () => {
         try {
             let response = await fetch(`http://localhost:9000/api/comments/${this.props.post._id}?sort=updatedAt`)
