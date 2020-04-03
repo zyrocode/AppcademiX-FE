@@ -13,7 +13,7 @@ body.light-mode {
 }
 
 body.dark-mode {
-  background-color: #181818 !important;
+  background-color: #202020 !important;
   color: #dfdfdf;
   .navbar {
     background-color: #212020;
@@ -27,6 +27,10 @@ body.dark-mode {
   }
 }
 
+.dark-mode .details-post {
+  color: #dfdfdf!important
+}
+
 .dark-mode .post {
   background-color: #212020 !important;
 }
@@ -36,19 +40,33 @@ body.dark-mode {
 }
 
 .dark-mode .modal-content {
-  background-color: #181818;
+  background-color: #202020;
   color: #dfdfdf;
 }
 
 .dark-mode .container {
-  background-color: #181818;
+  background-color: #202020;
   color: #dfdfdf;
 }
 
-.dark-mode .ui.button {
-  background-color: #181818;
+.dark-mode .modal .container {
+  background-color: #202020;
   color: #dfdfdf;
-  border: 1px solid #dfdfdf;
+}
+
+.dark-mode .comment-name {
+  color: #EF3C59 !important;
+}
+
+.dark-mode .ui.button {
+  background-color: #202020;
+  color: #dfdfdf;
+  border: 1px solid #dfdfdf44;
+}
+.dark-mode .ui.button:hover {
+  background-color: #202020;
+  color: #dfdfdf;
+  border: 1px solid #dfdfdf44;
 }
 
 .dark-mode .ui.dropdown .menu {
@@ -56,8 +74,11 @@ body.dark-mode {
   color: #dfdfdf;
 }
 
+.dark-mode .rate2-color {
+  color: #EF3C59 !important;
+}
 
-body.dark-mode span {
+.dark-mode span {
   color: #dfdfdf;
 }
 
@@ -89,7 +110,6 @@ html.dark-mode {
 
 .dark-mode-toggle {
   display: flex;
-  margin: 0 auto;
   & > button {
     font-size: 1.2em;
     background: none;
@@ -112,6 +132,7 @@ html.dark-mode {
   padding: 0 4px;
   display: flex;
   align-items: center;
+  background-color: rgba(51, 51, 51, 0) !important;
 }
 
 input[type='checkbox'].dmcheck {
