@@ -30,7 +30,8 @@ class PostModal extends Component {
         commentForEdit: "",
         commentForEditID: "",
         commentForEditPostID: "",
-        videoPlayer: true
+        videoPlayer: true,
+        upvotes: false
     }
 
     render() {
@@ -195,7 +196,19 @@ class PostModal extends Component {
                                             <Row>
                                                 <h6 style={{ fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{comment.createdAt}</Moment></h6>
                                             </Row>
-                                        </Col>}
+                                            <Row>
+                                                <div>
+                                           <span onClick={() => this.rateComment(comment._id)}>
+                                            
+                                    {comment.upvoted ?  <span className="rate2"><FontAwesome name="heart" size="2x" /></span>:  <span className="rate"><FontAwesome name="heart" size="2x" /></span>}
+                                    
+                                           </span>
+                                           <span className="rate-number"> {comment.upvotes}</span>
+                                           </div>
+                                           
+                                           </Row>
+                                        </Col>
+                                        }
                                     {this.state.openForEdit && this.state.commentForEditID === comment._id && <Col>
                                         <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForEdit: false, commentForEditID: "", commentForEditPostID: "" })}>
                                             <span aria-hidden="true">&times;</span>
@@ -229,6 +242,17 @@ class PostModal extends Component {
         }
     }
 
+    rateComment = async (id) => {
+        let response = await fetch(`http://localhost:9000/api/rate/comment/${id}`, {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + this.props.accessToken
+                }
+        
+            })
+        this.getAllComments()
+            
+    }
 
     getAllComments = async () => {
         try {
