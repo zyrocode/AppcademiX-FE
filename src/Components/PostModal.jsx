@@ -42,7 +42,7 @@ class PostModal extends Component {
                 <Modal isOpen={this.props.open} toggle={this.props.toggle} >
                     <ModalHeader toggle={this.props.toggle}></ModalHeader>
                     <ModalBody>
-                        <Container  className="section-modal">
+                        <Container className="section-modal">
                             <Row>
                                 <Col>
                                     <Row>
@@ -111,7 +111,7 @@ class PostModal extends Component {
                                 </Col>
                             </Row>
                             <Row className="p-4">
-                                    {this.state.videoPlayer && <ReactPlayer url={this.props.post.link} onError={() => this.setState({ videoPlayer: false })} />}
+                                {this.state.videoPlayer && <ReactPlayer url={this.props.post.link} onError={() => this.setState({ videoPlayer: false })} />}
                             </Row>
                             <Row>
                                 <Col className="mt-2 ml-4 ">
@@ -191,11 +191,17 @@ class PostModal extends Component {
                                                 <h5 className="font-weight-bold"><Link className="comment-name" to={"/profile/" + comment.userInfo.username}>{this.capFirst(comment.userInfo.firstname) + " " + this.capFirst(comment.userInfo.lastname)}</Link></h5>
                                             </Row>
                                             <Row>
-                                                <h6 className="mt-3 mb-3">{comment.comment}</h6>
+                                                <h5 className="mt-3 mb-3">{comment.comment}</h5>
                                             </Row>
                                             <Row>
-                                                <h6 style={{ fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{comment.createdAt}</Moment></h6>
+                                                <span style={{ fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{comment.createdAt}</Moment></span>
+                                                <Col>
+                                                    <h6><span style={{ cursor: "pointer" }} onClick={() => this.setState({ openForReply: !this.state.openForReply, replyToCommentID: comment._id })}>Reply</span></h6>
+                                                </Col>
                                             </Row>
+
+                                        </Col>}
+
                                             <Row>
                                                 <div>
                                            <span onClick={() => this.rateComment(comment._id)}>
@@ -218,10 +224,33 @@ class PostModal extends Component {
                                             <Input type="textarea" onChange={(e) => this.setState({ commentForEdit: e.target.value })} value={this.state.commentForEdit} />
                                         </FormGroup>
                                         <Row>
-                                            <Button className="btn-modal-primary m-3" onClick={this.updateComment}>Update</Button>
-                                            <Button onClick={this.deleteComment}>Delete</Button>
-                                        </Row>
-                                    </Col>}
+                                            <Label>Reply:</Label>
+                                            {/* <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForReply: false, replyToCommentID: ""})}>
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <FormGroup >
+                                                <Label>Reply:</Label>
+                                                <Input type="textarea" onChange={(e) => this.setState({ commentForEdit: e.target.value })} value={this.state.commentForEdit} />
+                                            </FormGroup>
+                                            <Row>
+                                                <Button className="btn-modal-primary m-3" onClick={this.updateComment}>Update</Button>
+                                                <Button onClick={this.deleteComment}>Delete</Button>
+                                            </Row> */
+                                    }
+                                    {this.state.openForEdit && this.state.commentForEditID === comment._id &&
+                                        <Col>
+                                            <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForEdit: false, commentForEditID: "", commentForEditPostID: "" })}>
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <FormGroup >
+                                                <Label>Edit this comment:</Label>
+                                                <Input type="textarea" onChange={(e) => this.setState({ commentForEdit: e.target.value })} value={this.state.commentForEdit} />
+                                            </FormGroup>
+                                            <Row>
+                                                <Button className="btn-modal-primary m-3" onClick={this.updateComment}>Update</Button>
+                                                <Button onClick={this.deleteComment}>Delete</Button>
+                                            </Row>
+                                        </Col>}
                                 </Row>
                             </Container>
                         )}
@@ -253,14 +282,12 @@ class PostModal extends Component {
         this.getAllComments()
             
     }
-
+                      
     getAllComments = async () => {
         try {
             let response = await fetch(`http://localhost:9000/api/comments/${this.props.post._id}?sort=updatedAt`)
             let comments = await response.json()
             //    let sortedComments = comments.sort((a,b) =>b.createdAt - a.createdAt)
-
-
             this.setState({
                 post: this.props.post,
                 comments: comments.reverse()
@@ -307,10 +334,8 @@ class PostModal extends Component {
 
     deleteComment = async () => {
         // api/comments/:commentid/posts/:postid?username=:username
-
         try {
             const { commentForEditID, commentForEditPostID } = this.state
-
             let response = await fetch(`http://localhost:9000/api/comments/${commentForEditID}/posts/${commentForEditPostID}?username=${this.props.userInfo.username}`, {
                 method: "DELETE",
                 headers: {
@@ -318,7 +343,6 @@ class PostModal extends Component {
                     "Content-Type": "application/json"
                 }
             })
-
             if (response.ok) {
                 this.setState({
                     commentForEdit: "",
@@ -326,12 +350,9 @@ class PostModal extends Component {
                     commentForEditPostID: "",
                     openForEdit: false
                 })
-
             }
-
         } catch (error) {
             console.log(error)
-
         }
 
 
