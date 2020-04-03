@@ -71,12 +71,11 @@ class PostsList extends Component {
                                                 </div>
                                             </Row>
                                             <Row>
-                                                {post.tags.length > 0 && 
-                                                post.tags.map((tag, i) =>
-                                                <span key={i}>     
-                                                <Link className="post-hashtag" to={"/tags/" + tag}>&nbsp;{"#" + tag} &nbsp;</Link>
-
-                                                 </span>
+                                                {post.tags.length > 0 &&
+                                                    post.tags.map((tag, i) =>
+                                                        <span key={i}>
+                                                            <Link className="post-hashtag" to={"/tags/" + tag}>&nbsp;{"#" + tag} &nbsp;</Link>
+                                                        </span>
                                                     )}
                                             </Row>
                                             <Row>
@@ -90,7 +89,7 @@ class PostsList extends Component {
                                             {post.ratings.length > 0 && post.ratings.find(({ upvotedBy }) => upvotedBy === this.props.userInfo.username)
                                                 ?
                                                 <span onClick={(e) => this.ratePost(post, e)} className="rate2">
-                                                    <FontAwesome className="rate2-color" name="star" size="2x"/>
+                                                    <FontAwesome className="rate2-color" name="star" size="2x" />
                                                     <span className="rate-number">{post.ratingsCount}</span>
                                                 </span>
                                                 :
@@ -224,14 +223,15 @@ class PostsList extends Component {
                     title: "Yesterday"
                 })
             } break;
-            case "hashtag":{
-               this.setState({
-                   posts:postsList,
-                   title: "#hashTag"
-               }) 
+            case "hashtag": {
+                this.setState({
+                    posts: postsList,
+                    title: "#" + this.props.tag
+                })
             } break;
             default: {
                 let posts = postsList.filter(post => post.createdAt.substring(0, 10) < this.state.yesterday)
+                console.log(posts)
                 this.setState({
                     posts: posts,
                     title: "Older Posts"

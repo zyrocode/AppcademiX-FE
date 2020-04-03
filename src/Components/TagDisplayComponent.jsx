@@ -30,7 +30,7 @@ class TagDisplayComponent extends Component {
                     
                         {this.state.posts.length > 0
                             ?
-                            <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"hashtag"} />
+                            <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} refresh={() => this.fetchPosts()} section={"hashtag"} tag={this.props.match.params.tag}/>
                             :
                             <span className="center-msg">No Post with this #hashtag!</span>
                         }

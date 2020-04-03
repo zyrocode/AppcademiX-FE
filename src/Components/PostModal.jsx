@@ -77,7 +77,7 @@ class PostModal extends Component {
                                         <div className="details-post">
                                             <h6>
                                                 <FontAwesome name="comment" />
-                                                <span className="m-1">{Math.floor(Math.random() * 30) + 1}</span>
+                                                <span className="m-1">{this.props.post.commentsCount}</span>
                                             </h6>
                                         </div>
                                     </Row>
@@ -258,12 +258,8 @@ class PostModal extends Component {
         // commentForEditID:"",
         //commentForEditPostID:""
         try {
-
-
             const { commentForEdit, commentForEditID, commentForEditPostID } = this.state
-
             let bodyForPUT = { comment: commentForEdit }
-
             let response = await fetch(`http://localhost:9000/api/comments/${commentForEditPostID}/${this.props.userInfo.username}/${commentForEditID}`, {
                 method: "PUT",
                 headers: {
@@ -272,7 +268,6 @@ class PostModal extends Component {
                 },
                 body: JSON.stringify(bodyForPUT)
             })
-
             if (response.ok) {
                 this.setState({
                     commentForEdit: "",
@@ -280,16 +275,10 @@ class PostModal extends Component {
                     commentForEditPostID: "",
                     openForEdit: false
                 })
-
             }
-
         } catch (error) {
             console.log(error)
-
         }
-
-
-
     };
 
     deleteComment = async () => {

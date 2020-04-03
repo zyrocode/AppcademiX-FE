@@ -108,9 +108,6 @@ class PostPage extends Component {
             this.setState({
                 posts: newPosts
             })
-
-
-
         } catch (e) {
             console.log(e)
         }
