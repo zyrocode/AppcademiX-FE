@@ -45,7 +45,7 @@ class PostsList extends Component {
                                             <Row>
                                                 <div className="details-post">
                                                     <FontAwesome name="comment" />
-                                                    <span className="m-1">{Math.floor(Math.random() * 30) + 1}</span>
+                                                    <span className="m-1">{post.commentsCount}</span>
                                                 </div>
                                                 <div className="details-post">
                                                     <span>
@@ -73,7 +73,10 @@ class PostsList extends Component {
                                             <Row>
                                                 {post.tags.length > 0 && 
                                                 post.tags.map((tag, i) =>
-                                                        <span key={i}>{"#" + tag} &nbsp;</span>
+                                                <span key={i}>     
+                                                <Link className="post-hashtag" to={"/tags/" + tag}>&nbsp;{"#" + tag} &nbsp;</Link>
+
+                                                 </span>
                                                     )}
                                             </Row>
                                             <Row>
@@ -220,6 +223,12 @@ class PostsList extends Component {
                     posts: posts,
                     title: "Yesterday"
                 })
+            } break;
+            case "hashtag":{
+               this.setState({
+                   posts:postsList,
+                   title: "#hashTag"
+               }) 
             } break;
             default: {
                 let posts = postsList.filter(post => post.createdAt.substring(0, 10) < this.state.yesterday)

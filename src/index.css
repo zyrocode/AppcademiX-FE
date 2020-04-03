@@ -396,3 +396,14 @@ input[type="file"] {
 .not-clickable {
   pointer-events: none;
 }
+
+.post-hashtag {
+  color: #EF3C59 !important;
+}
+
+.post-hashtag:hover {
+  text-decoration: none !important;
+  font-weight: bold;
+  background: rgba(201, 201, 201, 0.288);
+  border-radius: .23em;
+}
