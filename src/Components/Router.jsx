@@ -17,6 +17,7 @@ import NewPostMetaGrab from "./NewPostMetaGrab";
 import SinglePostPage from "./SinglePostPage";
 import PostModal from "./PostModal";
 import TagDisplayComponent from "./TagDisplayComponent";
+import EditPost from "./EditPost";
 
 const mapStateToProps = state => state
 
@@ -40,12 +41,14 @@ class RouterBrowse extends Component {
             <NavBar />
             <Fade>
               <Switch>
+              <Route path="/editpost/:postId" exact component={EditPost} />
                 <Route path="/createpost" exact component={NewPostMetaGrab} />
                 <Route path="/" exact component={PostPage} />
                 <Route path="/profile/:username" exact component={ProfilePage} />
                 <Route path="/post/:id" exact component={SinglePostPage}/>
                 <Route path="/register" exact component={Register} />
                 <Route path="/tags/:tag" exact component={TagDisplayComponent}/>
+               
                 <Route component={NotFound} />
               </Switch>
             </Fade>
