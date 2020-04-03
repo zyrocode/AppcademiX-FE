@@ -8,19 +8,19 @@ const tagOptions = [
     key: "Title",
     text: "Title",
     value: "Title",
-    label: { color: "red", empty: true, circular: true }
+    label: { color: "", empty: true, circular: true }
   },
   {
     key: "Difficulty",
     text: "Difficulty",
     value: "Difficulty",
-    label: { color: "blue", empty: true, circular: true }
+    label: { color: "", empty: true, circular: true }
   },
   {
     key: "Category",
     text: "Category",
     value: "Category",
-    label: { color: "black", empty: true, circular: true }
+    label: { color: "", empty: true, circular: true }
   }
 ];
 
@@ -91,7 +91,6 @@ class FilterComponent extends Component {
         >
           <Dropdown.Menu>
             <Dropdown.Divider />
-            <Dropdown.Header icon="tags" content="Tag Label" />
             <Dropdown.Menu scrolling>
               {this.state.filteredList.map(option => (
                 <Dropdown.Item

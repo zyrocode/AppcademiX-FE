@@ -77,22 +77,22 @@ class PostsList extends Component {
                                                     )}
                                             </Row>
                                             <Row>
-                                                <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontSize: "medium", paddingTop: "0.5em" }}>Posted By <Link className="post-username" to={"/profile/" + post.username}>{"@" + post.username}</Link></h6>
+                                                <h6 style={{ fontSize: "medium", paddingTop: "0.5em" }}>Posted By <Link className="post-username" to={"/profile/" + post.username}>{"@" + post.username}</Link></h6>
                                             </Row>
                                             <Row>
-                                                <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{post.createdAt}</Moment></h6>
+                                                <h6 style={{ fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{post.createdAt}</Moment></h6>
                                             </Row>
                                         </Col>
                                         <Col className="p-0">
                                             {post.ratings.length > 0 && post.ratings.find(({ upvotedBy }) => upvotedBy === this.props.userInfo.username)
                                                 ?
                                                 <span onClick={(e) => this.ratePost(post, e)} className="rate2">
-                                                    <FontAwesome name="star" size="2x" />
+                                                    <FontAwesome className="rate2-color" name="star" size="2x"/>
                                                     <span className="rate-number">{post.ratingsCount}</span>
                                                 </span>
                                                 :
                                                 <span onClick={(e) => this.ratePost(post, e)} className="rate">
-                                                    <FontAwesome name="star" size="2x" />
+                                                    <FontAwesome className="rate-color" name="star" size="2x" />
                                                     <span className="rate-number">{post.ratingsCount}</span>
                                                 </span>
                                             }

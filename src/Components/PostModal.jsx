@@ -115,10 +115,10 @@ class PostModal extends Component {
                             <Row>
                                 <Col className="mt-2 ml-4 ">
                                     <Row>
-                                        <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontSize: "medium", paddingTop: "0.5em" }}>Posted By <Link className="post-username" to={"/profile/" + this.props.post.username}>{"@" + this.props.post.username}</Link></h6>
+                                        <h6 style={{ fontSize: "medium", paddingTop: "0.5em" }}>Posted By <Link className="post-username" to={"/profile/" + this.props.post.username}>{"@" + this.props.post.username}</Link></h6>
                                     </Row>
                                     <Row>
-                                        <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{this.props.post.createdAt}</Moment></h6>
+                                        <h6 style={{ fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{this.props.post.createdAt}</Moment></h6>
                                     </Row>
                                 </Col>
                                 <Col className="m-2">
@@ -193,7 +193,7 @@ class PostModal extends Component {
                                                 <h6 className="mt-3 mb-3">{comment.comment}</h6>
                                             </Row>
                                             <Row>
-                                                <h6 style={{ color: "rgba(32, 32, 32, 0.397)", fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{comment.createdAt}</Moment></h6>
+                                                <h6 style={{ fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{comment.createdAt}</Moment></h6>
                                             </Row>
                                         </Col>}
                                     {this.state.openForEdit && this.state.commentForEditID === comment._id && <Col>
