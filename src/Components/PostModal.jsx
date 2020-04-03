@@ -179,6 +179,8 @@ class PostModal extends Component {
                                 </Col>
                             </Form>
                         </Container>
+
+                        {/*---------------COMMENTS*--------------------*/}
                         {this.state.comments && !this.state.commentLoading && this.state.comments.map((comment, index) =>
                             <Container className="section-modal" key={index}>
                                 {this.props.userInfo.username === comment.userInfo.username && !this.state.openForEdit && <div className="penBg float-right" onClick={() => this.setState({ openForEdit: true, commentForEdit: comment.comment, commentForEditID: comment._id, commentForEditPostID: comment.postid })}><FontAwesome name="pen" className=" penEdit" /></div>
@@ -188,7 +190,10 @@ class PostModal extends Component {
                                     {this.state.commentForEditID !== comment._id &&
                                         <Col>
                                             <Row>
-                                                <h5 className="font-weight-bold"><Link className="comment-name" to={"/profile/" + comment.userInfo.username}>{this.capFirst(comment.userInfo.firstname) + " " + this.capFirst(comment.userInfo.lastname)}</Link></h5>
+                                            <h5 className="font-weight-bold"><Link className="comment-name" to={"/profile/" + comment.userInfo.username}>{this.capFirst(comment.userInfo.firstname) + " " + this.capFirst(comment.userInfo.lastname)}</Link></h5>
+                                            </Row>
+                                            <Row>
+                                                <h6 style={{ fontSize: "small", paddingTop: "0.5em" }}><Link className="post-username" to={"/profile/" + comment.userInfo.username}>{"@" + comment.userInfo.username}</Link></h6>
                                             </Row>
                                             <Row>
                                                 <h5 className="mt-3 mb-3">{comment.comment}</h5>
@@ -199,44 +204,21 @@ class PostModal extends Component {
                                                     <h6><span style={{ cursor: "pointer" }} onClick={() => this.setState({ openForReply: !this.state.openForReply, replyToCommentID: comment._id })}>Reply</span></h6>
                                                 </Col>
                                             </Row>
-
                                         </Col>}
+                                    <span onClick={() => this.rateComment(comment._id)}>
 
-                                            <Row>
-                                                <div>
-                                           <span onClick={() => this.rateComment(comment._id)}>
-                                            
-                                    {comment.upvoted ?  <span className="rate2"><FontAwesome name="heart" size="2x" /></span>:  <span className="rate"><FontAwesome name="heart" size="2x" /></span>}
-                                    
-                                           </span>
-                                           <span className="rate-number"> {comment.upvotes}</span>
-                                           </div>
-                                           
-                                           </Row>
-                                        </Col>
-                                        }
-                                    {this.state.openForEdit && this.state.commentForEditID === comment._id && <Col>
-                                        <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForEdit: false, commentForEditID: "", commentForEditPostID: "" })}>
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <FormGroup >
-                                            <Label>Edit this comment:</Label>
-                                            <Input type="textarea" onChange={(e) => this.setState({ commentForEdit: e.target.value })} value={this.state.commentForEdit} />
-                                        </FormGroup>
-                                        <Row>
-                                            <Label>Reply:</Label>
-                                            {/* <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForReply: false, replyToCommentID: ""})}>
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <FormGroup >
-                                                <Label>Reply:</Label>
-                                                <Input type="textarea" onChange={(e) => this.setState({ commentForEdit: e.target.value })} value={this.state.commentForEdit} />
-                                            </FormGroup>
-                                            <Row>
-                                                <Button className="btn-modal-primary m-3" onClick={this.updateComment}>Update</Button>
-                                                <Button onClick={this.deleteComment}>Delete</Button>
-                                            </Row> */
-                                    }
+                                        {comment.upvoted ?
+                                            <span className="rate2">
+                                                <FontAwesome name="heart" size="2x" />
+                                                <span className="rate-number"> {comment.upvotes}</span>
+                                                </span>
+                                            :
+                                            <span className="rate">
+                                                <FontAwesome name="heart" size="2x" />
+                                                <span className="rate-number"> {comment.upvotes}</span>
+                                                </span>}
+                                        
+                                    </span>
                                     {this.state.openForEdit && this.state.commentForEditID === comment._id &&
                                         <Col>
                                             <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForEdit: false, commentForEditID: "", commentForEditPostID: "" })}>
@@ -246,17 +228,27 @@ class PostModal extends Component {
                                                 <Label>Edit this comment:</Label>
                                                 <Input type="textarea" onChange={(e) => this.setState({ commentForEdit: e.target.value })} value={this.state.commentForEdit} />
                                             </FormGroup>
-                                            <Row>
-                                                <Button className="btn-modal-primary m-3" onClick={this.updateComment}>Update</Button>
-                                                <Button onClick={this.deleteComment}>Delete</Button>
-                                            </Row>
+                                            {this.state.openForEdit && this.state.commentForEditID === comment._id &&
+                                                <Col>
+                                                    <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForEdit: false, commentForEditID: "", commentForEditPostID: "" })}>
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <FormGroup >
+                                                        <Label>Edit this comment:</Label>
+                                                        <Input type="textarea" onChange={(e) => this.setState({ commentForEdit: e.target.value })} value={this.state.commentForEdit} />
+                                                    </FormGroup>
+                                                    <Row>
+                                                        <Button className="btn-modal-primary m-3" onClick={this.updateComment}>Update</Button>
+                                                        <Button onClick={this.deleteComment}>Delete</Button>
+                                                    </Row>
+                                                </Col>}
                                         </Col>}
                                 </Row>
                             </Container>
                         )}
                     </ModalBody>
                 </Modal>
-            </div>
+            </div >
         );
     }
 
@@ -273,16 +265,16 @@ class PostModal extends Component {
 
     rateComment = async (id) => {
         let response = await fetch(`http://localhost:9000/api/rate/comment/${id}`, {
-                method: "POST",
-                headers: {
-                    "Authorization": "Bearer " + this.props.accessToken
-                }
-        
-            })
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + this.props.accessToken
+            }
+
+        })
         this.getAllComments()
-            
+
     }
-                      
+
     getAllComments = async () => {
         try {
             let response = await fetch(`http://localhost:9000/api/comments/${this.props.post._id}?sort=updatedAt`)
