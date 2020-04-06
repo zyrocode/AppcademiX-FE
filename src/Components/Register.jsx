@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Col, Row, Fade, Container, Form, FormGroup, Label, Input,Alert } from 'reactstrap';
+import { Button, Col, Row, Fade, Container, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
+import {Link} from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 class Register extends Component {
@@ -9,11 +10,11 @@ class Register extends Component {
         username: "",
         password: "",
         email: "",
-        errorMessage:""
+        errorMessage: ""
     }
 
     render() {
-        let {errorMessage} = this.state
+        let { errorMessage } = this.state
         return (
             <Fade>
                 <Container className="create-post register">
@@ -21,7 +22,7 @@ class Register extends Component {
                         <Col>
                             <Container>
                                 <FormGroup>
-                                <h4 className="text-center">Register with:</h4>
+                                    <h4 className="text-center">Register with:</h4>
                                     <Button href="http://localhost:9000/api/auth/google/callback" className="fab fa-google m-2"></Button>
                                     <Button href="http://localhost:9000/api/auth/facebook/callback" className="fab fa-facebook-f m-2"></Button>
                                 </FormGroup>
@@ -40,7 +41,7 @@ class Register extends Component {
                                     <FormGroup>
                                         <Label>Username</Label>
                                         <Input type="text" onChange={(e) => this.setState({ username: e.target.value })} value={this.state.username} required></Input>
-                                        {errorMessage.type === 'USERNAME_EXIST' && <Alert color="danger">{errorMessage.message}</Alert>}
+                                        {errorMessage.type === 'USERNAME_EXIST' && <Alert color="danger">{errorMessage.message }</Alert>}
                                     </FormGroup>
                                     <FormGroup>
                                         <Label>Password</Label>
@@ -85,11 +86,12 @@ class Register extends Component {
             }
             else
                 toast.error("oops somethimg go wrong")
-        } catch (ex) {
-            if (ex && ex.type)
+            if (credentials && credentials.type)
                 this.setState({
-                    errorMessage:ex
+                    errorMessage: credentials
                 })
+        } catch (ex) {
+
         }
     }
 }
