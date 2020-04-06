@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Col, Row, Fade, Container, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Col, Row, Fade, Container, Form, FormGroup, Label, Input,Alert } from 'reactstrap';
 import { toast } from 'react-toastify'
 
 class Register extends Component {
@@ -8,10 +8,12 @@ class Register extends Component {
         lastname: "",
         username: "",
         password: "",
-        email: ""
+        email: "",
+        errorMessage:""
     }
 
     render() {
+        let {errorMessage} = this.state
         return (
             <Fade>
                 <Container className="create-post register">
@@ -38,6 +40,7 @@ class Register extends Component {
                                     <FormGroup>
                                         <Label>Username</Label>
                                         <Input type="text" onChange={(e) => this.setState({ username: e.target.value })} value={this.state.username} required></Input>
+                                        {errorMessage.type === 'USERNAME_EXIST' && <Alert color="danger">{errorMessage.message}</Alert>}
                                     </FormGroup>
                                     <FormGroup>
                                         <Label>Password</Label>
@@ -46,6 +49,7 @@ class Register extends Component {
                                     <FormGroup>
                                         <Label>E-Mail</Label>
                                         <Input type="email" onChange={(e) => this.setState({ email: e.target.value })} value={this.state.email} required />
+                                        {errorMessage.type === 'EMAIL_EXIST' && <Alert color="danger">{errorMessage.message}</Alert>}
                                     </FormGroup>
                                     <Button className="btn-modal-primary">Register</Button>
                                 </Form>
@@ -81,8 +85,11 @@ class Register extends Component {
             }
             else
                 toast.error("oops somethimg go wrong")
-        } catch (e) {
-            console.log(e)
+        } catch (ex) {
+            if (ex && ex.type)
+                this.setState({
+                    errorMessage:ex
+                })
         }
     }
 }
