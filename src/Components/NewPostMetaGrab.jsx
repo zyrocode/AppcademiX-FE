@@ -26,13 +26,17 @@ class NewPostMetaGrab extends Component {
                   {this.state.link === null &&
                     <h4 className="alert-url">Insert a valid url!</h4>
                   }
+
+      
                   <Input
+                    onClick={()=>this.setState({link: "http://www."})}
                     className="create-url"
                     type="url"
-                    placeholder="Type an URL..."
+                    placeholder="Type in a URL... Start with http://"
                     value={this.state.link}
                     onChange={this.isUrlValid}
                   />
+              
                 </Col>
                 {this.state.showImage && this.state.link &&
                   <Button onClick={() => this.handleMetaTag(this.state.link)} className="paste-button">Next</Button>}
@@ -68,10 +72,12 @@ class NewPostMetaGrab extends Component {
     this.setState({ showImage: true });
   };
 
+
   isUrlValid = (e) => {
     let userInput = e.currentTarget.value
     let res = userInput.match(
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+      // /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+      /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/
     );
     if (res == null) {
       this.setState({ link: null })
@@ -85,16 +91,26 @@ class NewPostMetaGrab extends Component {
   };
 
   handleMetaTag = async (url) => {
-    // http://localhost:9000/api/metatag?url=https://www.youtube.com/watch?v=93p3LxR9xfM
-    const response = await fetch(`http://localhost:9000/api/metatag?url=${url}`)
-    if (response.ok) {
-      const urlData = await response.json()
-      console.log(urlData)
-      this.setState({
-        urlMetaTags: urlData.value,
-        openMainForm: true
-      })
-    }
+   
+   try {
+    
+     // http://localhost:9000/api/metatag?url=https://www.youtube.com/watch?v=93p3LxR9xfM
+     const response = await fetch(`http://localhost:9000/api/metatag?url=${url}`)
+     if (response.ok) {
+       const urlData = await response.json()
+       console.log(urlData)
+       this.setState({
+         urlMetaTags: urlData.value,
+         openMainForm: true
+       })
+     }
+
+   } catch (error) {
+     console.log(error)
+   }
+   
+   
+   
   };
 
 }

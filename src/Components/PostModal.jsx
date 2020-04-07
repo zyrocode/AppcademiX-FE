@@ -183,7 +183,12 @@ class PostModal extends Component {
                         {/*---------------COMMENTS*--------------------*/}
                         {this.state.comments && !this.state.commentLoading && this.state.comments.map((comment, index) =>
                             <Container className="section-modal" key={index}>
-                                {this.props.userInfo.username === comment.userInfo.username && !this.state.openForEdit && <div className="penBg float-right" onClick={() => this.setState({ openForEdit: true, commentForEdit: comment.comment, commentForEditID: comment._id, commentForEditPostID: comment.postid })}><FontAwesome name="pen" className=" penEdit" /></div>
+                                {this.props.userInfo.username === comment.userInfo.username && !this.state.openForEdit && <div className="penBg float-right" 
+
+                                onClick={() => this.setState({ openForEdit: true, commentForEdit: comment.comment, commentForEditID: comment._id, commentForEditPostID: comment.postid })}
+                                
+                                >
+                                    <FontAwesome name="pen" className=" penEdit" /></div>
                                 }
                                 <Row>
                                     <img className="comment-pic" src={comment.userInfo.image} />
@@ -219,15 +224,6 @@ class PostModal extends Component {
                                                 </span>}
                                         
                                     </span>
-                                    {this.state.openForEdit && this.state.commentForEditID === comment._id &&
-                                        <Col>
-                                            <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForEdit: false, commentForEditID: "", commentForEditPostID: "" })}>
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <FormGroup >
-                                                <Label>Edit this comment:</Label>
-                                                <Input type="textarea" onChange={(e) => this.setState({ commentForEdit: e.target.value })} value={this.state.commentForEdit} />
-                                            </FormGroup>
                                             {this.state.openForEdit && this.state.commentForEditID === comment._id &&
                                                 <Col>
                                                     <button type="button" className="close" aria-label="Close" onClick={() => this.setState({ openForEdit: false, commentForEditID: "", commentForEditPostID: "" })}>
@@ -242,7 +238,7 @@ class PostModal extends Component {
                                                         <Button onClick={this.deleteComment}>Delete</Button>
                                                     </Row>
                                                 </Col>}
-                                        </Col>}
+
                                 </Row>
                             </Container>
                         )}
