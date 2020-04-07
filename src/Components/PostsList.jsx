@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Col, Fade, Row, Modal, ModalHeader, ModalBody,ModalFooter,Button } from 'reactstrap'
+import { Container, Col, Fade, Row, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 import Login from './Login';
 import PostModal from './PostModal';
 import FontAwesome from "react-fontawesome";
@@ -21,51 +21,42 @@ class PostsList extends Component {
         title: undefined,
         openLogin: false,
         deleteModalIsOpen: false,
-        postIdForDelete:""
+        postIdForDelete: ""
     }
 
 
-   
+
     render() {
         return (
             <Fade>
-                <div>
+                <Row>
+                    {this.state.postIdForDelete && this.state.deleteModalIsOpen &&
 
-                  
-                {this.state.postIdForDelete && this.state.deleteModalIsOpen &&
+                        <Modal isOpen={this.state.deleteModalIsOpen} toggle={this.toggleDelete} >
+                            <ModalHeader toggle={this.toggleDelete}></ModalHeader>
+                            <ModalBody>
 
-<Modal isOpen={this.state.deleteModalIsOpen} toggle={this.toggleDelete} >
-<ModalHeader toggle={this.toggleDelete}></ModalHeader>
-<ModalBody>
-
-Do you really want to Delete this post?
-</ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={this.toggleDelete}>Cancel</Button>
-          <Button color="danger" onClick={()=>this.deletePost(this.state.postIdForDelete)}>Delete</Button>
-        </ModalFooter>
-      </Modal>
+                                Do you really want to Delete this post?
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="primary" onClick={this.toggleDelete}>Cancel</Button>
+                                <Button color="danger" onClick={() => this.deletePost(this.state.postIdForDelete)}>Delete</Button>
+                            </ModalFooter>
+                        </Modal>
                     }
-
-
                     {this.state.postModal && <PostModal open={this.state.postModal} toggle={this.togglePostModal} post={this.state.selectedPost} refresh={this.props.refresh} rate={(post) => this.ratePost(post)} />}
                     {this.state.posts && this.state.posts.length > 0 &&
-                        <Container>
+                        <Col>
                             <h2>{this.state.title}</h2>
                             {this.state.posts.map((post, index) =>
-                               <div key={index}>
-                                 { this.props.updateIcons && <Row>
-                                
-                                      <Col>  <span onClick={()=>this.setState({postIdForDelete:post._id, deleteModalIsOpen:true})} ><FontAwesome className="mr-1" name="trash" /></span>
+                                <div key={index}>
+                                    {this.props.updateIcons && <Row>
+                                        <Col>  <span onClick={() => this.setState({ postIdForDelete: post._id, deleteModalIsOpen: true })} ><FontAwesome className="mr-1" name="trash" /></span>
                                       &nbsp; &nbsp;
-                                      <Link  to={"/editpost/" + post._id}><span><FontAwesome className="mr-1" name="edit" /></span></Link>
-                                      </Col>
-                                      
-                                          
-                                  </Row>}
+                                      <Link to={"/editpost/" + post._id}><span><FontAwesome className="mr-1" name="edit" /></span></Link>
+                                        </Col>
+                                    </Row>}
                                     <Container className="m-4 mx-auto post " onClick={() => { this.setState({ selectedPost: post }); this.togglePostModal() }} >
-    
-                                       
                                         <Row>
                                             <div className="m-2">
                                                 <img className="post-image" src={post.image} alt="Post Default Pic" />
@@ -134,12 +125,13 @@ Do you really want to Delete this post?
                                                     </span>
                                                 }
                                             </Col>
+
                                         </Row>
                                     </Container>
-                               </div>
+                                </div>
                             )}
-                        </Container>}
-                </div>
+                        </Col>}
+                </Row>
                 {!this.props.userInfo.accessToken && this.state.openLogin && <Login toggle={() => this.setState({ openLogin: !this.state.openLogin })} open={this.state.openLogin} />}
             </Fade >
         );
@@ -285,17 +277,17 @@ Do you really want to Delete this post?
     toggleDelete = () => {
         this.setState({
             deleteModalIsOpen: !this.state.deleteModalIsOpen,
-            postIdForDelete:""
+            postIdForDelete: ""
         })
     }
 
 
-    deletePost=async (id)=>{
+    deletePost = async (id) => {
         // api/posts/:username/:id
 
         try {
 
-           const resp =  await fetch(
+            const resp = await fetch(
                 `http://localhost:9000/api/posts/${this.props.userInfo.username}/${id}/`,
                 {
                     method: "DELETE",
@@ -306,14 +298,14 @@ Do you really want to Delete this post?
                 }
             );
 
-            if(resp.ok){
+            if (resp.ok) {
                 this.toggleDelete()
                 this.props.newrefresh()
                 toast.success(`Post successfully deleted`)
             }
-            
+
         } catch (error) {
-           console.log(error) 
+            console.log(error)
         }
     }
 }

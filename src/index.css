@@ -1,6 +1,17 @@
 @import url("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 
+@media only screen and (max-width: 768px) {
+  .filters {
+    position: relative !important
+  }
+}
+
+
+.filters {
+  position: fixed 
+}
+
 body {
   margin: 0 !important;
   font-family: 'Nunito' !important;
@@ -428,4 +439,27 @@ input[type="file"] {
 
 .Toastify__toast--error {
   background-color: #212020 !important;
+}
+
+.link-side-section {
+  color: #2e2e2e !important;
+}
+
+.number-view-side-section {
+  color: #EF3C59 !important
+}
+
+.most-viewed-post {
+  border-bottom: 1px solid #7e7e7e40;
+  margin-bottom: 0.5em;
+}
+
+.most-viewed-post:nth-last-child(3) {
+  border-bottom: none;
+}
+
+.side-section {
+  position:fixed;
+  margin-right: 0.8em;
+  max-width: 200px;
 }
