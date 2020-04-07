@@ -16,6 +16,7 @@ import {
     TwitterIcon,
     LinkedinIcon
 } from "react-share";
+import ReplyComponent from './ReplyComponent';
 
 
 
@@ -176,7 +177,7 @@ class SinglePostPage extends Component {
                                     </FormGroup>
                                     <Button className="btn-modal-primary">Comment</Button>
                                 </Col>
-                            </Form>
+                            </Form> 
                         </Container>
                         {this.state.comments && !this.state.commentLoading && this.state.comments.map((comment, index) =>
                             <Container className="section-modal" key={index}>
@@ -209,24 +210,45 @@ class SinglePostPage extends Component {
                                             <Button onClick={this.deleteComment}>Delete</Button>
                                         </Row>
                                     </Col>}
+
+                                   
                                 </Row>
+                                
                             </Container>
+
+                               
+
                         )}
+
+
                     </>}
+
+                    <Container> <ReplyComponent refresh={()=> this.refresh()} comments={this.state.comments}/></Container>
             </div>
         );
     }
 
-    componentDidMount = async () => {
+    refresh=async ()=>{
         await this.getAllComments()
+
+    }
+
+    componentDidMount = async () => {
         await this.fetchPost()
+        await this.getAllComments()
+
+        console.log(this.state.post._id)
     }
 
     componentDidUpdate = async (prevProps, prevState) => {
-        if (prevState.openForEdit !== this.state.openForEdit) {
-            await this.getAllComments()
+        if (prevState.openForEdit !== this.state.openForEdit || prevProps.match.params.id !== this.props.match.params.id) {
+  
             await this.fetchPost()
+            await this.getAllComments()
         }
+
+      
+
     }
 
     getAllComments = async () => {
