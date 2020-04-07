@@ -39,7 +39,7 @@ class PostModal extends Component {
         const title = this.props.post.title;
         return (
             <div>
-                <Modal isOpen={this.props.open} toggle={this.props.toggle} >
+                <Modal isOpen={this.props.open} toggle={this.props.toggle} size="xl" >
                     <ModalHeader toggle={this.props.toggle}></ModalHeader>
                     <ModalBody>
                         <Container className="section-modal">
@@ -111,7 +111,7 @@ class PostModal extends Component {
                                 </Col>
                             </Row>
                             <Row className="p-4">
-                                {this.state.videoPlayer && <ReactPlayer url={this.props.post.link} onError={() => this.setState({ videoPlayer: false })} />}
+                                {this.state.videoPlayer && <ReactPlayer url={this.props.post.link} onError={() => this.setState({ videoPlayer: false })} controls={true} playing={true} />}
                             </Row>
                             <Row>
                                 <Col className="mt-2 ml-4 ">
