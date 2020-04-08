@@ -94,7 +94,7 @@ class Register extends Component {
                 this.props.history.push("/")
             }
             else
-                toast.error("oops somethimg go wrong")
+                toast.error("oops somethimg went wrong")
             if (credentials && credentials.type)
                 this.setState({
                     errorMessage: credentials

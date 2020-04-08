@@ -30,6 +30,7 @@ class CommentComponent extends Component {
     replyMsg: "",
     commentInputForEdit:"",
     commentForDeleteId:"",
+    postId: "",
     openCommentBox: false,
     openEditCommentBox: false,
     deleteModalIsOpen: false,
@@ -115,7 +116,8 @@ Do you really want to Delete this comment?
                               commentId: comment._id,
                               commentInputForEdit: comment.comment,
                               openCommentBox: !this.state.openCommentBox,
-                              openEditCommentBox: !this.state.openEditCommentBox
+                              openEditCommentBox: !this.state.openEditCommentBox,
+                              postId: comment.postid
                             })}>
                           <a><Icon link name="edit"/></a>
                         </Comment.Action>
@@ -125,7 +127,8 @@ Do you really want to Delete this comment?
                             this.setState({
                               
                               deleteModalIsOpen:true,
-                              commentForDeleteId : comment._id
+                              commentForDeleteId : comment._id,
+                              postId: comment.postid
                             })
                             console.log("Comment id", comment._id)}}>
                           <a><Icon link name="trash alternate outline" /></a>
@@ -328,9 +331,9 @@ Do you really want to Delete this comment?
     // commentForEditID:"",
     //commentForEditPostID:""
     try {
-        let postId = this.props.match.params.id || this.props.post._id 
+       
 
-        const {  commentId, commentInputForEdit } = this.state
+        const {  commentId, commentInputForEdit, postId } = this.state
         let bodyForPUT = { comment: commentInputForEdit }
         let response = await fetch(`http://localhost:9000/api/comments/${postId}/${this.props.userInfo.username}/${commentId}`, {
             method: "PUT",
@@ -360,10 +363,10 @@ deleteComment = async (id) => {
     // api/comments/:commentid/posts/:postid?username=:username
     try {
     console.log()
-      let postID = this.props.match.params.id || this.props.post._id
-      const {  commentForDeleteId } = this.state
+      
+      const {  commentForDeleteId , postId} = this.state
       console.log(id, "id")
-        let response = await fetch(`http://localhost:9000/api/comments/${id}/posts/${postID}?username=${this.props.userInfo.username}`, {
+        let response = await fetch(`http://localhost:9000/api/comments/${id}/posts/${postId}?username=${this.props.userInfo.username}`, {
             method: "DELETE",
             headers: {
                 "Authorization": "Bearer " + this.props.accessToken,
