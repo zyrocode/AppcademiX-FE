@@ -9,6 +9,7 @@ class Register extends Component {
         lastname: "",
         username: "",
         password: "",
+        confirmPassword: "",
         email: "",
         errorMessage: ""
     }
@@ -46,6 +47,14 @@ class Register extends Component {
                                     <FormGroup>
                                         <Label>Password</Label>
                                         <Input type="password" onChange={(e) => this.setState({ password: e.target.value })} value={this.state.password} required></Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Confirm password</Label>
+                                        <Input type="password" onChange={(e) => this.setState({ confirmPassword: e.target.value })} value={this.state.confirmPassword} required></Input>
+                                        { this.state.password && this.state.confirmPassword && this.state.password !== this.state.confirmPassword && <div class="error">
+                                            The password does not match
+                                        </div>
+                                         }
                                     </FormGroup>
                                     <FormGroup>
                                         <Label>E-Mail</Label>

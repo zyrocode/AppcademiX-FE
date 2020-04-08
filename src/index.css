@@ -444,3 +444,7 @@ input[type="file"] {
   margin-right: 0.8em;
   max-width: 200px;
 }
+
+.error {
+  color: #EF3C59;
+}
