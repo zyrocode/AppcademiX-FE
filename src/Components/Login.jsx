@@ -44,6 +44,10 @@ class Login extends Component {
                                 <FormGroup>
                                     <Link to="/register" onClick={() => this.props.toggle()}>New user? Click here to register</Link>
                                 </FormGroup>
+
+                                <FormGroup>
+                                    <Link to="/password" onClick={() => this.props.toggle()}>Forgot Password</Link>
+                                </FormGroup>
                                 <Button className="btn-modal-primary">Login</Button>
                                 <Button className="btn-modal-secondary" color="secondary" onClick={this.props.toggle}>Cancel</Button>
                             </Form>

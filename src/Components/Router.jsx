@@ -18,7 +18,7 @@ import SinglePostPage from "./SinglePostPage";
 import PostModal from "./PostModal";
 import TagDisplayComponent from "./TagDisplayComponent";
 import EditPost from "./EditPost";
-
+import PasswordRecovery from "./PasswordRecovery"
 
 
 
@@ -46,7 +46,7 @@ class RouterBrowse extends Component {
             <NavBar />
             <Fade>
               <Switch>
-            
+              <Route path="/password/" exact component={PasswordRecovery} /> 
               <Route path="/editpost/:postId" exact component={EditPost} />
                 <Route path="/createpost" exact component={NewPostMetaGrab} />
                 <Route path="/" exact component={PostPage} />
