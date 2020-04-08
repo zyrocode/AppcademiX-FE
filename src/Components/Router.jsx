@@ -18,7 +18,7 @@ import SinglePostPage from "./SinglePostPage";
 import PostModal from "./PostModal";
 import TagDisplayComponent from "./TagDisplayComponent";
 import EditPost from "./EditPost";
-import ReplyComponent from "./ReplyComponent"
+
 
 
 
@@ -46,7 +46,7 @@ class RouterBrowse extends Component {
             <NavBar />
             <Fade>
               <Switch>
-              <Route path="/reply" exact component={ReplyComponent} />
+            
               <Route path="/editpost/:postId" exact component={EditPost} />
                 <Route path="/createpost" exact component={NewPostMetaGrab} />
                 <Route path="/" exact component={PostPage} />

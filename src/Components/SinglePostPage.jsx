@@ -16,7 +16,8 @@ import {
     TwitterIcon,
     LinkedinIcon
 } from "react-share";
-import ReplyComponent from './ReplyComponent';
+import ReplyComponent from './CommentComponent';
+import CommentComponent from './CommentComponent';
 
 
 
@@ -39,10 +40,10 @@ class SinglePostPage extends Component {
 
     render() {
         return (
-            <div>
+            <div className="w-50 mx-auto">
                 {this.state.post &&
-                    <>
-                        <Container className="section-modal mt-5">
+                    <div>
+                        <Container className=" mt-5">
                             <Row>
                                 <Col>
                                     <Row>
@@ -164,7 +165,7 @@ class SinglePostPage extends Component {
                                 </Col>
                             </Row>
                         </Container>
-                        <Container className="section-modal">
+                        <Container >
                             <Form onSubmit={this.postComment}>
                                 <Col>
                                     <FormGroup>
@@ -173,13 +174,15 @@ class SinglePostPage extends Component {
                                                 <img className="comment-pic mr-3 p-2 " src={this.props.userInfo.image} style={{ maxHeight: "40px", maxWidth: "40px" }} alt=" profile" />
                                                 <Label className="font-weight-bold">{this.capFirst(this.props.userInfo.firstname) + " " + this.capFirst(this.props.userInfo.lastname)}</Label>
                                             </>}
-                                        <Input type="text" onChange={(e) => this.setState({ comment: e.target.value })} value={this.state.comment} placeholder="Comment this post" />
+                                        <Input className="rounded-pill" type="text" onChange={(e) => this.setState({ comment: e.target.value })} value={this.state.comment} placeholder="Comment this post" />
                                     </FormGroup>
-                                    <Button className="btn-modal-primary">Comment</Button>
+                                    <Button className="btn-modal-primary rounded-pill">Comment</Button>
                                 </Col>
                             </Form> 
                         </Container>
-                        {this.state.comments && !this.state.commentLoading && this.state.comments.map((comment, index) =>
+                {/*<------------------- comment section -------------------> */}
+
+                        {/* {this.state.comments && !this.state.commentLoading && this.state.comments.map((comment, index) =>
                             <Container className="section-modal" key={index}>
                                 {this.props.userInfo.username === comment.userInfo.username && !this.state.openForEdit && <div className="penBg float-right" onClick={() => this.setState({ openForEdit: true, commentForEdit: comment.comment, commentForEditID: comment._id, commentForEditPostID: comment.postid })}><FontAwesome name="pen" className=" penEdit" /></div>
                                 }
@@ -218,12 +221,12 @@ class SinglePostPage extends Component {
 
                                
 
-                        )}
+                        )} */}
 
 
-                    </>}
+                    </div>}
 
-                    <Container> <ReplyComponent refresh={()=> this.refresh()} comments={this.state.comments}/></Container>
+                    <Container className="mt-5"> <CommentComponent  refresh={()=> this.refresh()} comments={this.state.comments}/></Container>
             </div>
         );
     }
