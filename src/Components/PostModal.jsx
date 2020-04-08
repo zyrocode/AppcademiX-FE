@@ -385,9 +385,10 @@ class PostModal extends Component {
     );
   }
 
-  componentDidMount = async () => {
-    await this.getAllComments();
-  };
+    componentDidMount = async () => {
+        await this.getAllComments()
+        await this.fetchPost()
+    }
 
   componentDidUpdate = async (prevProps, prevState) => {
     if (prevState.openForEdit !== this.state.openForEdit) {
@@ -396,16 +397,24 @@ class PostModal extends Component {
     }
   };
 
-  rateComment = async id => {
-    let response = await fetch(`http://localhost:9000/api/rate/comment/${id}`, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + this.props.accessToken
-      }
-    });
-    this.getAllComments();
-  };
+    fetchPost = async() => {
+        try {
+            await fetch("http://localhost:9000/api/posts/" + this.props.post._id)
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
+    rateComment = async (id) => {
+        let response = await fetch(`http://localhost:9000/api/rate/comment/${id}`, {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + this.props.accessToken
+            }
+
+        })
+        this.getAllComments()
+    }
   getAllComments = async () => {
     try {
       let response = await fetch(

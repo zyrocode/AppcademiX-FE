@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import PostsList from './PostsList';
 import { toast } from 'react-toastify'
 import { Fade, Row, Col, Container, Input, Button } from 'reactstrap';
-import FontAwesome from "react-fontawesome";
 import FilterComponent from './FilterComponent';
 import FilterCategory from './FilterCategory';
 import { connect } from "react-redux"
 import { refreshTokenAPI } from "../API/refresh"
 import { getUsersWithThunk } from '../Actions/setUser'
+import SideSection from './SideSection';
 
 const mapStateToProps = state => state
 
@@ -23,30 +23,33 @@ class PostPage extends Component {
     render() {
         return (
             <Fade>
-                <Container className="mt-5">
-                    <div className="row">
-                        <div className="mt-5">
-                            <Row className="mr-5">
+                <Container fluid className="mt-5">
+                    <Row>
+                        <div className="col-sm-12 col-md-3 col-lg-3 ml-5">
+                            <div className="filters">
+                            <Row className="mb-3">
                                 <FilterComponent filter={this.filterby} />
                             </Row>
-                            <Row className="mr-5 mt-3">
+                            <Row className="mb-5" >
                                 <FilterCategory filter={this.filterbycategory} />
                             </Row>
+                            </div>
                         </div>
-                        <div className="col">
+                        <Col className="posts-section">
                             {this.state.posts.length > 0 &&
                                 <>
                                     <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.filteredPosts} refresh={() => this.fetchPosts()} section={"today"} />
                                     <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.filteredPosts} refresh={() => this.fetchPosts()} section={"yesterday"} />
                                     <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.filteredPosts} refresh={() => this.fetchPosts()} />
                                 </>}
-                        </div>
-                    </div>
+                        </Col>
+                        <Col className="col-sm-4 col-md-3 col-lg-3  d-none d-md-block" >
+                            <SideSection cap={(str) => this.capFirst(str)}/>
+                        </Col>
+                    </Row>
                 </Container>
-            </Fade>
-        )
-    }
-
+            </Fade>)}
+            
     componentDidUpdate = async (prevProps, prevState) => {
         if (prevProps.accessToken !== this.props.accessToken) {
             await this.filterby()

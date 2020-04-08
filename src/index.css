@@ -1,6 +1,16 @@
 @import url("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 
+@media only screen and (max-width: 768px) {
+  .filters {
+    position: relative !important
+  }
+}
+
+.filters {
+  position: fixed 
+}
+
 body {
   margin: 0 !important;
   font-family: 'Nunito' !important;
@@ -306,24 +316,12 @@ input[type="file"] {
   color: white;
 }
 
-.logo-loading {
-  animation: loading 1s;
-  animation-direction: alternate-reverse;
-}
+
 
 .logo-load {
-  max-width: 80% !important;
+  max-width: 50% !important;
 }
 
-@keyframes loading {
-  from {
-    transform: scale(1);
-  }
-
-  to {
-    transform: scale(1.2);
-  }
-}
 
 .details-post {
   margin: 0.4em;
@@ -430,6 +428,7 @@ input[type="file"] {
   background-color: #212020 !important;
 }
 
+
 .ui.red.button, .ui.red.buttons .button{
   background-color: #EF3C59 !important;
   
@@ -437,5 +436,26 @@ input[type="file"] {
 
 .ui.basic.red.label, .ui.basic.red.button{
   color: #EF3C59 !important;
-  border-color:  #EF3C59 !important;;
+  border-color:  #EF3C59 !important;
+}
+
+.link-side-section {
+  color: #2e2e2e !important;
+}
+
+.number-view-side-section {
+  color: #EF3C59 !important;
+}
+
+.most-viewed-post {
+  margin-bottom: 0.6em;
+}
+
+.side-section {
+  margin-right: 0.8em;
+  max-width: 200px;
+}
+
+.error {
+  color: #EF3C59;
 }
