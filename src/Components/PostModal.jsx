@@ -250,12 +250,21 @@ class PostModal extends Component {
 
     componentDidMount = async () => {
         await this.getAllComments()
+        await this.fetchPost()
     }
 
     componentDidUpdate = async (prevProps, prevState) => {
         if (prevState.openForEdit !== this.state.openForEdit) {
             await this.getAllComments()
             // this.props.refresh()
+        }
+    }
+
+    fetchPost = async() => {
+        try {
+            await fetch("http://localhost:9000/api/posts/" + this.props.post._id)
+        } catch (e) {
+            console.log(e)
         }
     }
 
