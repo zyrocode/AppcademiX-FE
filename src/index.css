@@ -428,6 +428,17 @@ input[type="file"] {
   background-color: #212020 !important;
 }
 
+
+.ui.red.button, .ui.red.buttons .button{
+  background-color: #EF3C59 !important;
+  
+}
+
+.ui.basic.red.label, .ui.basic.red.button{
+  color: #EF3C59 !important;
+  border-color:  #EF3C59 !important;
+}
+
 .link-side-section {
   color: #2e2e2e !important;
 }
