@@ -7,7 +7,6 @@
   }
 }
 
-
 .filters {
   position: fixed 
 }
@@ -317,24 +316,12 @@ input[type="file"] {
   color: white;
 }
 
-.logo-loading {
-  animation: loading 1s;
-  animation-direction: alternate-reverse;
-}
+
 
 .logo-load {
-  max-width: 80% !important;
+  max-width: 50% !important;
 }
 
-@keyframes loading {
-  from {
-    transform: scale(1);
-  }
-
-  to {
-    transform: scale(1.2);
-  }
-}
 
 .details-post {
   margin: 0.4em;
@@ -446,20 +433,14 @@ input[type="file"] {
 }
 
 .number-view-side-section {
-  color: #EF3C59 !important
+  color: #EF3C59 !important;
 }
 
 .most-viewed-post {
-  border-bottom: 1px solid #7e7e7e40;
-  margin-bottom: 0.5em;
-}
-
-.most-viewed-post:nth-last-child(3) {
-  border-bottom: none;
+  margin-bottom: 0.6em;
 }
 
 .side-section {
-  position:fixed;
   margin-right: 0.8em;
   max-width: 200px;
 }

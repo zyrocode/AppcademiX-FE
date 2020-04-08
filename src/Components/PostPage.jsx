@@ -44,14 +44,12 @@ class PostPage extends Component {
                                 </>}
                         </Col>
                         <Col className="col-sm-4 col-md-3 col-lg-3  d-none d-md-block" >
-                            <SideSection />
+                            <SideSection cap={(str) => this.capFirst(str)}/>
                         </Col>
                     </Row>
                 </Container>
-            </Fade>
-        )
-    }
-
+            </Fade>)}
+            
     componentDidUpdate = async (prevProps, prevState) => {
         if (prevProps.accessToken !== this.props.accessToken) {
             await this.filterby()
