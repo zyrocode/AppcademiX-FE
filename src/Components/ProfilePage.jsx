@@ -40,7 +40,7 @@ class ProfilePage extends Component {
                             {this.state.openEditInfo && <EditInfoModal open={this.state.openEditInfo} toggle={this.toggleEditInfo} />}
                             {this.state.posts.length > 0
                                 ?
-                                <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} newrefresh={this.initialFetcher} posts={this.state.posts} updateIcons={this.state.updateIcons} />
+                                <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.posts} newrefresh={this.initialFetcher} posts={this.state.posts} updateIcons={this.state.updateIcons} section={"myposts"} />
                                 :
                                 <span className="center-msg">No Posts</span>
                             }

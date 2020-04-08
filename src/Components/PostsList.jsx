@@ -257,6 +257,14 @@ class PostsList extends Component {
                     title: "#" + this.props.tag
                 })
             } break;
+
+            case "myposts": {
+                this.setState({
+                    posts: postsList,
+                    title: "My Post List"
+                })
+            } break;
+
             default: {
                 let posts = postsList.filter(post => post.createdAt.substring(0, 10) < this.state.yesterday)
                 console.log(posts)
