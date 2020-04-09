@@ -50,12 +50,6 @@ class PostsList extends Component {
                             <h2>{this.state.title}</h2>
                             {this.state.posts.map((post, index) =>
                                 <div key={index}>
-                                    {this.props.updateIcons && <Row>
-                                        <Col>  <span onClick={() => this.setState({ postIdForDelete: post._id, deleteModalIsOpen: true })} ><FontAwesome className="mr-1" name="trash" /></span>
-                                      &nbsp; &nbsp;
-                                      <Link to={"/editpost/" + post._id}><span><FontAwesome className="mr-1" name="edit" /></span></Link>
-                                        </Col>
-                                    </Row>}
                                     <Container className="m-4 mx-auto post " onClick={() => { this.setState({ selectedPost: post }); this.togglePostModal() }} >
                                         <Row>
                                             <div className="m-2">
@@ -95,6 +89,14 @@ class PostsList extends Component {
                                                             {post.difficulty}
                                                         </span>
                                                     </div>
+                                                    {this.props.updateIcons &&
+                                                        <div className="details-post">
+                                                            <Col>  
+                                                            <span onClick={(e) => {e.stopPropagation(); this.setState({postIdForDelete: post._id, deleteModalIsOpen: true })}} ><FontAwesome className="mr-1" name="trash" />Delete</span>
+                                                                &nbsp; &nbsp;
+                                                            <Link to={"/editpost/" + post._id}><span><FontAwesome className="mr-1" name="edit" />Edit</span></Link>
+                                                            </Col>
+                                                        </div>}
                                                 </Row>
                                                 <Row>
                                                     {post.tags.length > 0 &&
