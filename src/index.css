@@ -15,7 +15,7 @@
   }
 
   .post-image {
-    max-width: 90%;
+    max-width: 90% !important;
     max-height: 500px;
   }
 }
