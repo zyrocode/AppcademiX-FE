@@ -11,7 +11,7 @@ class PasswordRecovery extends Component {
         confirmPassword: "",
         email: "",
         errorMessage: "",
-
+        token:"",
         passModalIsOpen: false,
         secondModalOpen:false,
         openPwdReset : false
@@ -123,10 +123,10 @@ class PasswordRecovery extends Component {
 
       componentDidMount=()=>{
         let search = new URLSearchParams(this.props.location.search)
-        const userId = search.get("userid")
+        const token = search.get("token")
         const username = search.get("username")
         console.log("mounted now")
-        if(!userId){
+        if(!token){
             this.setState({
                 passModalIsOpen: true,
             })
@@ -135,6 +135,8 @@ class PasswordRecovery extends Component {
             this.setState({
                 passModalIsOpen: false,
                 username: username,
+                token:token
+
             })
         }
       };
@@ -146,29 +148,40 @@ class PasswordRecovery extends Component {
 
     submitPost = async (e) => {
         e.preventDefault()
-        let user = {
-            username: this.state.username,
-            password: this.state.password,
-        }
         try {
-            let response = await fetch("http://localhost:9000/api/auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(user)
-            })
-            let credentials = await response.json()
-            if (response.ok) {
-                toast.success(credentials.message)
-                this.props.history.push("/")
-            }
-            else
-                toast.error("oops somethimg went wrong")
-            if (credentials && credentials.type)
-                this.setState({
-                    errorMessage: credentials
+            if(this.state.password === this.state.confirmPassword){
+                let user = {
+               
+                    password: this.state.password
+                }
+    
+                let response = await fetch("http://localhost:9000/api/auth/resetpassword", {
+                    method: "POST",
+                    headers: {
+                        Authorization: "Bearer " + this.state.token,
+                         "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(user)
                 })
+                let credentials = await response.json()
+                if (response.ok) {
+                    toast.success(credentials.message)
+                    this.props.history.push("/")
+                }
+                else
+                    toast.error("oops something went wrong, try again later")
+
+                    setTimeout(() => {
+                        this.props.history.push("/")
+                    }, 2000);
+                    
+                if (credentials && credentials.type)
+                    this.setState({
+                        errorMessage: credentials
+                    })
+            } else{
+                toast.error("The Confirm Password does not match the password you want to change")
+            }
         } catch (ex) {
 
         }
