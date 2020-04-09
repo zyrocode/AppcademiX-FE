@@ -101,9 +101,9 @@ class CommentComponent extends Component {
                           }
                         >
                           <Row>
-                            <Col>
+                            {/* <Col>
                               <Icon link name="chat" />
-                            </Col>
+                            </Col> */}
                             <span>Reply</span>
                           </Row>
                         </Comment.Action>
