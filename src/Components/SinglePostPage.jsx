@@ -123,7 +123,7 @@ class SinglePostPage extends Component {
                                         <h6 style={{ fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{this.state.post.createdAt}</Moment></h6>
                                     </Row>
                                 </Col>
-                                <Col className="m-2">
+                                <Col className="m-2 ">
                                     <Container className="text-right">
                                         <h5 className="mr-4">Share it on:</h5>
                                         <ul className="social-share list-unstyled list-inline">
@@ -167,7 +167,7 @@ class SinglePostPage extends Component {
                         </Container>
                         <Container className="mt-5">
                             <Form onSubmit={this.postComment}>
-                                <Col>
+                                <Col className="col-md-12 col-lg-10">
                                     <FormGroup>
                                         {this.props.userInfo.username &&
                                             <div className="avatar">
