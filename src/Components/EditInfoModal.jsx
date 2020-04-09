@@ -92,10 +92,10 @@ class EditInfoModal extends Component {
                 } catch (e) {
                     console.log(e)
                 }
-            }
-            profile = {
-                ...profile,
-                image: this.state.image.image
+                profile = {
+                    ...profile,
+                    image: this.state.image.image
+                }
             }
             if (response.ok) {
                 this.props.toggle(profile)
