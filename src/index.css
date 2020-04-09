@@ -30,6 +30,15 @@
     padding-top: 0 
   }
 
+  .profile-img {
+    margin: auto;
+    margin-bottom: 1.3em;
+  }
+
+  .profile-info {
+    text-align: center
+  }
+
   .ui.left {
     max-width: 1em;
   }

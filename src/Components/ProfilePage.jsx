@@ -22,9 +22,9 @@ class ProfilePage extends Component {
                 {this.state.profile &&
                     <Fade>
                         <Container style={{ maxWidth: "800px" }}>
-                            <Container className="profile">
+                            <div className="profile">
                                 <Row>
-                                    <Col className="col-sm-4 col-md-3 col-l-2">
+                                    <Col className="col-xs-12 col-sm-4 col-md-3 col-l-2">
                                         <img className="profile-img" src={this.state.profile.image} alt="Profile Pic" />
                                     </Col>
                                     <Col>
@@ -36,7 +36,7 @@ class ProfilePage extends Component {
                                         {this.props.match.params.username === localStorage.getItem("username") && <span className="icon" onClick={() => this.toggleEditInfo()}><FontAwesome name="edit" /></span>}
                                     </Col>
                                 </Row>
-                            </Container>
+                            </div>
                             {this.state.openEditInfo && <EditInfoModal open={this.state.openEditInfo} toggle={this.toggleEditInfo} />}
                             {this.state.posts.length > 0
                                 ?
