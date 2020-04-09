@@ -4,7 +4,7 @@
 export const refreshTokenAPI = async token => {
     try {
       const response = await fetch(
-        "http://localhost:9000/api/auth/refreshtoken",
+        "https://appcademix-be.herokuapp.com/api/auth/refreshtoken",
         {
           headers: {
             Authorization: "Bearer " + token
