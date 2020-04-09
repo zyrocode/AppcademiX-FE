@@ -128,6 +128,9 @@ class NewPostMetaGrab extends Component {
      else{
        let er = await response.json()
       toast.error(`${er.error}, start with http://`)
+      this.setState({
+        link: ""
+      })
      }
 
    } catch (error) {
