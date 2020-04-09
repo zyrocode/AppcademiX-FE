@@ -100,12 +100,19 @@ class CommentComponent extends Component {
                           })
                           }
                         >
-                          <Row>
+                          {/* <Row>
                             <Col>
                              <span> <Icon link name="chat" /></span>  <span>Reply</span>
                             </Col>
                            
+                          </Row> */}
+                          <Row>
+                            <Col className="p-0">
+                            <span><Icon link name="chat" /></span>  
+                            </Col>
+                           <Col className="p-0"><span>Reply</span></Col>
                           </Row>
+                          
                         </Comment.Action>
 
                           {/* <--------------------------------------End of Reply Comment--------------------------------> */}
@@ -124,12 +131,19 @@ class CommentComponent extends Component {
                                       postId: comment.postid
                                     })}>
 
-                          <Row>
+                          {/* <Row>
                             <Col>
                             <span> <Icon link name="edit" /></span>  <span>Edit</span>
                            
                             </Col>
                            
+                          </Row> */}
+
+                          <Row>
+                            <Col className="p-0">
+                            <span><Icon link name="edit" /></span>  
+                            </Col>
+                           <Col className="p-0"><span>Edit</span></Col>
                           </Row>
                                   {/* <a><Icon link name="edit" /></a> */}
                                 </Comment.Action>
@@ -146,10 +160,10 @@ class CommentComponent extends Component {
                                   }}>
 
                           <Row>
-                            <Col>
+                            <Col className="p-0">
                             <span><Icon link name="trash alternate outline" /></span>  
                             </Col>
-                           <Col><span>delete</span></Col>
+                           <Col className="p-0"><span>Delete</span></Col>
                           </Row>
                                   {/* <a><Icon link name="trash alternate outline" /></a> */}
 
