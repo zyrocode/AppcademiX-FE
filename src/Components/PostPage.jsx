@@ -43,7 +43,7 @@ class PostPage extends Component {
                                     <PostsList updateRates={(posts) => this.updateRatings(posts)} posts={this.state.filteredPosts} refresh={() => this.fetchPosts()} />
                                 </>}
                         </Col>
-                        <Col className="col-sm-4 col-md-3 col-lg-3  d-none d-md-block" >
+                        <Col className="col-sm-4 col-md-3 col-lg-3 side-col" >
                             <SideSection cap={(str) => this.capFirst(str)}/>
                         </Col>
                     </Row>

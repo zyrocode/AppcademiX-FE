@@ -7,6 +7,18 @@
   }
 }
 
+@media only screen and (max-width: 1065px) {
+  .side-col {
+    display: none !important
+  }
+}
+
+@media only screen and (min-width: 1066px) {
+  .side-col {
+    display: block !important
+  }
+}
+
 .filters {
   position: fixed 
 }
@@ -196,11 +208,12 @@ input[type="file"] {
   border: none !important;
 }
 
-.avatar img {
+.avatar img, .comment-pic {
   max-width: 40px;
   max-height: 40px;
   border-radius: 25px !important;
 }
+
 
 .section-modal {
   background-color: #f7f7f7;
