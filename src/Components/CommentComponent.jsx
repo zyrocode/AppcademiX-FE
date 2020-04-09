@@ -101,9 +101,9 @@ class CommentComponent extends Component {
                           }
                         >
                           <Row>
-                            {/* <Col>
+                            <Col>
                               <Icon link name="chat" />
-                            </Col> */}
+                            </Col>
                             <span>Reply</span>
                           </Row>
                         </Comment.Action>
@@ -123,7 +123,14 @@ class CommentComponent extends Component {
                                       openEditCommentBox: !this.state.openEditCommentBox,
                                       postId: comment.postid
                                     })}>
-                                  <a><Icon link name="edit" /></a>
+
+                          <Row>
+                            <Col>
+                            <Icon link name="edit" />
+                            </Col>
+                            <span>Edit</span>
+                          </Row>
+                                  {/* <a><Icon link name="edit" /></a> */}
                                 </Comment.Action>
 
                                 <Comment.Action
@@ -136,7 +143,14 @@ class CommentComponent extends Component {
                                     })
                                     console.log("Comment id", comment._id)
                                   }}>
-                                  <a><Icon link name="trash alternate outline" /></a>
+
+                          <Row>
+                            <Col>
+                            <Icon link name="trash alternate outline" />
+                            </Col>
+                            <span>Delete</span>
+                          </Row>
+                                  {/* <a><Icon link name="trash alternate outline" /></a> */}
 
                                 </Comment.Action>
 
