@@ -3,7 +3,7 @@ import { Button, Icon, Label } from 'semantic-ui-react'
 
  const LikeButton = (props) => (
   
-  props.upVotedByUser? 
+  props.upVotedByUser && props.username ? 
   
   <div >
 
