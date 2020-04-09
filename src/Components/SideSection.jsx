@@ -43,7 +43,7 @@ class SideSection extends Component {
                 <h4 className="mt-4">Popular Hashtags</h4>
                 <Row className="mx-auto">
                     {this.state.tags &&
-                        this.state.tags.map((tag, index) => <span style={{ padding: "0.4em", fontSize: Math.floor(Math.random() * (20 - 15) + 15) }}><Link className="post-hashtag" to={"/tags/" + tag}>{"#" + tag}</Link></span>)}
+                        this.state.tags.map((tag, index) => <span key={index} style={{ padding: "0.4em", fontSize: Math.floor(Math.random() * (20 - 15) + 15) }}><Link className="post-hashtag" to={"/tags/" + tag}>{"#" + tag}</Link></span>)}
                 </Row>
             </div>);
     }

@@ -50,7 +50,7 @@ class PostModal extends Component {
         <Modal isOpen={this.props.open} toggle={this.props.toggle} size="xl">
           <ModalHeader toggle={this.props.toggle}></ModalHeader>
           <ModalBody>
-            <Container className="section-modal">
+            <Container>
               <Row>
                 <Col>
                   <Row>
@@ -214,19 +214,19 @@ class PostModal extends Component {
                 <Col>
                   <FormGroup>
                     {this.props.userInfo.username && (
-                      <>
+                      <div className="avatar">
                         <img
-                          className="comment-pic mr-3 p-2 "
+                          className="comment-pic mr-3 p-1 mb-3"
                           src={this.props.userInfo.image}
                           style={{ maxHeight: "40px", maxWidth: "40px" }}
                           alt=" profile"
                         />
-                        <Label className="font-weight-bold rounded-pill">
+                        <Label className="font-weight-bold rounded-pill ">
                           {this.capFirst(this.props.userInfo.firstname) +
                             " " +
                             this.capFirst(this.props.userInfo.lastname)}
                         </Label>
-                      </>
+                      </div>
                     )}
                     <Input
                       type="text"
@@ -235,10 +235,10 @@ class PostModal extends Component {
                       placeholder="Comment this post"
                     />
                   </FormGroup>
-                  <Button className="btn-modal-primary rounded-pill">Comment</Button>
+                  <Button className="btn-modal-primary rounded-pill mt-2">Comment</Button>
                 </Col>
               </Form>
-             <Container className="mt-4"> <CommentComponent  refresh={()=> this.getAllComments()} comments={this.state.comments}/></Container>
+             <Container className="mt-5"> <CommentComponent  refresh={()=> this.getAllComments()} comments={this.state.comments}/></Container>
             </Container>
 
             {/*---------------COMMENTS*--------------------*/}

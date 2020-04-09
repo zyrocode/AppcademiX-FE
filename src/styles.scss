@@ -27,10 +27,33 @@ body.dark-mode {
   }
 }
 
-.dark-mode h6 {
-  color: #dfdfdf
+.light-mode .animated i {
+  color: white !important
 }
 
+.dark-mode .ui.threaded.comments .comment .comments {
+  box-shadow: -1px 0 0 rgba(194, 194, 194, 0.3) !important;
+}
+
+.dark-mode h6,.dark-mode i,.dark-mode .content .author ,.dark-mode h4,.dark-mode h3, .text, time {
+  color: #dfdfdf !important
+}
+
+.light-mode h6, .light-mode h4, .light-mode i, .light-mode .text {
+  color: black !important;
+}
+
+.light-mode time {
+  color: #999 !important
+}
+
+.dark-mode .rate2 .fa-star {
+  color: #EF3C59 !important
+}
+
+.dark-mode .rate .fa-star {
+  color: #dfdfdf !important
+}
 
 .dark-mode .details-post {
   color: #dfdfdf!important

@@ -86,9 +86,9 @@ class SinglePostPage extends Component {
                                     <Row>
                                         <div className="details-post">
                                             <h6>
-                                                {this.state.post.category == "Tech" &&
+                                                {this.state.post.category === "Tech" &&
                                                     <FontAwesome className="mr-1" name="laptop" />}
-                                                {this.state.post.category == "Sales" &&
+                                                {this.state.post.category === "Sales" &&
                                                     <FontAwesome className="mr-1" name="chart-bar" />}
                                                 {this.state.post.category}
                                             </h6>
@@ -97,9 +97,9 @@ class SinglePostPage extends Component {
                                     <Row>
                                         <div className="details-post">
                                             <h6>
-                                                {this.state.post.difficulty == "Medium" &&
+                                                {this.state.post.difficulty === "Medium" &&
                                                     <FontAwesome name="dot-circle" />}
-                                                {this.state.post.difficulty == "Hard" &&
+                                                {this.state.post.difficulty === "Hard" &&
                                                     <>
                                                         <FontAwesome name="dot-circle" />
                                                         <FontAwesome name="dot-circle" />
@@ -165,18 +165,18 @@ class SinglePostPage extends Component {
                                 </Col>
                             </Row>
                         </Container>
-                        <Container >
+                        <Container className="mt-5">
                             <Form onSubmit={this.postComment}>
                                 <Col>
                                     <FormGroup>
                                         {this.props.userInfo.username &&
-                                            <>
-                                                <img className="comment-pic mr-3 p-2 " src={this.props.userInfo.image} style={{ maxHeight: "40px", maxWidth: "40px" }} alt=" profile" />
+                                            <div className="avatar">
+                                                <img className="mr-3 mb-3 p-1" src={this.props.userInfo.image} style={{ maxHeight: "40px", maxWidth: "40px" }} alt=" profile" />
                                                 <Label className="font-weight-bold">{this.capFirst(this.props.userInfo.firstname) + " " + this.capFirst(this.props.userInfo.lastname)}</Label>
-                                            </>}
+                                            </div>}
                                         <Input className="rounded-pill" type="text" onChange={(e) => this.setState({ comment: e.target.value })} value={this.state.comment} placeholder="Comment this post" />
                                     </FormGroup>
-                                    <Button className="btn-modal-primary rounded-pill">Comment</Button>
+                                    <Button className="btn-modal-primary rounded-pill mt-2">Comment</Button>
                                 </Col>
                             </Form> 
                         </Container>
@@ -384,7 +384,7 @@ class SinglePostPage extends Component {
                 try {
                     let indexOfRating = 0
                     this.state.post.ratings.forEach((singleRating, index) => {
-                        if (singleRating.upvotedBy == this.props.userInfo.username)
+                        if (singleRating.upvotedBy === this.props.userInfo.username)
                             indexOfRating = index
                     })
                     let post = this.state.post
