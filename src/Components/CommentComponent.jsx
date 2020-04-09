@@ -139,7 +139,7 @@ class CommentComponent extends Component {
                            
                           </Row> */}
 
-                          <Row className="mr-4 ml-1">
+                          <Row className="mr-1 ml-1">
                             <Col className="p-0">
                             <Icon link name="edit" /> 
                             </Col>
@@ -182,7 +182,7 @@ class CommentComponent extends Component {
 
 
                   </Col>
-                  <Col className="comment col-1">
+                  <Col className="comment col-1 ml-4">
 
                     <LikeButton count={comment.upvotes} username={this.props.userInfo.username} click={() => this.rateComment(comment._id)} upVotedByUser={comment.upvoted} />
 

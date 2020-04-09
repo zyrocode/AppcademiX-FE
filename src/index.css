@@ -42,6 +42,10 @@
   .ui.left {
     max-width: 1em;
   }
+
+  #root > div.fade.show > div{
+    width:100% !important
+  }
 }
 
 @media only screen and (max-width: 1065px) {
