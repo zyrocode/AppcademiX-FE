@@ -131,9 +131,9 @@ class NavBar extends Component {
 
     componentDidMount = async () => {
         try {
-            let responseUsers = await fetch("http://localhost:9000/api/users")
+            let responseUsers = await fetch("https://appcademix-be.herokuapp.com/api/users")
             let users = await responseUsers.json()
-            let responsePosts = await fetch("http://localhost:9000/api/posts/all")
+            let responsePosts = await fetch("https://appcademix-be.herokuapp.com/api/posts/all")
             let posts = await responsePosts.json()
             if (responseUsers.ok || responsePosts.ok) {
                 this.setState({

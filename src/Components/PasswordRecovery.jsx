@@ -94,7 +94,7 @@ class PasswordRecovery extends Component {
             email: emailForPassReset
             }
 
-            let response = await fetch("http://localhost:9000/api/auth/forgotpwd", {
+            let response = await fetch("https://appcademix-be.herokuapp.com/api/auth/forgotpwd", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -155,7 +155,7 @@ class PasswordRecovery extends Component {
                     password: this.state.password
                 }
     
-                let response = await fetch("http://localhost:9000/api/auth/resetpassword", {
+                let response = await fetch("https://appcademix-be.herokuapp.com/api/auth/resetpassword", {
                     method: "POST",
                     headers: {
                         Authorization: "Bearer " + this.state.token,

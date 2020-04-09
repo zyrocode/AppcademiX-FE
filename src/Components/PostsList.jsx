@@ -189,7 +189,7 @@ class PostsList extends Component {
                     allPosts[indexOfThePost].ratings.splice(indexOfRating, 1)
                     this.props.updateRates(allPosts)
                     await fetch(
-                        `http://localhost:9000/api/ratings/${
+                        `https://appcademix-be.herokuapp.com/api/ratings/${
                         post._id
                         }/${this.props.userInfo.username}`,
                         {
@@ -218,7 +218,7 @@ class PostsList extends Component {
                     allPosts[indexOfThePost].ratings.push(userUpRate)
                     this.props.updateRates(allPosts)
                     await fetch(
-                        `http://localhost:9000/api/ratings/${
+                        `https://appcademix-be.herokuapp.com/api/ratings/${
                         post._id
                         }/${this.props.userInfo.username}`,
                         {
@@ -302,7 +302,7 @@ class PostsList extends Component {
         try {
 
             const resp = await fetch(
-                `http://localhost:9000/api/posts/${this.props.userInfo.username}/${id}/`,
+                `https://appcademix-be.herokuapp.com/api/posts/${this.props.userInfo.username}/${id}/`,
                 {
                     method: "DELETE",
                     headers: {

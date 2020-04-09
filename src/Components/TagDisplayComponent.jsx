@@ -66,10 +66,10 @@ class TagDisplayComponent extends Component {
     );
   }
   componentDidMount = async () => {
-    // http://localhost:9000/api/posts/hastag/javascript
+    // https://appcademix-be.herokuapp.com/api/posts/hastag/javascript
     try {
       const responce = await fetch(
-        "http://localhost:9000/api/posts/hastag/all/tags"
+        "https://appcademix-be.herokuapp.com/api/posts/hastag/all/tags"
       );
       if (responce.ok) {
         const tagJson = await responce.json();
@@ -95,7 +95,7 @@ class TagDisplayComponent extends Component {
     try {
       const tag = this.props.match.params.tag;
       let response = await fetch(
-        `http://localhost:9000/api/posts/hastag/${tag}`
+        `https://appcademix-be.herokuapp.com/api/posts/hastag/${tag}`
       );
       let newPosts = await response.json();
 
