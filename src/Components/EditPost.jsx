@@ -74,7 +74,7 @@ class EditPost extends Component {
     />
      </FormGroup>
      
-                                <Button className="btn-modal-primary">Create Post</Button>
+                                <Button className="btn-modal-primary">Edit Post</Button>
 
       
                             </Form>
