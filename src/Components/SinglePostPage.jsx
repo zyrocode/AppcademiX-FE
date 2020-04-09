@@ -40,7 +40,7 @@ class SinglePostPage extends Component {
 
     render() {
         return (
-            <div className="w-50 mx-auto">
+            <div className="w-75 mx-auto single-post-width">
                 {this.state.post &&
                     <div>
                         <Container className=" mt-5">
