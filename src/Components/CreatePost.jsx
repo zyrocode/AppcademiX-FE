@@ -19,7 +19,7 @@ class CreatePost extends Component {
     render() {
         return (
             <Fade>
-                <Container className="create-post">
+                <Container className="create-post mx-auto">
                     <Row>
                         <Col>
                             <Form onSubmit={this.submitPost}>
