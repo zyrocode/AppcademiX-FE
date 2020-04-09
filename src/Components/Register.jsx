@@ -18,7 +18,7 @@ class Register extends Component {
         let { errorMessage } = this.state
         return (
             <Fade>
-                <Container className="create-post register">
+                <Container className="create-post register mx-auto">
                     <Row>
                         <Col>
                             <Container>
