@@ -98,9 +98,15 @@ class ProfilePage extends Component {
                     ...this.state.profile,
                     firstname: update.firstname,
                     lastname: update.lastname,
-                    image: update.image
                 }
             })
+        if(update !== undefined && update.image !== undefined)
+        this.setState({
+            profile: {
+                ...this.state.profile,
+                image: update.image
+            }
+        })
     }
 
     updateRatings = (posts) => {
