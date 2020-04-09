@@ -48,6 +48,7 @@
   }
 }
 
+
 @media only screen and (max-width: 1065px) {
   .side-col {
     display: none !important
@@ -57,6 +58,10 @@
 @media only screen and (min-width: 1066px) {
   .side-col {
     display: block !important
+  }
+
+  #root > div.fade.show > div{
+    width:55% !important
   }
 }
 
