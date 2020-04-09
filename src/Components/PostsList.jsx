@@ -55,7 +55,7 @@ class PostsList extends Component {
                                             <div className="m-2">
                                                 <img className="post-image" src={post.image} alt="Post Default Pic" />
                                             </div>
-                                            <Col className="col-6">
+                                            <Col className="col-6 post-body">
                                                 <Row className="mb-2">
                                                     <h4>{post.title.toUpperCase()}</h4>
                                                 </Row>
@@ -117,7 +117,7 @@ class PostsList extends Component {
                                                     <h6 style={{ fontStyle: "italic", fontSize: "small" }}><Moment fromNow>{post.createdAt}</Moment></h6>
                                                 </Row>
                                             </Col>
-                                            <Col className="p-0">
+                                            <Col className="p-0 post-rate">
                                                 {post.ratings.length > 0 && post.ratings.find(({ upvotedBy }) => upvotedBy === this.props.userInfo.username)
                                                     ?
                                                     <span onClick={(e) => this.ratePost(post, e)} className="rate2">

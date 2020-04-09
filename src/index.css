@@ -5,6 +5,19 @@
   .filters {
     position: relative !important
   }
+
+  .post-body {
+    margin-left: 10%;
+  }
+
+  .post-rate {
+    margin-right: 5%;
+  }
+
+  .post-image {
+    max-width: 90%;
+    max-height: 500px;
+  }
 }
 
 @media only screen and (max-width: 1065px) {
