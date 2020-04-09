@@ -102,9 +102,9 @@ class CommentComponent extends Component {
                         >
                           <Row>
                             <Col>
-                              <Icon link name="chat" />
+                             <span> <Icon link name="chat" /></span>  <span>Reply</span>
                             </Col>
-                            <span>Reply</span>
+                           
                           </Row>
                         </Comment.Action>
 
@@ -126,9 +126,10 @@ class CommentComponent extends Component {
 
                           <Row>
                             <Col>
-                            <Icon link name="edit" />
+                            <span> <Icon link name="edit" /></span>  <span>Edit</span>
+                           
                             </Col>
-                            <span>Edit</span>
+                           
                           </Row>
                                   {/* <a><Icon link name="edit" /></a> */}
                                 </Comment.Action>
@@ -146,9 +147,9 @@ class CommentComponent extends Component {
 
                           <Row>
                             <Col>
-                            <Icon link name="trash alternate outline" />
+                            <span><Icon link name="trash alternate outline" /></span>  
                             </Col>
-                            <span>Delete</span>
+                           <Col><span>delete</span></Col>
                           </Row>
                                   {/* <a><Icon link name="trash alternate outline" /></a> */}
 
