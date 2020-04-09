@@ -90,13 +90,17 @@ class PostsList extends Component {
                                                         </span>
                                                     </div>
                                                     {this.props.updateIcons &&
-                                                        <div className="details-post">
-                                                            <Col>  
-                                                            <span onClick={(e) => {e.stopPropagation(); this.setState({postIdForDelete: post._id, deleteModalIsOpen: true })}} ><FontAwesome className="mr-1" name="trash" />Delete</span>
+                                                        <>        
+                                                                <div onClick={(e) => { e.stopPropagation(); this.setState({ postIdForDelete: post._id, deleteModalIsOpen: true })}} className="details-post">
+                                                                    <span><FontAwesome className="mr-1" name="trash" />Delete</span>
+                                                                </div>
                                                                 &nbsp; &nbsp;
-                                                            <Link to={"/editpost/" + post._id}><span><FontAwesome className="mr-1" name="edit" />Edit</span></Link>
-                                                            </Col>
-                                                        </div>}
+                                                                <Link to={"/editpost/" + post._id}>
+                                                                <div className="details-post" onClick={(e) => e.stopPropagation()}>
+                                                                    <span><FontAwesome className="mr-1" name="edit" />Edit</span>
+                                                                </div>
+                                                                </Link>
+                                                        </>}
                                                 </Row>
                                                 <Row>
                                                     {post.tags.length > 0 &&
