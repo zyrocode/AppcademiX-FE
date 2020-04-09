@@ -31,7 +31,7 @@ class NewPostMetaGrab extends Component {
 
       
                   <Input
-                     onClick={()=>this.setState({link: "http://www."})}
+                    //  onClick={()=>this.setState({link: "http://www."})}
                     className="create-url"
                     type="url"
                     placeholder="Type in a URL... Start with http://"
