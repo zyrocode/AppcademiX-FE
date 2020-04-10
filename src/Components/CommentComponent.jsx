@@ -75,12 +75,14 @@ class CommentComponent extends Component {
                 <Row>
                   <Col className=" col-8">
                     <Comment.Content>
+                    <Link to={"/profile/" + comment.userInfo.username}>
                       <Comment.Author as="a">
                         {comment.userInfo.firstname} {comment.userInfo.lastname}
                         {/* <small>
                                                 <h6 style={{ fontSize: "small", paddingTop: "0.5em" }}><Link className="post-username" to={"/profile/" + comment.userInfo.username}>{"@" + comment.userInfo.username}</Link></h6>
                                                 </small> */}
                       </Comment.Author>
+                      </Link>
 
 
                       {this.state.openEditCommentBox && this.state.commentId === comment._id ? null : <Comment.Text className="mt-2 ml-1 mb-0">{comment.comment}</Comment.Text>}
