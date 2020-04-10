@@ -146,7 +146,7 @@ class EditPost extends Component {
             difficulty: this.state.difficulty,
             category: this.state.category,
             link: this.state.link,
-            image: this.state.selectedFile
+            // image: this.state.selectedFile
         }
         try {
             const id = this.props.match.params.postId
@@ -175,6 +175,20 @@ class EditPost extends Component {
 
                 
             }
+
+            if(!this.state.uploadFileChecker){
+                let nextresponse = await fetch("https://appcademix-be.herokuapp.com/api/posts/" + localStorage.getItem("username") + "/"+ id, {
+                method: "PUT",
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("access_token"),
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({image: this.state.selectedFile})
+            })
+            }
+
+
+
             if (response.ok && this.state.hashTag) {
             let newResp = await response.json()
             let newId = newResp.newPost._id
