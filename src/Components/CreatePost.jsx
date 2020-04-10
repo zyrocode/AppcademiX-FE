@@ -142,10 +142,10 @@ class CreatePost extends Component {
                 },
                 body: JSON.stringify(post)
             })
-            if (this.state.selectedFile && this.state.uploadFileChecker) {
-                let post = await response.json()
+            if ( this.state.uploadFileChecker) {
+                let postOne = await response.json()
                 console.log(post)
-                let id = post.newPost._id
+                let id = postOne.newPost._id
                 this.setState({newId: id})
                 let fd = new FormData();
                 fd.append("postImage", this.state.selectedFile)
@@ -185,6 +185,7 @@ class CreatePost extends Component {
             }
             else
                 console.log("Error")
+                this.props.history.push("/")
 
 
 

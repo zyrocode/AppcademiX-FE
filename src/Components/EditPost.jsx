@@ -158,10 +158,10 @@ class EditPost extends Component {
                 },
                 body: JSON.stringify(post)
             })
-            if (this.state.selectedFile && this.state.uploadFileChecker) {
-                let post = await response.json()
-                console.log(post)
-                let id = post.newPost._id
+            if (this.state.uploadFileChecker) {
+                let newpost = await response.json()
+                
+                let id = newpost.newPost._id
                 this.setState({newId: id})
                 let fd = new FormData();
                 fd.append("postImage", this.state.selectedFile)
@@ -172,6 +172,8 @@ class EditPost extends Component {
                     },
                     body: fd
                 })
+
+                
             }
             if (response.ok && this.state.hashTag) {
             let newResp = await response.json()
@@ -198,9 +200,15 @@ class EditPost extends Component {
                     else{
                         console.log("didnt tag")
                     }
+
+
             }
+
+     
             else
+
                 console.log("Error")
+                this.props.history.push("/")
 
 
 
