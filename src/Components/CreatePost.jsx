@@ -163,14 +163,17 @@ class CreatePost extends Component {
 
 
             if(!this.state.uploadFileChecker){
-                let nextresponse = await fetch("https://appcademix-be.herokuapp.com/api/posts/" + localStorage.getItem("username") + "/"+ id, {
-                method: "PUT",
-                headers: {
-                    "Authorization": "Bearer " + localStorage.getItem("access_token"),
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({image: this.state.selectedFile})
-            })
+                if(this.state.selectedFile !== undefined){
+                    let nextresponse = await fetch("https://appcademix-be.herokuapp.com/api/posts/" + localStorage.getItem("username") + "/"+ id, {
+                        method: "PUT",
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem("access_token"),
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({image: this.state.selectedFile})
+                    })
+                }
+                
             }
 
 
