@@ -133,7 +133,7 @@ class CreatePost extends Component {
             image: this.state.selectedFile
         }
         try {
-            var id;
+           
             let response = await fetch("https://appcademix-be.herokuapp.com/api/posts/" + localStorage.getItem("username"), {
                 method: "POST",
                 headers: {
@@ -142,10 +142,11 @@ class CreatePost extends Component {
                 },
                 body: JSON.stringify(post)
             })
+            let newResponce = await response.json()
             if ( this.state.uploadFileChecker) {
-                let postOne = await response.json()
-                console.log(post)
-                let id = postOne.newPost._id
+                // let postOne = await response.json()
+                // console.log(post)
+                let id = newResponce.newPost._id
                 this.setState({newId: id})
                 let fd = new FormData();
                 fd.append("postImage", this.state.selectedFile)
@@ -157,9 +158,9 @@ class CreatePost extends Component {
                     body: fd
                 })
             }
-            if (response.ok && this.state.hashTag) {
-            let newResp = await response.json()
-            let newId = newResp.newPost._id
+            if (this.state.hashTag) {
+            
+            let newId = newResponce.newPost._id
             const { hashTag } = this.state
             const hashStrings = hashTag.join()
             let tagBody = { tags: hashStrings}
@@ -175,16 +176,16 @@ class CreatePost extends Component {
                     body: JSON.stringify(tagBody)
                 })  
 
-                if (tagResponse.ok){
-                    this.props.history.push("/")
-                }
+                // if (tagResponse.ok){
+                //     this.props.history.push("/")
+                // }
                     
-                    else{
-                        console.log("didnt tag")
-                    }
+                //     else{
+                //         console.log("didnt tag")
+                //     }
             }
-            else
-                console.log("Error")
+            // else
+            //     console.log("Error")
                 this.props.history.push("/")
 
 
