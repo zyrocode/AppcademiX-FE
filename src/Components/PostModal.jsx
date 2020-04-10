@@ -148,7 +148,7 @@ class PostModal extends Component {
                     url={this.props.post.link}
                     onError={() => this.setState({ videoPlayer: false })}
                     controls={true}
-                    playing={true}
+                    playing={false}
                   />
                 )}
               </Row>

@@ -5,10 +5,9 @@ import { Button, Icon, Label } from 'semantic-ui-react'
   
   props.upVotedByUser && props.username ? 
   
-  <div >
+ 
 
-
-    <Button as='div' labelPosition='right' onClick={props.click} animated>
+    <Button className="rounded-pill"  as='div' labelPosition='right' onClick={props.click} animated>
       <Button color='red'>
         
         <Button.Content visible><Icon name='heart ' /> liked</Button.Content> 
@@ -19,12 +18,12 @@ import { Button, Icon, Label } from 'semantic-ui-react'
       </Label>
     </Button>
     
-  </div>
+
 
   :
 
-  <div >
-  <Button as='div' labelPosition='right' onClick={props.click} animated >
+
+  <Button className="rounded-pill"  as='div' labelPosition='right' onClick={props.click} animated >
     <Button  color='red'>
       
       <Button.Content visible><Icon name='heart outline' /> likes</Button.Content> 
@@ -35,7 +34,7 @@ import { Button, Icon, Label } from 'semantic-ui-react'
     </Label>
   </Button>
   
-</div>
+
 )
 
 export default LikeButton

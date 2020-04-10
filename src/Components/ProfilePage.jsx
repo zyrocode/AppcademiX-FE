@@ -100,6 +100,7 @@ class ProfilePage extends Component {
                     lastname: update.lastname,
                 }
             })
+            console.log()
         if(update !== undefined && update.image !== undefined)
         this.setState({
             profile: {

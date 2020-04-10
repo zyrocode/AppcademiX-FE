@@ -82,14 +82,12 @@ class CommentComponent extends Component {
                                                 </small> */}
                       </Comment.Author>
 
-                      <Comment.Metadata>
-                        <div>
-                          <Moment fromNow>{comment.updatedAt}</Moment>
-                        </div>
-                      </Comment.Metadata>
-                      {this.state.openEditCommentBox && this.state.commentId === comment._id ? null : <Comment.Text>{comment.comment}</Comment.Text>}
 
-                      <Comment.Actions>
+                      {this.state.openEditCommentBox && this.state.commentId === comment._id ? null : <Comment.Text className="mt-2 ml-1 mb-0">{comment.comment}</Comment.Text>}
+                      <Comment.Metadata className="m-0 ml-1">
+                          <Moment fromNow>{comment.updatedAt}</Moment>
+                      </Comment.Metadata>
+                      <Comment.Actions className="m-2">
                         {/* <---------------------------------Reply Comment----------------------------------------> */}
                         {!this.state.openCommentBox && <><Comment.Action
                           onClick={() => this.setState({
@@ -108,17 +106,17 @@ class CommentComponent extends Component {
                           </Row> */}
                           <Row className="mr-3">
                             <Col className="p-0">
-                            <Icon link name="chat" /> 
+                              <Icon link name="chat" />
                             </Col>
-                           <Col className="p-0">Reply</Col>
+                            <Col className="p-0">Reply</Col>
                           </Row>
-                          
+
                         </Comment.Action>
 
                           {/* <--------------------------------------End of Reply Comment--------------------------------> */}
 
                           {/* <-----------------------------------Edit and Delete Comment--------------------------------> */}
-                          {comment.userInfo.username !==
+                          {comment.userInfo.username ===
                             this.props.userInfo.username && (
                               <>
                                 <Comment.Action
@@ -131,7 +129,7 @@ class CommentComponent extends Component {
                                       postId: comment.postid
                                     })}>
 
-                          {/* <Row>
+                                  {/* <Row>
                             <Col>
                             <span> <Icon link name="edit" /></span>  <span>Edit</span>
                            
@@ -139,13 +137,13 @@ class CommentComponent extends Component {
                            
                           </Row> */}
 
-                          <Row className="mr-1 ml-1">
-                            <Col className="p-0">
-                            <Icon link name="edit" /> 
-                            </Col>
-                           <Col className="p-0">Edit</Col>
-                          </Row>
-                                 
+                                  <Row className="mr-1 ml-1">
+                                    <Col className="p-0">
+                                      <Icon link name="edit" />
+                                    </Col>
+                                    <Col className="p-0">Edit</Col>
+                                  </Row>
+
                                 </Comment.Action>
 
                                 <Comment.Action
@@ -159,13 +157,13 @@ class CommentComponent extends Component {
                                     console.log("Comment id", comment._id)
                                   }}>
 
-                          <Row className=" ml-1">
-                            <Col className="p-0">
-                            <Icon link name="trash alternate outline" /> 
-                            </Col>
-                           <Col className="p-0">Delete</Col>
-                          </Row>
-                                
+                                  <Row className=" ml-1">
+                                    <Col className="p-0">
+                                      <Icon link name="trash alternate outline" />
+                                    </Col>
+                                    <Col className="p-0">Delete</Col>
+                                  </Row>
+
 
                                 </Comment.Action>
 
@@ -177,6 +175,7 @@ class CommentComponent extends Component {
                             )} </>}
                         {/* <-------------------End of Delete and edit Comment--------------------------------> */}
                       </Comment.Actions>
+
                     </Comment.Content>
 
 

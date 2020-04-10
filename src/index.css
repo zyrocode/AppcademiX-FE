@@ -76,6 +76,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ui.labeled  a{
+  border-right: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

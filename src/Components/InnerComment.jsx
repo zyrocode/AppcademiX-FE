@@ -57,17 +57,16 @@ class InnerComponent extends Component {
                       {reply.userInfo.firstname} {reply.userInfo.lastname}
                     </Comment.Author>
                   </Link>
-                  <Comment.Metadata>
-                    <div>
-                      <Moment fromNow>{reply.updatedAt}</Moment>
-                    </div>
-                  </Comment.Metadata>
+
                   {this.state.openReplyBoxForEdit ? null : <Comment.Text>{reply.reply}</Comment.Text>}
                   <Comment.Actions>
-
+                    <Comment.Metadata  className="mt-0">
+                      <Moment fromNow>{reply.updatedAt}</Moment>
+                    </Comment.Metadata>
                     {/* <-------------------start of Delete and edit Comment--------------------------------> */}
                     {reply.userInfo.username === this.props.userInfo.username && <>
                       <Comment.Action
+                        className="m-2"
                         onClick={() =>
                           this.setState({
                             commentId: comment._id,
