@@ -43,7 +43,7 @@
     max-width: 1em;
   }
 
-  #root > div.fade.show > div{
+  #root .single-post-width{
     width:100% !important
   }
 }
@@ -60,7 +60,7 @@
     display: block !important
   }
 
-  #root > div.fade.show > div{
+  #root .single-post-width{
     width:55% !important
   }
 }
