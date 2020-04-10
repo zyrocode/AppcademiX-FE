@@ -19,7 +19,7 @@ class TagDisplayComponent extends Component {
                 marginTop: this.state.posts ? "1.5em" : "0.5em"
               }}
             >
-              <Row className="row justify-content-end">
+              {/* <Row className="row justify-content-end">
                 <Col className=" col-lg-3  col-md-3  col-sm-4 ">
                   <Container>
                     {this.state.allTags.map((tag, i) => (
@@ -31,7 +31,7 @@ class TagDisplayComponent extends Component {
                     ))}
                   </Container>
                 </Col>
-              </Row>
+              </Row> */}
 
               {(() => {
                 if (!this.state.posts || this.state.posts > 0) {

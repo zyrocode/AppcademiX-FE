@@ -30,10 +30,12 @@ class SideSection extends Component {
                         <Row key={index} className="most-viewed-post">
                             <Col>
                                 <Row>
-                                <img width="30px" className="comment-pic mx-3 my-1" src={user.image} />
-                                    <Link to={"/profile/" + user.username} className="mt-2 link-side-section">
-                                        <span>{this.props.cap(user.firstname.toLowerCase()) + " " + this.props.cap(user.lastname.toLowerCase())}</span>
-                                    </Link>
+                                    <img width="30px" className="comment-pic mx-3 my-1" src={user.image} />
+                                    <Col>
+                                        <Link to={"/profile/" + user.username} className="mt-2 link-side-section">
+                                            <span>{this.props.cap(user.firstname.toLowerCase()) + " " + this.props.cap(user.lastname.toLowerCase())}</span>
+                                        </Link>
+                                    </Col>
                                 </Row>
                             </Col>
                             <Col className="col-3 number-view-side-section mt-2">
