@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Comment, Header, Icon } from "semantic-ui-react";
 import Moment from "react-moment";
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   Row,
@@ -11,14 +11,16 @@ import {
   Col,
   Container,
   Button,
-  Modal, ModalHeader, ModalBody, ModalFooter
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { connect } from "react-redux";
 import InnerComment from "./InnerComment";
 import LikeButton from "./LikeButton";
 
-
-const mapStateToProps = state => state;
+const mapStateToProps = (state) => state;
 
 class CommentComponent extends Component {
   state = {
@@ -36,101 +38,109 @@ class CommentComponent extends Component {
     deleteModalIsOpen: false,
   };
 
-
-
   render() {
     console.log(this.props.comments);
     return (
       <Container className="mb-5">
-
-
-        {this.state.commentForDeleteId && this.state.deleteModalIsOpen &&
-
-          <Modal isOpen={this.state.deleteModalIsOpen} toggle={this.toggleDelete} >
+        {this.state.commentForDeleteId && this.state.deleteModalIsOpen && (
+          <Modal
+            isOpen={this.state.deleteModalIsOpen}
+            toggle={this.toggleDelete}
+          >
             <ModalHeader toggle={this.toggleDelete}></ModalHeader>
-            <ModalBody>
-
-              Do you really want to Delete this comment?
-</ModalBody>
+            <ModalBody>Do you really want to Delete this comment?</ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={this.toggleDelete}>Cancel</Button>
-              <Button color="danger" onClick={() => this.deleteComment(this.state.commentForDeleteId)}>Delete</Button>
+              <Button color="primary" onClick={this.toggleDelete}>
+                Cancel
+              </Button>
+              <Button
+                color="danger"
+                onClick={() =>
+                  this.deleteComment(this.state.commentForDeleteId)
+                }
+              >
+                Delete
+              </Button>
             </ModalFooter>
           </Modal>
-        }
-
-
+        )}
 
         <Comment.Group threaded>
           <Header as="h3" dividing>
             Comments
           </Header>
-          {this.props.comments.length <= 0 &&
-            <h5>No comments</h5>}
+          {this.props.comments.length <= 0 && <h5>No comments</h5>}
           {this.props.comments.length > 0 &&
             this.props.comments.map((comment, i) => (
               <Comment key={i}>
-
                 <Comment.Avatar src={comment.userInfo.image} />
                 <Row>
                   <Col className=" col-8">
                     <Comment.Content>
-                    <Link to={"/profile/" + comment.userInfo.username}>
-                      <Comment.Author as="a">
-                        {comment.userInfo.firstname} {comment.userInfo.lastname}
-                        {/* <small>
+                      <Link to={"/profile/" + comment.userInfo.username}>
+                        <Comment.Author as="a">
+                          {comment.userInfo.firstname}{" "}
+                          {comment.userInfo.lastname}
+                          {/* <small>
                                                 <h6 style={{ fontSize: "small", paddingTop: "0.5em" }}><Link className="post-username" to={"/profile/" + comment.userInfo.username}>{"@" + comment.userInfo.username}</Link></h6>
                                                 </small> */}
-                      </Comment.Author>
+                        </Comment.Author>
                       </Link>
 
-
-                      {this.state.openEditCommentBox && this.state.commentId === comment._id ? null : <Comment.Text className="mt-2 ml-1 mb-0">{comment.comment}</Comment.Text>}
+                      {this.state.openEditCommentBox &&
+                      this.state.commentId === comment._id ? null : (
+                        <Comment.Text className="mt-2 ml-1 mb-0">
+                          {comment.comment}
+                        </Comment.Text>
+                      )}
                       <Comment.Metadata className="m-0 ml-1">
-                          <Moment fromNow>{comment.updatedAt}</Moment>
+                        <Moment fromNow>{comment.updatedAt}</Moment>
                       </Comment.Metadata>
                       <Comment.Actions className="m-2">
                         {/* <---------------------------------Reply Comment----------------------------------------> */}
-                        {!this.state.openCommentBox && <><Comment.Action
-                          onClick={() => this.setState({
-                            commentId: comment._id,
-                            commentUsername: comment.userInfo.username,
-                            commentFullname: `${comment.userInfo.firstname} ${comment.userInfo.lastname}`,
-                            openCommentBox: !this.state.openCommentBox
-                          })
-                          }
-                        >
-                          {/* <Row>
+                        {!this.state.openCommentBox && (
+                          <>
+                            <Comment.Action
+                              onClick={() =>
+                                this.setState({
+                                  commentId: comment._id,
+                                  commentUsername: comment.userInfo.username,
+                                  commentFullname: `${comment.userInfo.firstname} ${comment.userInfo.lastname}`,
+                                  openCommentBox: !this.state.openCommentBox,
+                                })
+                              }
+                            >
+                              {/* <Row>
                             <Col>
                              <span> <Icon link name="chat" /></span>  <span>Reply</span>
                             </Col>
                            
                           </Row> */}
-                          <Row className="mr-3">
-                            <Col className="p-0">
-                              <Icon link name="chat" />
-                            </Col>
-                            <Col className="p-0">Reply</Col>
-                          </Row>
-
-                        </Comment.Action>
-
-                          {/* <--------------------------------------End of Reply Comment--------------------------------> */}
-
-                          {/* <-----------------------------------Edit and Delete Comment--------------------------------> */}
-                          {comment.userInfo.username ===
-                            this.props.userInfo.username && (
+                              <Row className="mr-3">
+                                <Col className="p-0">
+                                  <Icon link name="chat" />
+                                </Col>
+                                <Col className="p-0">Reply</Col>
+                              </Row>
+                            </Comment.Action>
+                            {/* <--------------------------------------End of Reply Comment--------------------------------> */}
+                            {/* <-----------------------------------Edit and Delete Comment--------------------------------> */}
+                            {comment.userInfo.username ===
+                              this.props.userInfo.username && (
                               <>
                                 <Comment.Action
                                   onClick={() =>
                                     this.setState({
                                       commentId: comment._id,
                                       commentInputForEdit: comment.comment,
-                                      openCommentBox: !this.state.openCommentBox,
-                                      openEditCommentBox: !this.state.openEditCommentBox,
-                                      postId: comment.postid
-                                    })}>
-
+                                      openCommentBox:
+                                        !this.state.openCommentBox,
+                                      openEditCommentBox:
+                                        !this.state.openEditCommentBox,
+                                      postId: comment.postid,
+                                    })
+                                  }
+                                >
                                   {/* <Row>
                             <Col>
                             <span> <Icon link name="edit" /></span>  <span>Edit</span>
@@ -145,52 +155,45 @@ class CommentComponent extends Component {
                                     </Col>
                                     <Col className="p-0">Edit</Col>
                                   </Row>
-
                                 </Comment.Action>
 
                                 <Comment.Action
                                   onClick={() => {
                                     this.setState({
-
                                       deleteModalIsOpen: true,
                                       commentForDeleteId: comment._id,
-                                      postId: comment.postid
-                                    })
-                                    console.log("Comment id", comment._id)
-                                  }}>
-
+                                      postId: comment.postid,
+                                    });
+                                    console.log("Comment id", comment._id);
+                                  }}
+                                >
                                   <Row className=" ml-1">
                                     <Col className="p-0">
-                                      <Icon link name="trash alternate outline" />
+                                      <Icon
+                                        link
+                                        name="trash alternate outline"
+                                      />
                                     </Col>
                                     <Col className="p-0">Delete</Col>
                                   </Row>
-
-
                                 </Comment.Action>
-
-
-
-
                               </>
-
-                            )} </>}
+                            )}{" "}
+                          </>
+                        )}
                         {/* <-------------------End of Delete and edit Comment--------------------------------> */}
                       </Comment.Actions>
-
                     </Comment.Content>
-
-
-
                   </Col>
                   <Col className="comment col-1 ml-4">
-
-                    <LikeButton count={comment.upvotes} username={this.props.userInfo.username} click={() => this.rateComment(comment._id)} upVotedByUser={comment.upvoted} />
-
+                    <LikeButton
+                      count={comment.upvotes}
+                      username={this.props.userInfo.username}
+                      click={() => this.rateComment(comment._id)}
+                      upVotedByUser={comment.upvoted}
+                    />
                   </Col>
                 </Row>
-
-
                 {/* <------Box for comment Input-------------> */}
                 {this.state.commentId === comment._id &&
                   this.state.openCommentBox && (
@@ -209,46 +212,52 @@ class CommentComponent extends Component {
                               commentFullname: "",
                               openCommentBox: !this.state.openCommentBox,
                               commentInputForEdit: "",
-                              openEditCommentBox: false
+                              openEditCommentBox: false,
                             })
                           }
                         >
                           <span aria-hidden="true">&times;</span>
                         </button>
                         <FormGroup>
-                          {this.state.openEditCommentBox ?
+                          {this.state.openEditCommentBox ? (
                             <Input
                               className="rounded-pill ml-4 mt-2"
                               type="text"
-                              onChange={e =>
-                                this.setState({ commentInputForEdit: e.target.value })
+                              onChange={(e) =>
+                                this.setState({
+                                  commentInputForEdit: e.target.value,
+                                })
                               }
                               value={this.state.commentInputForEdit}
-
                             />
-                            : <Input
+                          ) : (
+                            <Input
                               className="rounded-pill ml-4 mt-2"
                               type="text"
-                              onChange={e =>
+                              onChange={(e) =>
                                 this.setState({ replyMsg: e.target.value })
                               }
                               value={this.state.replyMsg}
                               placeholder={`reply to @ ${this.state.commentFullname}`}
-                            />}
+                            />
+                          )}
                         </FormGroup>
 
                         <Button className="btn-modal-primary rounded-pill ml-4">
-                          {this.state.openEditCommentBox ? "Edit Comment" : "Reply Post"}
+                          {this.state.openEditCommentBox
+                            ? "Edit Comment"
+                            : "Reply Post"}
                         </Button>
-
                       </Col>
                     </Form>
-                  )} {/* <------end of Box for comment Input-------------> */}
-
+                  )}{" "}
+                {/* <------end of Box for comment Input-------------> */}
                 {/* <------Inner reply-------------> */}
-
-                <InnerComment replies={comment.replies} comment={comment} refresh={this.props.refresh} />
-
+                <InnerComment
+                  replies={comment.replies}
+                  comment={comment}
+                  refresh={this.props.refresh}
+                />
                 {/* <------Inner reply-------------> */}
               </Comment>
             ))}
@@ -268,64 +277,57 @@ class CommentComponent extends Component {
     );
   }
 
-  rateComment = async id => {
+  rateComment = async (id) => {
     if (!this.props.accessToken) {
-
       toast.error("Login to rate this comment!");
-
-    }
-    else {
-      let response = await fetch(`https://appcademix-be.herokuapp.com/api/rate/comment/${id}`, {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + this.props.accessToken
+    } else {
+      let response = await fetch(
+        `https://appcademix-be.cyclic.app/api/rate/comment/${id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + this.props.accessToken,
+          },
         }
-      });
+      );
       this.props.refresh();
     }
-
   };
 
   toggleDelete = () => {
     this.setState({
       deleteModalIsOpen: !this.state.deleteModalIsOpen,
-      commentForDeleteId: ""
-    })
-  }
+      commentForDeleteId: "",
+    });
+  };
 
   //rework this!!!
-  postReplyOrEdit = async e => {
+  postReplyOrEdit = async (e) => {
     e.preventDefault();
     try {
-
       if (!this.props.accessToken) {
         this.setState({
-          openCommentBox: false
-        })
+          openCommentBox: false,
+        });
         toast.error("Login to reply this comment!");
-      }
-      else {
-
+      } else {
         if (this.state.commentInputForEdit) {
-
-          await this.updateComment()
-        }
-
-        else {
-
+          await this.updateComment();
+        } else {
           let replyBody = {
-            reply: this.state.replyMsg
+            reply: this.state.replyMsg,
           };
-          // https://appcademix-be.herokuapp.com/api/reply/commentID
+          // https://appcademix-be.cyclic.app/api/reply/commentID
           let response = await fetch(
-            "https://appcademix-be.herokuapp.com/api/reply/" + this.state.commentId,
+            "https://appcademix-be.cyclic.app/api/reply/" +
+              this.state.commentId,
             {
               method: "POST",
               headers: {
                 Authorization: "Bearer " + localStorage.getItem("access_token"),
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
               },
-              body: JSON.stringify(replyBody)
+              body: JSON.stringify(replyBody),
             }
           );
 
@@ -340,23 +342,17 @@ class CommentComponent extends Component {
             replyMsg: "",
             commentFullname: "",
             openCommentBox: false,
-
-          })
-
+          });
         }
       }
-
     } catch (error) {
       console.log(error);
     }
-
-
-
   };
 
   componentDidMount = () => {
     this.setState({
-      comments: this.props.comments
+      comments: this.props.comments,
     });
   };
 
@@ -367,60 +363,63 @@ class CommentComponent extends Component {
     // commentForEditID:"",
     //commentForEditPostID:""
     try {
-
-
-      const { commentId, commentInputForEdit, postId } = this.state
-      let bodyForPUT = { comment: commentInputForEdit }
-      let response = await fetch(`https://appcademix-be.herokuapp.com/api/comments/${postId}/${this.props.userInfo.username}/${commentId}`, {
-        method: "PUT",
-        headers: {
-          "Authorization": "Bearer " + this.props.accessToken,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(bodyForPUT)
-      })
+      const { commentId, commentInputForEdit, postId } = this.state;
+      let bodyForPUT = { comment: commentInputForEdit };
+      let response = await fetch(
+        `https://appcademix-be.cyclic.app/api/comments/${postId}/${this.props.userInfo.username}/${commentId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: "Bearer " + this.props.accessToken,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodyForPUT),
+        }
+      );
       if (response.ok) {
         this.setState({
           commentInputForEdit: "",
           commentId: "",
           openForEdit: false,
           openCommentBox: false,
-          openEditCommentBox: false
-        })
+          openEditCommentBox: false,
+        });
       }
 
       this.props.refresh();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
   deleteComment = async (id) => {
     // api/comments/:commentid/posts/:postid?username=:username
     try {
-      console.log()
+      console.log();
 
-      const { commentForDeleteId, postId } = this.state
-      console.log(id, "id")
-      let response = await fetch(`https://appcademix-be.herokuapp.com/api/comments/${id}/posts/${postId}?username=${this.props.userInfo.username}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": "Bearer " + this.props.accessToken,
-          "Content-Type": "application/json"
+      const { commentForDeleteId, postId } = this.state;
+      console.log(id, "id");
+      let response = await fetch(
+        `https://appcademix-be.cyclic.app/api/comments/${id}/posts/${postId}?username=${this.props.userInfo.username}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + this.props.accessToken,
+            "Content-Type": "application/json",
+          },
         }
-      })
+      );
       if (response.ok) {
         this.setState({
           commentForDeleteId: "",
           openForEdit: false,
           deleteModalIsOpen: false,
-        })
+        });
       }
       this.props.refresh();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
-
 }
 export default withRouter(connect(mapStateToProps)(CommentComponent));

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { Fade, Container, Row, Col } from "reactstrap";
+import { Fade, Container } from "reactstrap";
 import PostsList from "./PostsList";
-import { Link } from "react-router-dom";
 
 class TagDisplayComponent extends Component {
   state = {
     posts: [],
-    allTags: []
+    allTags: [],
   };
   render() {
     return (
@@ -16,7 +15,7 @@ class TagDisplayComponent extends Component {
             <Container
               style={{
                 maxWidth: "800px",
-                marginTop: this.state.posts ? "1.5em" : "0.5em"
+                marginTop: this.state.posts ? "1.5em" : "0.5em",
               }}
             >
               {/* <Row className="row justify-content-end">
@@ -43,7 +42,7 @@ class TagDisplayComponent extends Component {
                 } else {
                   return (
                     <PostsList
-                      updateRates={posts => this.updateRatings(posts)}
+                      updateRates={(posts) => this.updateRatings(posts)}
                       posts={this.state.posts}
                       refresh={() => this.fetchPosts()}
                       section={"hashtag"}
@@ -66,15 +65,15 @@ class TagDisplayComponent extends Component {
     );
   }
   componentDidMount = async () => {
-    // https://appcademix-be.herokuapp.com/api/posts/hastag/javascript
+    // https://appcademix-be.cyclic.app/api/posts/hastag/javascript
     try {
       const responce = await fetch(
-        "https://appcademix-be.herokuapp.com/api/posts/hastag/all/tags"
+        "https://appcademix-be.cyclic.app/api/posts/hastag/all/tags"
       );
       if (responce.ok) {
         const tagJson = await responce.json();
         this.setState({
-          allTags: tagJson.allTags
+          allTags: tagJson.allTags,
         });
       }
 
@@ -90,26 +89,25 @@ class TagDisplayComponent extends Component {
     }
   };
 
-
   fetchPosts = async () => {
     try {
       const tag = this.props.match.params.tag;
       let response = await fetch(
-        `https://appcademix-be.herokuapp.com/api/posts/hastag/${tag}`
+        `https://appcademix-be.cyclic.app/api/posts/hastag/${tag}`
       );
       let newPosts = await response.json();
 
       this.setState({
-        posts: newPosts
+        posts: newPosts,
       });
     } catch (e) {
       console.log(e);
     }
   };
 
-  updateRatings = posts => {
+  updateRatings = (posts) => {
     this.setState({
-      posts: posts.sort((a, b) => b.ratings.length - a.ratings.length)
+      posts: posts.sort((a, b) => b.ratings.length - a.ratings.length),
     });
   };
 }

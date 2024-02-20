@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Container, Col, Fade, Row } from "reactstrap";
 import FontAwesome from "react-fontawesome";
-import Login from "./Login"
-import { connect } from "react-redux"
+import Login from "./Login";
+import { connect } from "react-redux";
 
-const mapStateToProps = state => state
+const mapStateToProps = (state) => state;
 
 class RatingsPage extends Component {
   state = {
@@ -12,7 +12,7 @@ class RatingsPage extends Component {
     upVotedByUser: true,
     loginModal: false,
     ratings: 0,
-    users: []
+    users: [],
   };
 
   render() {
@@ -21,20 +21,28 @@ class RatingsPage extends Component {
         <Col>
           <Row>
             <Col>
-              { !this.state.upVotedByUser ? (
+              {!this.state.upVotedByUser ? (
                 <span onClick={this.upRatePost} className="rate">
                   <FontAwesome name="star" size="2x" />
-                  <span className="rate-number">{this.state.upVoteCount + " " + this.props.count}</span>
+                  <span className="rate-number">
+                    {this.state.upVoteCount + " " + this.props.count}
+                  </span>
                 </span>
               ) : (
                 <span onClick={this.downRatePost} className="rate2">
                   <FontAwesome name="star" size="2x" />
-                  <span className="rate-number"> {this.state.upVoteCount + " " + this.props.count}</span>
+                  <span className="rate-number">
+                    {" "}
+                    {this.state.upVoteCount + " " + this.props.count}
+                  </span>
                 </span>
               )}
-              {
-                !this.props.accessToken && this.state.loginModal && <Login toggle={this.toggleLoginModal} open={this.state.loginModal} />
-              }
+              {!this.props.accessToken && this.state.loginModal && (
+                <Login
+                  toggle={this.toggleLoginModal}
+                  open={this.state.loginModal}
+                />
+              )}
             </Col>
           </Row>
         </Col>
@@ -42,39 +50,39 @@ class RatingsPage extends Component {
     );
   }
 
-
-  toggleLoginModal = () => this.setState({ loginModal: !this.state.loginModal })
-
+  toggleLoginModal = () =>
+    this.setState({ loginModal: !this.state.loginModal });
 
   componentDidMount = async () => {
     await this.countUpvotes(this.props.id);
   };
 
-  componentDidUpdate =  (prevProps, prevState) => {
+  componentDidUpdate = (prevProps, prevState) => {
     if (prevProps.accessToken !== this.props.accessToken) {
       this.countUpvotes(this.props.id);
-      
     }
   };
 
-  countUpvotes = async id => { 
+  countUpvotes = async (id) => {
     try {
-      //https://appcademix-be.herokuapp.com/api/ratings/5e72afef19ef022fd996c4ef
-      const allUpVotes = await fetch(`https://appcademix-be.herokuapp.com/api/ratings/${id}`);
+      //https://appcademix-be.cyclic.app/api/ratings/5e72afef19ef022fd996c4ef
+      const allUpVotes = await fetch(
+        `https://appcademix-be.cyclic.app/api/ratings/${id}`
+      );
       const response = await allUpVotes.json();
       this.setState({
-        upVoteCount: this.props.count
+        upVoteCount: this.props.count,
       });
       const upVotedByUserAvailable = response.post.ratings.find(
-        user => user.upvotedBy === localStorage.getItem("username")
+        (user) => user.upvotedBy === localStorage.getItem("username")
       );
       // console.log("ratings found", upVotedByUserAvailable);
-      upVotedByUserAvailable 
+      upVotedByUserAvailable
         ? this.setState({
-            upVotedByUser: true
+            upVotedByUser: true,
           })
         : this.setState({
-            upVotedByUser: false
+            upVotedByUser: false,
           });
     } catch (error) {
       console.log(error);
@@ -84,30 +92,29 @@ class RatingsPage extends Component {
   upRatePost = async () => {
     try {
       const response = await fetch(
-        `https://appcademix-be.herokuapp.com/api/ratings/${
+        `https://appcademix-be.cyclic.app/api/ratings/${
           this.props.id
         }/${localStorage.getItem("username")}`,
         {
           method: "POST",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("access_token"),
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
       if (response.ok) {
         this.setState({
-          upVotedByUser: true
+          upVotedByUser: true,
         });
         await this.countUpvotes(this.props.id);
         await this.props.refresh();
         console.log("total", this.state.upVoteCount);
-      }
-      else{
-        console.log("You are not authorised to upVote")
+      } else {
+        console.log("You are not authorised to upVote");
         this.setState({
-          loginModal: true
-        })
+          loginModal: true,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -117,20 +124,20 @@ class RatingsPage extends Component {
   downRatePost = async () => {
     try {
       const response = await fetch(
-        `https://appcademix-be.herokuapp.com/api/ratings/${
+        `https://appcademix-be.cyclic.app/api/ratings/${
           this.props.id
         }/${localStorage.getItem("username")}`,
         {
           method: "DELETE",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("access_token"),
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
       if (response.ok) {
         this.setState({
-          upVotedByUser: false
+          upVotedByUser: false,
         });
         await this.countUpvotes(this.props.id);
         await this.props.refresh();
@@ -142,4 +149,4 @@ class RatingsPage extends Component {
   };
 }
 
-export default connect (mapStateToProps)(RatingsPage);
+export default connect(mapStateToProps)(RatingsPage);

@@ -11,7 +11,7 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
+  Input,
 } from "reactstrap";
 import { toast } from "react-toastify";
 import Moment from "react-moment";
@@ -22,12 +22,12 @@ import ReactPlayer from "react-player";
 import {
   FacebookShareButton,
   TwitterShareButton,
-  LinkedinShareButton
+  LinkedinShareButton,
 } from "react-share";
 import { FacebookIcon, TwitterIcon, LinkedinIcon } from "react-share";
 import CommentComponent from "./CommentComponent";
 
-const mapStateToProps = state => state;
+const mapStateToProps = (state) => state;
 
 class PostModal extends Component {
   state = {
@@ -39,7 +39,7 @@ class PostModal extends Component {
     commentForEditID: "",
     commentForEditPostID: "",
     videoPlayer: true,
-    upvotes: false
+    upvotes: false,
   };
 
   render() {
@@ -230,15 +230,25 @@ class PostModal extends Component {
                     )}
                     <Input
                       type="text"
-                      onChange={e => this.setState({ comment: e.target.value })}
+                      onChange={(e) =>
+                        this.setState({ comment: e.target.value })
+                      }
                       value={this.state.comment}
                       placeholder="Comment this post"
                     />
                   </FormGroup>
-                  <Button className="btn-modal-primary rounded-pill mt-2">Comment</Button>
+                  <Button className="btn-modal-primary rounded-pill mt-2">
+                    Comment
+                  </Button>
                 </Col>
               </Form>
-             <Container className="mt-5"> <CommentComponent  refresh={()=> this.getAllComments()} comments={this.state.comments}/></Container>
+              <Container className="mt-5">
+                {" "}
+                <CommentComponent
+                  refresh={() => this.getAllComments()}
+                  comments={this.state.comments}
+                />
+              </Container>
             </Container>
 
             {/*---------------COMMENTS*--------------------*/}
@@ -385,10 +395,10 @@ class PostModal extends Component {
     );
   }
 
-    componentDidMount = async () => {
-        await this.getAllComments()
-        await this.fetchPost()
-    }
+  componentDidMount = async () => {
+    await this.getAllComments();
+    await this.fetchPost();
+  };
 
   componentDidUpdate = async (prevProps, prevState) => {
     if (prevState.openForEdit !== this.state.openForEdit) {
@@ -397,39 +407,43 @@ class PostModal extends Component {
     }
   };
 
-    fetchPost = async() => {
-        try {
-            await fetch("https://appcademix-be.herokuapp.com/api/posts/" + this.props.post._id)
-        } catch (e) {
-            console.log(e)
-        }
+  fetchPost = async () => {
+    try {
+      await fetch(
+        "https://appcademix-be.cyclic.app/api/posts/" + this.props.post._id
+      );
+    } catch (e) {
+      console.log(e);
     }
+  };
 
-    rateComment = async (id) => {
-        let response = await fetch(`https://appcademix-be.herokuapp.com/api/rate/comment/${id}`, {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + this.props.accessToken
-            }
-
-        })
-        this.getAllComments()
-    }
+  rateComment = async (id) => {
+    let response = await fetch(
+      `https://appcademix-be.cyclic.app/api/rate/comment/${id}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + this.props.accessToken,
+        },
+      }
+    );
+    this.getAllComments();
+  };
   getAllComments = async () => {
     try {
       let response = await fetch(
-        `https://appcademix-be.herokuapp.com/api/comments/${this.props.post._id}?sort=updatedAt`
+        `https://appcademix-be.cyclic.app/api/comments/${this.props.post._id}?sort=updatedAt`
       );
       let comments = await response.json();
       //    let sortedComments = comments.sort((a,b) =>b.createdAt - a.createdAt)
       this.setState({
         post: this.props.post,
-        comments: comments.reverse()
+        comments: comments.reverse(),
       });
       console.log(this.state.comments);
       setTimeout(() => {
         this.setState({
-          commentLoading: false
+          commentLoading: false,
         });
       }, 500);
     } catch (e) {
@@ -443,21 +457,18 @@ class PostModal extends Component {
     // commentForEditID:"",
     //commentForEditPostID:""
     try {
-      const {
-        commentForEdit,
-        commentForEditID,
-        commentForEditPostID
-      } = this.state;
+      const { commentForEdit, commentForEditID, commentForEditPostID } =
+        this.state;
       let bodyForPUT = { comment: commentForEdit };
       let response = await fetch(
-        `https://appcademix-be.herokuapp.com/api/comments/${commentForEditPostID}/${this.props.userInfo.username}/${commentForEditID}`,
+        `https://appcademix-be.cyclic.app/api/comments/${commentForEditPostID}/${this.props.userInfo.username}/${commentForEditID}`,
         {
           method: "PUT",
           headers: {
             Authorization: "Bearer " + this.props.accessToken,
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(bodyForPUT)
+          body: JSON.stringify(bodyForPUT),
         }
       );
       if (response.ok) {
@@ -465,7 +476,7 @@ class PostModal extends Component {
           commentForEdit: "",
           commentForEditID: "",
           commentForEditPostID: "",
-          openForEdit: false
+          openForEdit: false,
         });
       }
     } catch (error) {
@@ -478,13 +489,13 @@ class PostModal extends Component {
     try {
       const { commentForEditID, commentForEditPostID } = this.state;
       let response = await fetch(
-        `https://appcademix-be.herokuapp.com/api/comments/${commentForEditID}/posts/${commentForEditPostID}?username=${this.props.userInfo.username}`,
+        `https://appcademix-be.cyclic.app/api/comments/${commentForEditID}/posts/${commentForEditPostID}?username=${this.props.userInfo.username}`,
         {
           method: "DELETE",
           headers: {
             Authorization: "Bearer " + this.props.accessToken,
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
       if (response.ok) {
@@ -492,7 +503,7 @@ class PostModal extends Component {
           commentForEdit: "",
           commentForEditID: "",
           commentForEditPostID: "",
-          openForEdit: false
+          openForEdit: false,
         });
       }
     } catch (error) {
@@ -500,16 +511,16 @@ class PostModal extends Component {
     }
   };
 
-  postComment = async e => {
+  postComment = async (e) => {
     e.preventDefault();
     if (localStorage.getItem("username")) {
       let comment = {
         comment: this.state.comment,
-        postid: this.props.post._id
+        postid: this.props.post._id,
       };
       try {
         let response = await fetch(
-          "https://appcademix-be.herokuapp.com/api/comments/" +
+          "https://appcademix-be.cyclic.app/api/comments/" +
             this.props.post._id +
             "/" +
             localStorage.getItem("username"),
@@ -517,16 +528,16 @@ class PostModal extends Component {
             method: "POST",
             headers: {
               Authorization: "Bearer " + localStorage.getItem("access_token"),
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(comment)
+            body: JSON.stringify(comment),
           }
         );
         comment = await response.json();
         if (response.ok) {
           this.setState({
             comments: [comment.newComment, ...this.state.comments],
-            comment: ""
+            comment: "",
           });
           console.log(comment);
         }
@@ -538,7 +549,7 @@ class PostModal extends Component {
     }
   };
 
-  capFirst = string => {
+  capFirst = (string) => {
     if (string) return string.charAt(0).toUpperCase() + string.slice(1);
   };
 }
